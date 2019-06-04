@@ -1,0 +1,37 @@
+package rules;
+import cn.lizi.lizi.model.putonglei.user
+dialect  "mvel"
+
+declare
+  @role
+end
+
+
+
+rule "rule"
+//同一个组执行一个
+activation-group "zu01"
+//优先级
+salience 999
+//激活
+agenda-group "jihuo - a"
+//加上 no-loop true 不执行自身的循环 如果update 之前修改的东西还是这个条件则不执行    insert也不会去执行
+no-loop true
+//over window:time(10s) 匹配最后10s请求到的的数据   滑动时间窗口
+//over window:length(1) 匹配最后请求到的请求  滑动长度窗口
+//延时 轮询 参数1 延时时间 参数2 轮询时间
+//timer (int: 10s 1s)
+//time (cron: 0/2 * * * * ?)
+    when
+        $u : user(getUserName() == "张三" ) over window:time(10s)
+    then
+    //再去执行一次
+    //update($u)
+    user user = new user();
+    insert(user)
+
+    //如果确定该次评估之后， 当前评估对象fact对象不会再次使用 必须删除
+    retract($u)
+    System.out.print("Double类型\n");
+end
+
