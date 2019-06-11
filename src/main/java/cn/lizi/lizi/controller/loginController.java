@@ -34,5 +34,11 @@ public class loginController{
         return loginService.rule(model);
     }
 
+    @ResponseBody
+    @RequestMapping("/111")
+    public String test001(){
+        return "12312312";
+    }
+
 
 }
