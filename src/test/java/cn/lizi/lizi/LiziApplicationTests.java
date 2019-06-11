@@ -4,9 +4,7 @@ import cn.lizi.lizi.model.dingshi.Test01Model;
 import cn.lizi.lizi.model.putonglei.user;
 import cn.lizi.lizi.service.impl.LoginServiceImpl;
 import cn.lizi.lizi.utils.RedisUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.olayc.engine.core.redis.RedissonComponent;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +39,16 @@ public class LiziApplicationTests {
 		list.add(map1);
 		list.add(map2);
 
-		System.out.print(redisUtil.set("list", JSON.toJSONString(list),0));
+
 }
 
 	@Test
 	public void test01() {
 		//boolean lizi = redisUtil.set("lizi", "999999");
 		String list = (String)redisUtil.get("list");
-		List jsonObject = (List)JSON.parseObject(list);
 
-		System.out.print(jsonObject.toArray().toString());
+
+
 	}
 
 
@@ -83,7 +81,7 @@ public class LiziApplicationTests {
 		list.add(map2);
 
 
-		redisUtil.lSet("list", JSON.toJSONString(list),0);
+
 	}
 
 	@Test
