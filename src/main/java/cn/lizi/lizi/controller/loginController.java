@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/login")
@@ -34,10 +35,11 @@ public class loginController{
         return loginService.rule(model);
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping("/111")
     public String test001(){
-        return "12312312";
+        //return new ModelAndView("index.html");
+return "ServiceImpl.ftl";
     }
 
 
