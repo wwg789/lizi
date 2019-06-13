@@ -9,11 +9,13 @@
 .box {
   height: 40px;
   line-height: 40px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
+  /*margin-bottom: 100px;*/
+  margin-top: 60px;
+  display: inline-block;
+}
+.box >p{
+  background: #fffx;
 }
 .box button {
   padding: 0 10px;
