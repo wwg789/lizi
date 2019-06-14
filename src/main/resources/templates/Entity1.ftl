@@ -19,22 +19,15 @@ public class ${table_name} {
 
 <#if model_column?exists>
     <#list model_column as model>
-    /**
-    * ${model.columnComment!}
-    */
-        <#if (model.columnName?lower_case = 'id')>
-            <#if (model.columnType?lower_case = 'bigint')>
-            @Id
-            @GeneratedValue(strategy = GenerationType.AUTO)
-            @Column(name = "${model.columnName}", columnDefinition = "${model.columnType}")
-            private Long ${model.changeColumnName?uncap_first};
-            <#else >
-            @Id
-            @GeneratedValue(strategy = GenerationType.AUTO)
-            @Column(name = "${model.columnName}", columnDefinition = "${model.columnType}")
-            private Integer ${model.changeColumnName?uncap_first};
-            </#if>
-        <#else>
+
+    //${model.columnComment!}
+    <#if (model.columnName?lower_case = 'id')>
+    <#if (model.columnType?lower_case = 'bigint')>
+    private Long ${model.changeColumnName?uncap_first};
+    <#else >
+    private Integer ${model.changeColumnName?uncap_first};
+    </#if>
+    <#else>
             <#if (model.columnType?lower_case = 'tinyint' || model.columnType?lower_case = 'bit')>
     private Integer ${model.changeColumnName?uncap_first};
             <#elseif (model.columnType?lower_case = 'smallint' || model.columnType?lower_case = 'mediumint' || model.columnType?lower_case = 'int' || model.columnType?lower_case = 'integer')>

@@ -17,11 +17,11 @@ import java.util.*;
 
 public class CodeGenerateTest {
 
-    private static final String URL = "jdbc:mysql://rm-2ze77uf6sbwdcxe917o.mysql.rds.aliyuncs.com:3306/carhailing";
-    private static final String USER = "carhailing";
+    private static final String URL = "jdbc:mysql://localhost:3306/db_0?serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "wuweigang";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String PASSWORD = "ola_carhailing_2018";
-    
+
     
     public String tableName = "";
     public String changeTableName = "";
@@ -42,55 +42,43 @@ public class CodeGenerateTest {
 
     private static void codeGenrate() throws Exception {
 
-        String tableName = "olayc_pay_info";
-        String basePath = "C:/Users/OLAYC_PC/Desktop/code";
-
-        //Class.forName(DRIVER);
+        String tableName = "user_0";
+        String modelPath = "D:\\ACODE";
         Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-
         DatabaseMetaData databaseMetaData = connection.getMetaData();
         ResultSet resultSet = databaseMetaData.getColumns(null, "%", tableName, "%");
-        ResultSet allResultSet = databaseMetaData.getColumns(null, "%", tableName, "%");
-
-        String finaldPath = basePath + "olaycactivityinfo";
         String finalChangeTN = replaceUnderLineAndUpperCase(tableName);
-
-        String idType = getIdType(allResultSet);
-        if (StringUtils.isEmpty(finaldPath) || StringUtils.isEmpty(finalChangeTN)) {
-            throw new IllegalArgumentException("参数错误");
-        }
-        ArrayList<ColumnClass> ziduan = new ArrayList<>();
         //生成代码
-        TemplateGenModel templateGenModel = generateEntityFile(resultSet, finaldPath, finalChangeTN,ziduan);
-
+        ArrayList<ColumnClass> ziduan = new ArrayList<>();
+        TemplateGenModel templateGenModel = generateEntityFile(resultSet, finalChangeTN,ziduan);
+        generateFileByTemplate(templateGenModel, modelPath);
         //打印xml语句
         if(null != templateGenModel){
-            prient(ziduan);
+            prient(ziduan,tableName);
         }
-        generateFileByTemplate(templateGenModel, idType);
     }
 
-    private static void prient(ArrayList<ColumnClass> ziduan) {
+    private static void prient(ArrayList<ColumnClass> ziduan,String tableName) {
         //ResultMap
         createResultMap(ziduan);
         //新增
-        createAdd(ziduan);
+        createAdd(ziduan,tableName);
         //修改
-        createUpdate(ziduan);
+        createUpdate(ziduan,tableName);
         //根据ID查询Model
-        createQueryModel(ziduan);
+        createQueryModel(ziduan,tableName);
         //根据所有字段查询 List
-        creteQueryList(ziduan);
+        creteQueryList(ziduan,tableName);
     }
 
     //根据所有字段查询 List
-    private static void creteQueryList(ArrayList<ColumnClass> ziduan) {
+    private static void creteQueryList(ArrayList<ColumnClass> ziduan,String tableName) {
         System.out.print("<!-- ================================================== -->\n\n");
         StringBuilder sb = new StringBuilder();
         sb.append("    <select id=\"替换方法名称\" resultType=\"替换表名称\">\n");
         sb.append("    SELECT\n");
         sb.append("    <include refid=\"searchInfoSql\"/>\n");
-        sb.append("    FROM 替换表名称\n");
+        sb.append("    FROM "+ tableName +"\n");
         sb.append("    WHERE 1\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
         ziduan.forEach(key ->{
@@ -103,13 +91,13 @@ public class CodeGenerateTest {
     }
 
     //查询一个model
-    private static void createQueryModel(ArrayList<ColumnClass> ziduan) {
+    private static void createQueryModel(ArrayList<ColumnClass> ziduan,String tableName) {
         System.out.print("<!-- ================================================== -->\n\n");
         StringBuilder sb = new StringBuilder();
         sb.append("    <select id=\"方法名称\" resultType=\"类名称\">\n");
         sb.append("    SELECT\n");
         sb.append("    <include refid=\"searchInfoSql\"/>\n");
-        sb.append("    FROM 表名称\n");
+        sb.append("    FROM "+ tableName +"\n");
         sb.append("    WHERE 1\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
         ziduan.forEach(key ->{
@@ -121,12 +109,12 @@ public class CodeGenerateTest {
 
     }
 
-    private static void createUpdate(ArrayList<ColumnClass> ziduan) {
+    private static void createUpdate(ArrayList<ColumnClass> ziduan,String tableName) {
         System.out.print("<!-- ================================================== -->\n\n");
         StringBuilder sb = new StringBuilder();
         sb.append("    <update id=\"updataInvoice\">\n");
         sb.append("    UPDATE\n");
-        sb.append("    表名称\n");
+        sb.append("    "+ tableName +"\n");
         sb.append("    <set>\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\",\">\n");
         ziduan.forEach(key ->{
@@ -140,11 +128,11 @@ public class CodeGenerateTest {
         System.out.print(sb.toString());
     }
 
-    private static void createAdd(ArrayList<ColumnClass> ziduan) {
+    private static void createAdd(ArrayList<ColumnClass> ziduan,String tableName) {
         System.out.print("<!-- ================================================== -->\n\n");
         StringBuilder sb = new StringBuilder();
         sb.append("    <insert id=\"方法名称\" keyProperty=\"id\" useGeneratedKeys=\"true\" parameterType=\"替换表名\" >\n");
-        sb.append("    INSERT INTO 替换表名\n");
+        sb.append("    INSERT INTO "+ tableName +"\n");
         sb.append("    <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
         ziduan.forEach(key ->{
             sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">"+ key.getColumnName() +",</if>\n");
@@ -189,17 +177,10 @@ public class CodeGenerateTest {
      * @param resultSet 查询数据库返回对象
      * @throws Exception 抛出异常
      */
-    public static TemplateGenModel generateEntityFile(ResultSet resultSet, String diskPath, String changeTableName,List<ColumnClass> ziduan) throws Exception {
+    public static TemplateGenModel generateEntityFile(ResultSet resultSet, String changeTableName,List<ColumnClass> ziduan) throws Exception {
 
-        final String suffix = ".java";
-        final String pagePath = diskPath + File.separator + "entity" + File.separator;
-        File pageFile = new File(pagePath);
-        if (!pageFile.exists()) {
-            pageFile.mkdirs();
-        }
-        final String path = diskPath + File.separator + "entity" + File.separator + changeTableName + suffix;
         final String templateName = "Entity1.ftl";
-        File mapperFile = new File(path);
+
         List<ColumnClass> columnClassList = new ArrayList<>();
         ColumnClass columnClass = null;
         while (resultSet.next()) {
@@ -221,7 +202,7 @@ public class CodeGenerateTest {
         }
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("model_column", columnClassList);
-        return new TemplateGenModel(templateName, mapperFile, dataMap);
+        return new TemplateGenModel(templateName, dataMap);
     }
 
 
@@ -250,9 +231,14 @@ public class CodeGenerateTest {
     }
 
     //获取文件
-    private static void generateFileByTemplate(TemplateGenModel genModel, String idType) throws Exception {
+    private static void generateFileByTemplate(TemplateGenModel genModel, String modelPath) throws Exception {
         Template template = FreeMarkerTemplateUtils.getTemplate(genModel.getTemplateName());
-        FileOutputStream fos = new FileOutputStream(genModel.getMapperFile());
+        File pageFile = new File(modelPath);
+        if (!pageFile.exists()) {
+            pageFile.mkdirs();
+        }
+        File file = new File(pageFile, "Model.java");
+        FileOutputStream fos = new FileOutputStream(file);
         genModel.getDataMap().put("table_name_small", "olayc_model");
         genModel.getDataMap().put("table_name", "olaycModel");
         genModel.getDataMap().put("author", "123");
@@ -260,7 +246,7 @@ public class CodeGenerateTest {
         genModel.getDataMap().put("package_name", "olayc_mis");
         genModel.getDataMap().put("table_annotation", "333333");
         genModel.getDataMap().put("business_package_name", "4444444");
-        genModel.getDataMap().put("id_type", idType);
+
         Writer out = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"), 10240);
         template.process(genModel.getDataMap(), out);
     }

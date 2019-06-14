@@ -39,7 +39,18 @@ public class loginController{
     @RequestMapping("/111")
     public String test001(){
         //return new ModelAndView("index.html");
-return "ServiceImpl.ftl";
+        return "ServiceImpl.ftl";
+    }
+
+    /**
+     * 微信回调 获取用户信息
+     * @param model
+     * @return
+     */
+    @RequestMapping("/getUserInfo")
+    public String getUserInfo(Object model){
+
+        return "null";
     }
 
 
