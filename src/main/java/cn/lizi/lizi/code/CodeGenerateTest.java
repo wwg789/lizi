@@ -59,13 +59,119 @@ public class CodeGenerateTest {
         if (StringUtils.isEmpty(finaldPath) || StringUtils.isEmpty(finalChangeTN)) {
             throw new IllegalArgumentException("参数错误");
         }
-
+        ArrayList<ColumnClass> ziduan = new ArrayList<>();
         //生成代码
-        TemplateGenModel templateGenModel = generateEntityFile(resultSet, finaldPath, finalChangeTN);
+        TemplateGenModel templateGenModel = generateEntityFile(resultSet, finaldPath, finalChangeTN,ziduan);
+
+        //打印xml语句
+        if(null != templateGenModel){
+            prient(ziduan);
+        }
         generateFileByTemplate(templateGenModel, idType);
     }
 
-        private static String getIdType(ResultSet resultSet) throws Exception {
+    private static void prient(ArrayList<ColumnClass> ziduan) {
+        //ResultMap
+        createResultMap(ziduan);
+        //新增
+        createAdd(ziduan);
+        //修改
+        createUpdate(ziduan);
+        //根据ID查询Model
+        createQueryModel(ziduan);
+        //根据所有字段查询 List
+        creteQueryList(ziduan);
+    }
+
+    //根据所有字段查询 List
+    private static void creteQueryList(ArrayList<ColumnClass> ziduan) {
+        System.out.print("<!-- ================================================== -->\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("    <select id=\"替换方法名称\" resultType=\"替换表名称\">\n");
+        sb.append("    SELECT\n");
+        sb.append("    <include refid=\"searchInfoSql\"/>\n");
+        sb.append("    FROM 替换表名称\n");
+        sb.append("    WHERE 1\n");
+        sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
+        ziduan.forEach(key ->{
+            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+        });
+        sb.append("    </trim>\n");
+        sb.append("    ORDER BY createTime\n");
+        sb.append("    </select>\n");
+        System.out.print(sb.toString());
+    }
+
+    //查询一个model
+    private static void createQueryModel(ArrayList<ColumnClass> ziduan) {
+        System.out.print("<!-- ================================================== -->\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("    <select id=\"方法名称\" resultType=\"类名称\">\n");
+        sb.append("    SELECT\n");
+        sb.append("    <include refid=\"searchInfoSql\"/>\n");
+        sb.append("    FROM 表名称\n");
+        sb.append("    WHERE 1\n");
+        sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
+        ziduan.forEach(key ->{
+            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+        });
+        sb.append("    </trim>\n");
+        sb.append("    </select>\n");
+        System.out.print(sb.toString());
+
+    }
+
+    private static void createUpdate(ArrayList<ColumnClass> ziduan) {
+        System.out.print("<!-- ================================================== -->\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("    <update id=\"updataInvoice\">\n");
+        sb.append("    UPDATE\n");
+        sb.append("    表名称\n");
+        sb.append("    <set>\n");
+        sb.append("    <trim prefix=\"\" suffixOverrides=\",\">\n");
+        ziduan.forEach(key ->{
+            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">"+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+        });
+        sb.append("    </trim>\n");
+        sb.append("    </set>\n");
+        sb.append("    WHERE\n");
+        sb.append("    id = #{id}\n");
+        sb.append("    </update>\n");
+        System.out.print(sb.toString());
+    }
+
+    private static void createAdd(ArrayList<ColumnClass> ziduan) {
+        System.out.print("<!-- ================================================== -->\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("    <insert id=\"方法名称\" keyProperty=\"id\" useGeneratedKeys=\"true\" parameterType=\"替换表名\" >\n");
+        sb.append("    INSERT INTO 替换表名\n");
+        sb.append("    <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+        ziduan.forEach(key ->{
+            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">"+ key.getColumnName() +",</if>\n");
+        });
+        sb.append("    </trim>\n");
+        sb.append("    <trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\n");
+        ziduan.forEach(key ->{
+            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">#{"+ key.getChangeColumnName() +"},</if>\n");
+        });
+        sb.append("    </trim>\n");
+        sb.append("    </insert>\n");
+        System.out.print(sb.toString());
+
+    }
+
+    private static void createResultMap(ArrayList<ColumnClass> ziduan) {
+        System.out.print("<!-- ================================================== -->\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("    <sql id=\"searchInfoSql\">\n");
+        ziduan.forEach(key ->{
+            sb.append("       "+ key.getColumnName() +" AS "+ key.getChangeColumnName() +",\n");
+        });
+        String substring = sb.substring(0, sb.length() - 2) + "\n    </sql>\n";
+        System.out.print(substring);
+    }
+
+    private static String getIdType(ResultSet resultSet) throws Exception {
             String idType = "Integer";
             while (resultSet.next()) {
                 if (resultSet.getString("COLUMN_NAME").equals("id")) {
@@ -83,7 +189,7 @@ public class CodeGenerateTest {
      * @param resultSet 查询数据库返回对象
      * @throws Exception 抛出异常
      */
-    public static TemplateGenModel generateEntityFile(ResultSet resultSet, String diskPath, String changeTableName) throws Exception {
+    public static TemplateGenModel generateEntityFile(ResultSet resultSet, String diskPath, String changeTableName,List<ColumnClass> ziduan) throws Exception {
 
         final String suffix = ".java";
         final String pagePath = diskPath + File.separator + "entity" + File.separator;
@@ -111,6 +217,7 @@ public class CodeGenerateTest {
                 columnClass.setCharOctetLength(length);
             }
             columnClassList.add(columnClass);
+            ziduan.add(columnClass);
         }
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("model_column", columnClassList);
