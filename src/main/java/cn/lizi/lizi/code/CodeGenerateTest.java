@@ -42,15 +42,15 @@ public class CodeGenerateTest {
 
     private static void codeGenrate() throws Exception {
 
-        String tableName = "user_0";
+        String tableName = "xt_forum_info";
         String modelPath = "D:\\ACODE";
         Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         DatabaseMetaData databaseMetaData = connection.getMetaData();
         ResultSet resultSet = databaseMetaData.getColumns(null, "%", tableName, "%");
-        String finalChangeTN = replaceUnderLineAndUpperCase(tableName);
+
         //生成代码
         ArrayList<ColumnClass> ziduan = new ArrayList<>();
-        TemplateGenModel templateGenModel = generateEntityFile(resultSet, finalChangeTN,ziduan);
+        TemplateGenModel templateGenModel = generateEntityFile(resultSet,ziduan);
         generateFileByTemplate(templateGenModel, modelPath);
         //打印xml语句
         if(null != templateGenModel){
@@ -82,7 +82,7 @@ public class CodeGenerateTest {
         sb.append("    WHERE 1\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
         ziduan.forEach(key ->{
-            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+            sb.append("     <if test=\""+ key.getChangeColumnName() +" != null\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
         });
         sb.append("    </trim>\n");
         sb.append("    ORDER BY createTime\n");
@@ -101,7 +101,7 @@ public class CodeGenerateTest {
         sb.append("    WHERE 1\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\"\">");
         ziduan.forEach(key ->{
-            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+            sb.append("     <if test=\""+ key.getChangeColumnName() +" != null\"> AND "+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
         });
         sb.append("    </trim>\n");
         sb.append("    </select>\n");
@@ -118,7 +118,7 @@ public class CodeGenerateTest {
         sb.append("    <set>\n");
         sb.append("    <trim prefix=\"\" suffixOverrides=\",\">\n");
         ziduan.forEach(key ->{
-            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">"+ key.getColumnName() +" = #{" + key.getChangeColumnName() + "}</if>\n");
+            sb.append("     <if test=\""+ key.getChangeColumnName() +" != null\">"+key.getColumnName()+"=#{"+key.getChangeColumnName()+"}</if>\n");
         });
         sb.append("    </trim>\n");
         sb.append("    </set>\n");
@@ -135,12 +135,12 @@ public class CodeGenerateTest {
         sb.append("    INSERT INTO "+ tableName +"\n");
         sb.append("    <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
         ziduan.forEach(key ->{
-            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">"+ key.getColumnName() +",</if>\n");
+            sb.append("     <if test=\""+ key.getChangeColumnName() +" != null\"> "+ key.getColumnName()+",</if>\n");
         });
         sb.append("    </trim>\n");
         sb.append("    <trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\n");
         ziduan.forEach(key ->{
-            sb.append("    <if test=\"@Ognl@isNotEmpty("+ key.getChangeColumnName() +")\">#{"+ key.getChangeColumnName() +"},</if>\n");
+            sb.append("     <if test=\""+ key.getChangeColumnName() +" != null\"> #{"+ key.getChangeColumnName()+"},</if>\n");
         });
         sb.append("    </trim>\n");
         sb.append("    </insert>\n");
@@ -177,7 +177,7 @@ public class CodeGenerateTest {
      * @param resultSet 查询数据库返回对象
      * @throws Exception 抛出异常
      */
-    public static TemplateGenModel generateEntityFile(ResultSet resultSet, String changeTableName,List<ColumnClass> ziduan) throws Exception {
+    public static TemplateGenModel generateEntityFile(ResultSet resultSet,List<ColumnClass> ziduan) throws Exception {
 
         final String templateName = "Entity1.ftl";
 
@@ -226,8 +226,7 @@ public class CodeGenerateTest {
                 sb.replace(count, count + 1, ia + "");
             }
         }
-        String result = sb.toString().replaceAll("_", "");
-        return StringUtils.capitalize(result);
+        return sb.toString().replaceAll("_", "");
     }
 
     //获取文件

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lizi.lizi.mapper.ForumMapper" >
+
+    <sql id="searchInfoSql">
+        id AS id,
+        user_id AS userId,
+        nick_name AS nickName,
+        user_head_portrait_url AS userHeadPortraitUrl,
+        forun_parent_id AS forunParentId,
+        forum_subject AS forumSubject,
+        forum_content AS forumContent,
+        forum_collect_count AS forumCollectCount,
+        forum_evaluate_count AS forumEvaluateCount,
+        forum_select_count AS forumSelectCount,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
+
+    <!-- 新增 -->
+    <insert id="addForum" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.forum.ForumInfoModel" >
+        INSERT INTO xt_forum_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> user_id,</if>
+            <if test="nickName != null"> nick_name,</if>
+            <if test="userHeadPortraitUrl != null"> user_head_portrait_url,</if>
+            <if test="forunParentId != null"> forun_parent_id,</if>
+            <if test="forumSubject != null"> forum_subject,</if>
+            <if test="forumContent != null"> forum_content,</if>
+            <if test="forumCollectCount != null"> forum_collect_count,</if>
+            <if test="forumEvaluateCount != null"> forum_evaluate_count,</if>
+            <if test="forumSelectCount != null"> forum_select_count,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> #{userId},</if>
+            <if test="nickName != null"> #{nickName},</if>
+            <if test="userHeadPortraitUrl != null"> #{userHeadPortraitUrl},</if>
+            <if test="forunParentId != null"> #{forunParentId},</if>
+            <if test="forumSubject != null"> #{forumSubject},</if>
+            <if test="forumContent != null"> #{forumContent},</if>
+            <if test="forumCollectCount != null"> #{forumCollectCount},</if>
+            <if test="forumEvaluateCount != null"> #{forumEvaluateCount},</if>
+            <if test="forumSelectCount != null"> #{forumSelectCount},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改 -->
+    <update id="updateForum">
+        UPDATE
+        xt_forum_info
+        <set>
+            <trim prefix="" suffixOverrides=",">
+                <if test="id != null">id=#{id}</if>
+                <if test="userId != null">user_id=#{userId}</if>
+                <if test="nickName != null">nick_name=#{nickName}</if>
+                <if test="userHeadPortraitUrl != null">user_head_portrait_url=#{userHeadPortraitUrl}</if>
+                <if test="forunParentId != null">forun_parent_id=#{forunParentId}</if>
+                <if test="forumSubject != null">forum_subject=#{forumSubject}</if>
+                <if test="forumContent != null">forum_content=#{forumContent}</if>
+                <if test="forumCollectCount != null">forum_collect_count=#{forumCollectCount}</if>
+                <if test="forumEvaluateCount != null">forum_evaluate_count=#{forumEvaluateCount}</if>
+                <if test="forumSelectCount != null">forum_select_count=#{forumSelectCount}</if>
+                <if test="createTime != null">create_time=#{createTime}</if>
+                <if test="updateTime != null">update_time=#{updateTime}</if>
+            </trim>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 查询列表 -->
+    <select id="queryFormList" resultType="cn.lizi.lizi.model.forum.ForumInfoModel">
+        SELECT
+        <include refid="searchInfoSql"/>
+        FROM xt_forum_info
+        WHERE 1
+        <trim prefix="" suffixOverrides="">
+            <if test="id != null"> AND id = #{id}</if>
+            <if test="userId != null"> AND user_id = #{userId}</if>
+            <if test="nickName != null"> AND nick_name = #{nickName}</if>
+            <if test="userHeadPortraitUrl != null"> AND user_head_portrait_url = #{userHeadPortraitUrl}</if>
+            <if test="forunParentId != null"> AND forun_parent_id = #{forunParentId}</if>
+            <if test="forumSubject != null"> AND forum_subject = #{forumSubject}</if>
+            <if test="forumContent != null"> AND forum_content = #{forumContent}</if>
+            <if test="forumCollectCount != null"> AND forum_collect_count = #{forumCollectCount}</if>
+            <if test="forumEvaluateCount != null"> AND forum_evaluate_count = #{forumEvaluateCount}</if>
+            <if test="forumSelectCount != null"> AND forum_select_count = #{forumSelectCount}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+    </select>
+
+    <!-- 查询详情 -->
+    <select id="queryForumDetail" resultType="cn.lizi.lizi.model.forum.ForumInfoModel">
+        SELECT
+        <include refid="searchInfoSql"/>
+        FROM xt_forum_info
+        WHERE 1
+        <trim prefix="" suffixOverrides="">
+            <if test="id != null"> AND id = #{id}</if>
+            <if test="userId != null"> AND user_id = #{userId}</if>
+            <if test="nickName != null"> AND nick_name = #{nickName}</if>
+            <if test="userHeadPortraitUrl != null"> AND user_head_portrait_url = #{userHeadPortraitUrl}</if>
+            <if test="forunParentId != null"> AND forun_parent_id = #{forunParentId}</if>
+            <if test="forumSubject != null"> AND forum_subject = #{forumSubject}</if>
+            <if test="forumContent != null"> AND forum_content = #{forumContent}</if>
+            <if test="forumCollectCount != null"> AND forum_collect_count = #{forumCollectCount}</if>
+            <if test="forumEvaluateCount != null"> AND forum_evaluate_count = #{forumEvaluateCount}</if>
+            <if test="forumSelectCount != null"> AND forum_select_count = #{forumSelectCount}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+        ORDER BY createTime
+    </select>
+
+
+
+
+
+</mapper>
