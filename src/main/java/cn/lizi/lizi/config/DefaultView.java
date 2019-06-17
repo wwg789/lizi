@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * 
  * <p>类描述：项目默认访问路径  </p>
- * <p>创建人：wanghonggang </p>
+ * <p>创建人：wuweigang </p>
  * <p>创建时间：2018年12月27日 上午11:29:03  </p>
  */
 @Configuration

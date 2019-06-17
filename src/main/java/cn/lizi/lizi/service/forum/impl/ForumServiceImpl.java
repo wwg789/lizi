@@ -3,12 +3,20 @@ package cn.lizi.lizi.service.forum.impl;
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.mapper.ForumMapper;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
+import cn.lizi.lizi.model.forum.ForumParentDetailModel;
+import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.forum.ForumService;
+import cn.lizi.lizi.service.other.CheckParamService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -17,6 +25,8 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
 
     @Autowired()
     ForumMapper forumMapper;
+    @Autowired
+    CheckParamService checkParamService;
 
     /**
      * 获取发帖列表
@@ -30,11 +40,11 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             model.setPage(0);
         }
         if(null == model.getPageSize()){
-            model.setPageSize(10);
+            model.setPageSize(9);
         }
         setQueryPage(model);
         List<ForumInfoModel> forumList = forumMapper.queryForumList(model);
-        return ResultModel.getSuccess("成功",forumList);
+        return ResultModel.getPageData("成功",forumList);
     }
 
     /**
@@ -44,7 +54,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
      */
     @Override
     public ResultModel queryForumDetail(ForumInfoModel model){
-        log.info("getForumInfo params {}",model);
+       log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
         ResultModel 成功 = ResultModel.getSuccess("成功", forumInfo);
         return 成功;
@@ -71,11 +81,40 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
      */
     @Override
     public ResultModel addForum(ForumInfoModel model) {
+
+        String resout = checkParamService.checkAddForum(model);
+        if(StringUtils.isNotEmpty(resout)){
+            return ResultModel.getError(resout);
+        }
+        //TODO  此部分用户信息从token中获取
+        UserModel userModel = new UserModel();
+        userModel.setId(1l);
+        userModel.setGender(1);
+        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
+        userModel.setNickName("栗哥的大树");
+        model.setUser(userModel);
+
+        //初始参数
+        model.setUserId(model.getUser().getId());
+        model.setNickName(model.getUser().getNickName());
+        model.setUserHeadPortraitUrl(model.getUser().getHeadPortraitUrl());
+        model.setCreateTime(new Date());
+
         int reoult = forumMapper.addForum(model);
         if(reoult < 1){
             return ResultModel.getError("创建失败");
         }
         return ResultModel.getSuccess("成功",null);
+    }
+
+    /**
+     *获取父级分类列表
+     * @param model
+     * @return
+     */
+    @Override
+    public ResultModel queryForumParentList(ForumParentDetailModel model){
+        return ResultModel.getSuccess("成功",forumMapper.queryForumParentList());
     }
 
 }

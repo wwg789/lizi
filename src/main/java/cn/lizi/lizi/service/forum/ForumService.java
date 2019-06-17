@@ -2,6 +2,9 @@ package cn.lizi.lizi.service.forum;
 
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
+import cn.lizi.lizi.model.forum.ForumParentDetailModel;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface ForumService{
 
@@ -12,4 +15,6 @@ public interface ForumService{
     ResultModel updateForum(ForumInfoModel model);
 
     ResultModel addForum(ForumInfoModel model);
+
+    ResultModel queryForumParentList(ForumParentDetailModel model);
 }

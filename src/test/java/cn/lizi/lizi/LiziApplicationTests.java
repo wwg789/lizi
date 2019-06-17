@@ -1,8 +1,5 @@
 package cn.lizi.lizi;
 
-import cn.lizi.lizi.model.dingshi.Test01Model;
-import cn.lizi.lizi.model.putonglei.user;
-import cn.lizi.lizi.service.impl.LoginServiceImpl;
 import cn.lizi.lizi.utils.RedisUtil;
 
 import org.junit.Test;
@@ -11,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.security.auth.login.LoginContext;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

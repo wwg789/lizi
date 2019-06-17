@@ -26,7 +26,7 @@ public class ForumInfoModel extends CommonModel implements Serializable {
     private String id;
 
     //用户ID
-    private Integer userId;
+    private Long userId;
 
     //用户昵称
     private String nickName;

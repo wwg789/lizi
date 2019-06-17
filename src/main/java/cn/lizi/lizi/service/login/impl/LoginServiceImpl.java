@@ -1,10 +1,8 @@
-package cn.lizi.lizi.service.impl;
+package cn.lizi.lizi.service.login.impl;
 
-import cn.lizi.lizi.ZiDingYiZhuJie.authority;
 import cn.lizi.lizi.model.dingshi.Test01Model;
 import cn.lizi.lizi.model.putonglei.user;
-import cn.lizi.lizi.service.LoginService;
-import cn.lizi.lizi.utils.KieSessionUtils;
+import cn.lizi.lizi.service.login.LoginService;
 import cn.lizi.lizi.utils.KieSessionUtils1;
 import org.kie.api.runtime.KieSession;
 import org.springframework.scheduling.annotation.Async;

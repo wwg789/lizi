@@ -73,7 +73,7 @@
     </update>
 
     <!-- 查询列表 -->
-    <select id="queryFormList" resultType="cn.lizi.lizi.model.forum.ForumInfoModel">
+    <select id="queryForumList" resultType="cn.lizi.lizi.model.forum.ForumInfoModel">
         SELECT
         <include refid="searchInfoSql"/>
         FROM xt_forum_info
@@ -117,6 +117,38 @@
         ORDER BY createTime
     </select>
 
+
+    <sql id="parentSearchInfoSql">
+        id AS id,
+        forum_parent_name AS forumParentName,
+        cerate_time AS cerateTime,
+        update_time AS updateTime
+    </sql>
+
+    <insert id="addForumParent" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.forum.ForumParentDetailModel" >
+        INSERT INTO xt_forun_parant_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="forumParentName != null"> forum_parent_name,</if>
+            <if test="cerateTime != null"> cerate_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="forumParentName != null"> #{forumParentName},</if>
+            <if test="cerateTime != null"> #{cerateTime},</if>
+        </trim>
+    </insert>
+
+
+    <select id="queryForumParentList" resultType="cn.lizi.lizi.model.forum.ForumParentDetailModel">
+        SELECT
+        <include refid="parentSearchInfoSql"/>
+        FROM xt_forun_parant_info
+        WHERE 1
+        <trim prefix="" suffixOverrides="">
+            <if test="id != null"> AND id = #{id}</if>
+            <if test="forumParentName != null"> AND forum_parent_name = #{forumParentName}</if>
+            <if test="cerateTime != null"> AND cerate_time = #{cerateTime}</if>
+        </trim>
+    </select>
 
 
 

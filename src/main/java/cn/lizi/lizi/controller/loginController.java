@@ -1,14 +1,12 @@
 package cn.lizi.lizi.controller;
 
-import cn.lizi.lizi.ZiDingYiZhuJie.authority;
 import cn.lizi.lizi.model.dingshi.Test01Model;
 import cn.lizi.lizi.model.putonglei.user;
-import cn.lizi.lizi.service.LoginService;
+import cn.lizi.lizi.service.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/login")

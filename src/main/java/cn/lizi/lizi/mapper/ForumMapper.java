@@ -1,6 +1,7 @@
 package cn.lizi.lizi.mapper;
 
 import cn.lizi.lizi.model.forum.ForumInfoModel;
+import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ForumMapper {
 
     //
     int addForum(ForumInfoModel model);
+
+    List<ForumParentDetailModel> queryForumParentList();
 }

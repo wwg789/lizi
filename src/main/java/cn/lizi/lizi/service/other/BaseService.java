@@ -1,4 +1,4 @@
-package cn.lizi.lizi.service;
+package cn.lizi.lizi.service.other;
 
 import cn.lizi.lizi.ZiDingYiZhuJie.authority;
 import cn.lizi.lizi.model.putonglei.user;

@@ -1,5 +1,6 @@
 package cn.lizi.lizi.model.common;
 
+import cn.lizi.lizi.model.other.UserModel;
 import lombok.Data;
 
 /**
@@ -24,5 +25,9 @@ public class CommonModel implements java.io.Serializable {
      * 总记录数
      */
     private Integer count;
+
+    private UserModel user;
+
+    private String _token;
 
 }

@@ -2,13 +2,18 @@ package cn.lizi.lizi.controller;
 
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
+import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 import cn.lizi.lizi.service.forum.ForumService;
+import com.sun.deploy.net.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 论坛
@@ -38,7 +43,7 @@ public class ForumController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/queryForumDetail")
+    @RequestMapping(name = "/queryForumDetail")
     public ResultModel queryForumDetail(ForumInfoModel model){
         return forumService.queryForumDetail(model);
     }
@@ -64,5 +69,18 @@ public class ForumController {
     public ResultModel addForum(ForumInfoModel model){
         return forumService.addForum(model);
     }
+
+    /**
+     * 获取父级分类列表
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryForumParentList")
+    public ResultModel queryForumParentList(ForumParentDetailModel model){
+        return forumService.queryForumParentList(model);
+    }
+
+
 
 }
