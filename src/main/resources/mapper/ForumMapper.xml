@@ -7,7 +7,7 @@
         user_id AS userId,
         nick_name AS nickName,
         user_head_portrait_url AS userHeadPortraitUrl,
-        forun_parent_id AS forunParentId,
+        forum_parent_id AS forunParentId,
         forum_subject AS forumSubject,
         forum_content AS forumContent,
         forum_collect_count AS forumCollectCount,
@@ -24,7 +24,7 @@
             <if test="userId != null"> user_id,</if>
             <if test="nickName != null"> nick_name,</if>
             <if test="userHeadPortraitUrl != null"> user_head_portrait_url,</if>
-            <if test="forunParentId != null"> forun_parent_id,</if>
+            <if test="forumParentId != null"> forum_parent_id,</if>
             <if test="forumSubject != null"> forum_subject,</if>
             <if test="forumContent != null"> forum_content,</if>
             <if test="forumCollectCount != null"> forum_collect_count,</if>
@@ -37,7 +37,7 @@
             <if test="userId != null"> #{userId},</if>
             <if test="nickName != null"> #{nickName},</if>
             <if test="userHeadPortraitUrl != null"> #{userHeadPortraitUrl},</if>
-            <if test="forunParentId != null"> #{forunParentId},</if>
+            <if test="forumParentId != null"> #{forumParentId},</if>
             <if test="forumSubject != null"> #{forumSubject},</if>
             <if test="forumContent != null"> #{forumContent},</if>
             <if test="forumCollectCount != null"> #{forumCollectCount},</if>
@@ -58,7 +58,7 @@
                 <if test="userId != null">user_id=#{userId}</if>
                 <if test="nickName != null">nick_name=#{nickName}</if>
                 <if test="userHeadPortraitUrl != null">user_head_portrait_url=#{userHeadPortraitUrl}</if>
-                <if test="forunParentId != null">forun_parent_id=#{forunParentId}</if>
+                <if test="forumParentId != null">forum_parent_id=#{forumParentId}</if>
                 <if test="forumSubject != null">forum_subject=#{forumSubject}</if>
                 <if test="forumContent != null">forum_content=#{forumContent}</if>
                 <if test="forumCollectCount != null">forum_collect_count=#{forumCollectCount}</if>
@@ -83,7 +83,7 @@
             <if test="userId != null"> AND user_id = #{userId}</if>
             <if test="nickName != null"> AND nick_name = #{nickName}</if>
             <if test="userHeadPortraitUrl != null"> AND user_head_portrait_url = #{userHeadPortraitUrl}</if>
-            <if test="forunParentId != null"> AND forun_parent_id = #{forunParentId}</if>
+            <if test="forumParentId != null"> AND forum_parent_id = #{forumParentId}</if>
             <if test="forumSubject != null"> AND forum_subject = #{forumSubject}</if>
             <if test="forumContent != null"> AND forum_content = #{forumContent}</if>
             <if test="forumCollectCount != null"> AND forum_collect_count = #{forumCollectCount}</if>
@@ -105,7 +105,7 @@
             <if test="userId != null"> AND user_id = #{userId}</if>
             <if test="nickName != null"> AND nick_name = #{nickName}</if>
             <if test="userHeadPortraitUrl != null"> AND user_head_portrait_url = #{userHeadPortraitUrl}</if>
-            <if test="forunParentId != null"> AND forun_parent_id = #{forunParentId}</if>
+            <if test="forumParentId != null"> AND forum_parent_id = #{forumParentId}</if>
             <if test="forumSubject != null"> AND forum_subject = #{forumSubject}</if>
             <if test="forumContent != null"> AND forum_content = #{forumContent}</if>
             <if test="forumCollectCount != null"> AND forum_collect_count = #{forumCollectCount}</if>
@@ -126,7 +126,7 @@
     </sql>
 
     <insert id="addForumParent" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.forum.ForumParentDetailModel" >
-        INSERT INTO xt_forun_parant_info
+        INSERT INTO xt_forum_parant_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="forumParentName != null"> forum_parent_name,</if>
             <if test="cerateTime != null"> cerate_time,</if>
@@ -141,7 +141,7 @@
     <select id="queryForumParentList" resultType="cn.lizi.lizi.model.forum.ForumParentDetailModel">
         SELECT
         <include refid="parentSearchInfoSql"/>
-        FROM xt_forun_parant_info
+        FROM xt_forum_parant_info
         WHERE 1
         <trim prefix="" suffixOverrides="">
             <if test="id != null"> AND id = #{id}</if>

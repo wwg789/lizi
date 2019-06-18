@@ -4,8 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>魅力牛城</title>
 
-<link rel="stylesheet" type="text/css" href="css/styledaohanglan.css"/>
-
 <link rel="stylesheet" type="text/css" href="css/styletupianlunbo.css"/>
 <link rel="stylesheet" type="text/css" href="css/swipertupianlunbo.css" />
 
@@ -33,28 +31,7 @@
  * 详尽信息请看官网：http://www.17sucai.com/pins/vip
 -->
 
-<div class="top-nav"> 
-	<div class="top-nav-width clearfix"> 
-		<dl class="tnLeft">
-			<dd> 
-				<h3><a href="#"><i></i></a></h3>
-				<ul> 
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-				</ul> 
-			</dd> 
-			<dd>
-				<h3><a href="#">邢台1234</a></h3>
-			</dd>
-		</dl> 
-	</div>
-</div> 
-
 <!-- 图片轮播 -->
-
 <div class="wqd-section-three">
 
 	<div class="section-three-fix">
@@ -70,12 +47,7 @@
 			<em></em>
 		</div>
 		<div class="section-img">
-			<img src="../images/sectoin-im3.jpg" width="100%" alt="" style="opacity:1;">
-			<img src="../images/section-bg3-61.jpg" width="100%" alt="">
-			<img src="../images/section-bg3-21.jpg" width="100%" alt="">
-			<img src="../images/section-bg3-31.jpg" width="100%" alt="">
-			<img src="../images/section-bg3-71.jpg" width="100%" alt="">
-			<img src="../images/section-bg3-51.jpg" width="100%" alt="">
+
 		</div>
 	</div>
 	
@@ -85,13 +57,6 @@
 			<div class="slipe-right"><img src="../images/banner-arow.png" alt="" /></div>
 			<div class="swiper-container slider-two">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="section-three-item">
-							<p class="animate-text" data-lazy="lazy">太清凉茶甜品网站需要展示产品色香味的特色，微企点的强大的页面布局功能和参数调整，非常专业展示了产品的特色，浏览体验非常好。</p>
-							<h6 class="animate-text" data-lazy="lazy">太清凉茶甜品 <span class="slider-auther"></span></h6>
-						</div>
-						<img src="../images/section-bg3.jpg" alt="" />
-					</div>
 				</div>
 				<div class="swiper-pagination swiper-pagination-two"></div>
 			</div>
@@ -170,33 +135,28 @@
 		<span>友情链接：</span>
 		<!-- 友情链接循环开始 -->
 
-		<a href="#" title="">xxx</a>
-
-		<a href="#" title="">云商城注册</a>
-
-		<a href="#" title="">云产品库</a>
-
-		<a href="#" title="">收银狗</a>
-
-		<a href="#" title="">神码收银</a>
-
-		<a href="#" title="">云物流</a>
-
-		<a href="#" title="">云ERP</a>
-
-		<a href="#" title="">生鲜电商</a>
-
-		<a href="#" title="">农村电商</a>
-
-		<a href="#" title="">母婴电商</a>
-
-		<a href="#" title="">商之论坛</a>
-
-		<a href="#" title="">动画公司</a>
-
-		<a href="#" title="">电商学院</a>
-
-		<!-- 友情链接循环结束 -->
+		<a href="http://www.baidu.com/" title="">百度一下</a>
+		<a href="http://xingtai.ganji.com/" title="">赶集网</a>
+		<a href="https://xt.58.com/" title="">58同城</a>
+		<a href="https://xingtai.baixing.com/" title="">百姓网</a>
+		<a href="http://www.xtzpw.com/" title="">邢台人才网</a>
+		<a href="http://www.xtrb.cn/" title="">邢台网</a>
+		<a href="http://www.xingtai.gov.cn/" title="">邢台市人民政府</a>
+		<a href="http://www.xtrb.cn/epaper/xtrb/html/2019-06/17/node_61.htm" title="">邢台日报</a>
+		<a href="http://www.xtrb.cn/epaper/ncwb/html/2019-06/17/node_21.htm" title="">牛城晚报</a>
+		<a href="http://www.xingtaiphoto.com/" title="">百泉视觉(摄影网)</a>
+		<a href="https://xingtai.focus.cn/" title="">邢台地产</a>
+		<a href="https://xingtai.fang.com/" title="">房天下</a>
+		<a href="https://www.xingtaishi.com/" title="">邢台都市网</a>
+		<a href="https://xingtai.anjuke.com/" title="">安居客</a>
+		<a href="http://bus.kaku100.com/m/" title="">公交查询</a>
+		<a href="http://www.nanhe111.com/" title="">南河111</a>
+		<a href="http://www.xtfj.org/" title="">佛教协会</a>
+		<a href="http://tianqi.2345.com/xingtai/53798.htm" title="">天气预报</a>
+		<a href="http://m.hbgajg.com/" title="">违章查询</a>
+		<a href="https://go.hao123.com/train" title="">列车时刻</a>
+		<a href="http://www.hbtcw.com/" title="">体彩</a>
+		<a href="http://www.yzfcw.com/" title="">福彩</a>
 	</div>
 
 	<div class="footer-info w1210">
@@ -239,6 +199,38 @@
 </div>
 
 <script>
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:80/index/queryTopAdvertisementList",
+        dataType: "json",
+        success: function (data) {
+            if (data.code == 0) {
+                var parentList = data.data;
+                var guanggaostr = "";
+                var xiaotu = "";
+                for (var i=0; i<parentList.length;i++ ){
+                    model = parentList[i];
+                    guanggaostr += "<div class=\"swiper-slide\">\n" +
+                        "<div class=\"section-three-item\">\n" +
+                        "<p class=\"animate-text\" data-lazy=\"lazy\">"+ model.advertisementHeader +"</p>\n" +
+                        "<h6 class=\"animate-text\" data-lazy=\"lazy\">"+ model.advertisementCount +"<span class=\"slider-auther\"></span></h6>\n" +
+                        "</div>\n" +
+                        "<img src=\""+ model.advertisementUrlA +"\" alt=\"\" />\n" +
+                        "</div>";
+                    if(0==i){
+                        xiaotu += "<img src=\""+ model.advertisementUrlB +"\" width=\"100%\" alt=\"\" style=\"opacity:1;>\n";
+                    }else{
+                        xiaotu += "<img src=\""+ model.advertisementUrlB +"\" width='100%' alt=\"\">\n";
+                        alert(xiaotu);
+                    }
+                }
+
+                $('.section-img').html(xiaotu);
+				$('.swiper-wrapper').html(guanggaostr);
+            }
+        }
+    });
 
     $.ajax({
         type: "GET",

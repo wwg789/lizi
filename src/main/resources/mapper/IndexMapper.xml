@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lizi.lizi.mapper.IndexMapper" >
+
+    <sql id="searchInfoSql">
+        id AS id,
+        advertisement_url_a AS advertisementUrlA,
+        advertisement_url_b AS advertisementUrlB,
+        advertisement_header AS advertisementHeader,
+        advertisement_count AS advertisementCount,
+        sequence AS sequence,
+        status AS status,
+        start_time AS startTime,
+        end_time AS endTime,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
+
+    <insert id="addTopAdvertisement" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.index.TopAdvertisement" >
+        INSERT INTO xt_index_advertisement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null"> id,</if>
+            <if test="advertisementUrlA != null"> advertisement_url_a,</if>
+            <if test="advertisementUrlB != null"> advertisement_url_b,</if>
+            <if test="advertisementHeader != null"> advertisement_header,</if>
+            <if test="advertisementCount != null"> advertisement_count,</if>
+            <if test="sequence != null"> sequence,</if>
+            <if test="status != null"> status,</if>
+            <if test="startTime != null"> start_time,</if>
+            <if test="endTime != null"> end_time,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null"> #{id},</if>
+            <if test="advertisementUrlA != null"> #{advertisementUrlA},</if>
+            <if test="advertisementUrlB != null"> #{advertisementUrlB},</if>
+            <if test="advertisementHeader != null"> #{advertisementHeader},</if>
+            <if test="advertisementCount != null"> #{advertisementCount},</if>
+            <if test="sequence != null"> #{sequence},</if>
+            <if test="status != null"> #{status},</if>
+            <if test="startTime != null"> #{startTime},</if>
+            <if test="endTime != null"> #{endTime},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updataTopAdvertisement">
+        UPDATE
+        xt_index_advertisement
+        <set>
+            <trim prefix="" suffixOverrides=",">
+                <if test="id != null">id=#{id}</if>
+                <if test="advertisementUrlA != null">advertisement_url_a=#{advertisementUrlA}</if>
+                <if test="advertisementUrlB != null">advertisement_url_b=#{advertisementUrlB}</if>
+                <if test="advertisementHeader != null">advertisement_header=#{advertisementHeader}</if>
+                <if test="advertisementCount != null">advertisement_count=#{advertisementCount}</if>
+                <if test="sequence != null">sequence=#{sequence}</if>
+                <if test="status != null">status=#{status}</if>
+                <if test="startTime != null">start_time=#{startTime}</if>
+                <if test="endTime != null">end_time=#{endTime}</if>
+                <if test="createTime != null">create_time=#{createTime}</if>
+                <if test="updateTime != null">update_time=#{updateTime}</if>
+            </trim>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="queryTopAdvertisementList" resultType="cn.lizi.lizi.model.index.TopAdvertisement">
+        SELECT
+        <include refid="searchInfoSql"/>
+        FROM xt_index_advertisement
+        WHERE 1
+        <trim prefix="" suffixOverrides="">     <if test="id != null"> AND id = #{id}</if>
+            <if test="advertisementUrlA != null"> AND advertisement_url_a = #{advertisementUrlA}</if>
+            <if test="advertisementUrlB != null"> AND advertisement_url_b = #{advertisementUrlB}</if>
+            <if test="advertisementHeader != null"> AND advertisement_header = #{advertisementHeader}</if>
+            <if test="advertisementCount != null"> AND advertisement_count = #{advertisementCount}</if>
+            <if test="sequence != null"> AND sequence = #{sequence}</if>
+            <if test="status != null"> AND status = #{status}</if>
+            <if test="startTime != null"> AND start_time = #{startTime}</if>
+            <if test="endTime != null"> AND end_time = #{endTime}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+    </select>
+
+
+
+
+</mapper>

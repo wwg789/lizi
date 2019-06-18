@@ -11,6 +11,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index:10;
 }
 .indexPic1{
     width: 76px;
@@ -54,6 +55,7 @@
     top: 55px;
     left: 0;
     background-color: #fff;
+    z-index:10;
 }
 .indexTable li{
     float: left;
@@ -74,7 +76,7 @@
 }
 .indexTable_son{
     box-sizing: border-box;
-    padding: 10px 4% 15px 4%;
+    padding: 10px 4% 200px 4%;
     width: 100%;
     background-color: #fff;
     margin-bottom: 10px;
@@ -128,6 +130,7 @@
 .indexTable_conFoot{
     width: 100%;
     margin-top: 5px;
+    float: left;
 }
 .indexTable_conFoot li{
     float: left;

@@ -35,7 +35,7 @@ public class ForumInfoModel extends CommonModel implements Serializable {
     private String userHeadPortraitUrl;
 
     //主题父级ID
-    private Integer forunParentId;
+    private Integer forumParentId;
 
     //论坛主题
     private String forumSubject;

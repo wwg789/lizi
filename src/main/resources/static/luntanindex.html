@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/paging.css">
-
+    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
     <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
     <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
@@ -31,16 +31,17 @@
     </div>
 <div class="indexTable">
     <ul>
-        <li class="on">热门</li>
-        <li>最新</li>
+        <li class="on">最新</li>
+        <li>热门</li>
         <li>精华</li>
     </ul>
 </div>
 <div style="width: 100%;height: 81px"></div>
 <div class="indexTable_con" style="display: block"></div>
-
-<div style="background-color: #fff;position: absolute;left: 35%;bottom: 44px;" id="boxfenye">
+<div style="z-index:9999">
+<div style="width:100%;background-color: #fff;position: absolute;left: 4%;bottom: 44px;" id="boxfenye">
     <div class="box" id="box"></div>
+</div>
 </div>
 <div class="footBar">
     <a href="http://localhost">
@@ -97,6 +98,25 @@
         },
     });
 
+    //九宫格
+    $(window).load(function(){
+        var spotlight = {
+            opacity : 0.2,
+            imgWidth : $('.spotlightWrapper ul li').find('img').width(),
+            imgHeight : $('.spotlightWrapper ul li').find('img').height()
+        };
+        $('.spotlightWrapper ul li').css({ 'width' : spotlight.imgWidth, 'height' : spotlight.imgHeight });
+        $('.spotlightWrapper ul li').hover(function(){
+            $(this).find('img').addClass('active').css({ 'opacity' : 1});
+            $(this).siblings('li').find('img').css({'opacity' : spotlight.opacity}) ;
+        }, function(){
+            $(this).find('img').removeClass('active');
+        });
+        $('.spotlightWrapper ul').bind('mouseleave',function(){
+            $(this).find('img').css('opacity', 1);
+        });
+    });
+
     $(".indexTable li").click(function(){
         var indexs=$(this).index();
         $(".indexTable li").removeClass("on").eq(indexs).addClass("on");
@@ -104,7 +124,6 @@
     });
 
     $("#boxfenye").click(function(){
-        alert(thisPage);
         $.ajax({
             type: "GET",
             url: "http://localhost:80/forum/queryForumList?forunParentId="+parentId + "&page=" + thisPage,
@@ -126,7 +145,7 @@
         for (var i=0; i<data.length;i++ ) {
             var a = data[i];
             if(i==data.length-1){
-                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 123px 4%;\">\n";
+                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 300px 4%;\">\n";
             }else{
                 divstr += "<div class=\"indexTable_son\">\n";
             }
@@ -146,13 +165,22 @@
                 "                <p>"+ a.forumContent +"</p>\n" +
                 "            </div>\n" +
                 "        </a>\n" +
-                "        <ul class=\"indexTable_conFoot clearfix\">\n" +
-                "            <li>收藏<span>"+ a.forumCollectCount +"</span></li>\n" +
-                "            <li>评论<span>"+ a.forumEvaluateCount +"</span></li>\n" +
-                "            <li>查看<span>"+ a.forumSelectCount +"</span></li>\n" +
-                "            <li>10分钟前</li>\n" +
-                "        </ul>\n" +
-                "    </div>"
+                "<div class='spotlightWrapper'>\n" +
+                    "<ul>\n" +
+                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/1.jpg' /></a></li>\n" +
+                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/2.jpg' /></a></li>\n" +
+                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/3.png' /></a></li>\n" +
+                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/4.jpg' /></a></li>\n" +
+                    "</ul>\n" +
+                "</div>\n"+
+
+                "<ul class=\"indexTable_conFoot clearfix\">\n" +
+                "<li>收藏<span>"+ a.forumCollectCount +"</span></li>\n" +
+                "<li>评论<span>"+ a.forumEvaluateCount +"</span></li>\n" +
+                "<li>查看<span>"+ a.forumSelectCount +"</span></li>\n" +
+                "<li>10分钟前</li>\n" +
+                "</ul>\n" +
+                "</div>"
         }
         return divstr;
     }

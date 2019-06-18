@@ -12,7 +12,7 @@ public class CheckParamService {
         if(null == model){
             return "参数空";
         }
-        if(null == model.getForunParentId()){
+        if(null == model.getForumParentId()){
             return "分类ID空";
         }
         if(StringUtils.isEmpty(model.getForumSubject())){
