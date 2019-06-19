@@ -79,10 +79,10 @@
 </html>
 
 <script type="text/javascript">
-    var parentId = getCookie("parentId")
+    var parentId = getCookie("parentId");
     $("#btnAjax").click(function(){
         var data = "?_token=GJYGKUYFGJHBNKJDBNLKGUYGCYGBDLJKBLKUHFLJKH" +
-            "&forunParentId="+ parentId +
+            "&forumParentId="+ parentId +
             "&forumSubject="+ $("#forumSubject").val()+
             "&forumContent="+ $("#forumContent").val();
         $.ajax({

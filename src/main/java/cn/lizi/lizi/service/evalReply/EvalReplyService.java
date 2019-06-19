@@ -6,8 +6,7 @@ import cn.lizi.lizi.model.EvalReply.ReplyModel;
 
 public interface EvalReplyService {
 
-    ResultModel queryEvalDetail(EvalModel model);
-
+    ResultModel queryEvalList(EvalModel model);
 
     ResultModel addReplyDetail(ReplyModel model);
 

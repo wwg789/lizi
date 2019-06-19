@@ -19,8 +19,8 @@ public class ViewController {
     }
 
     @RequestMapping("/write")
-    public String write(@Param("id") String id, HttpServletResponse response) {
-        response.addCookie(new Cookie("parentId",id));
+    public String write(@Param("parentId") String parentId, HttpServletResponse response) {
+        response.addCookie(new Cookie("parentId",parentId));
         return "write";
     }
 

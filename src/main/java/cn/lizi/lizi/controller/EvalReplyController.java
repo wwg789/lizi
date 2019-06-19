@@ -49,9 +49,9 @@ public class EvalReplyController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/queryEvalDetail")
-    public ResultModel queryEvalDetail(EvalModel model){
-        return evalReplyService.queryEvalDetail(model);
+    @RequestMapping("/queryEvalList")
+    public ResultModel queryEvalList(EvalModel model){
+        return evalReplyService.queryEvalList(model);
     }
 
 

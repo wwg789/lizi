@@ -67,4 +67,16 @@ public class CheckParamService {
         return null;
 
     }
+
+    public String checkQueryForumDetail(ForumInfoModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(null == model.getId()){
+            return "发帖ID空";
+        }
+
+        return null;
+
+    }
 }

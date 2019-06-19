@@ -39,4 +39,7 @@ public class EvalModel extends CommonModel {
     private Date updateTime;
     //回复列表
     private List<ReplyModel> replyList;
+
+    //距离创建时间的时间差
+    private String chaTime;
 }

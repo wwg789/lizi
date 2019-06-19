@@ -79,6 +79,10 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
      */
     @Override
     public ResultModel queryForumDetail(ForumInfoModel model){
+        String resout = checkParamService.checkQueryForumDetail(model);
+        if(StringUtils.isNotEmpty(resout)){
+            return ResultModel.getError(resout);
+        }
        log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
         return ResultModel.getSuccess("成功", forumInfo);

@@ -586,7 +586,7 @@
     float: right;
     border: none;
     outline: none;
-    background: url("../img/ltSub.png") no-repeat 0 0;
+    background: url("http://localhost:80/images/ltSub.png") no-repeat 0 0;
     background-size: 20px 20px;
     margin-top: 21px;
 }

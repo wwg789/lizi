@@ -8,6 +8,7 @@ import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.evalReply.EvalReplyService;
 import cn.lizi.lizi.service.other.CheckParamService;
+import cn.lizi.lizi.utils.DateUtils4Java8;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
 
         //TODO 获取用户信息  这里先创建一个
         UserModel user = new UserModel();
-        user.setId(1);
+        user.setId(2);
         user.setNickName("栗哥的大树");
         user.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
         user.setGender(1);
@@ -93,7 +94,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
      * @return
      */
     @Override
-    public ResultModel queryEvalDetail(EvalModel model) {
+    public ResultModel queryEvalList(EvalModel model) {
         String resout = checkParamService.checkQueryEvalDetailParam(model);
         if(StringUtils.isNotEmpty(resout)){
             ResultModel.getError(resout);
@@ -102,9 +103,14 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
         setQueryPage(model);
         List<EvalModel> resoutList = evalReplyMapper.queryEvalList(model);
 
-        //获取回复
+        //获取回复,计算创建时间差
         resoutList.forEach(k->{
            k.setReplyList(queryReplyDetail(k.getId()));
+            try {
+                k.setChaTime(DateUtils4Java8.getTimeDiff(new Date(), k.getCreateTime()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         return ResultModel.getPageData("成功",resoutList);
     }

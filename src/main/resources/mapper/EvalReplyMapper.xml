@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.olayc.engine.core.dal.manager.invoice.MisInvoiceMapper" >
+<mapper namespace="cn.lizi.lizi.mapper.EvalReplyMapper" >
 
     <sql id="searchInfoSql">
         id AS id,
@@ -48,12 +48,13 @@
         </trim>
     </insert>
 
-    <select id="queryEvalDetail" resultType="cn.lizi.lizi.model.EvalReply.EvalModel">
+    <select id="queryEvalList" resultType="cn.lizi.lizi.model.EvalReply.EvalModel">
         SELECT
         <include refid="searchInfoSql"/>
         FROM xt_eval_detail
         WHERE 1
-        <trim prefix="" suffixOverrides="">     <if test="id != null"> AND id = #{id}</if>
+        <trim prefix="" suffixOverrides="">
+            <if test="id != null"> AND id = #{id}</if>
             <if test="forumInfoId != null"> AND forum_info_id = #{forumInfoId}</if>
             <if test="userId != null"> AND user_id = #{userId}</if>
             <if test="userHeadUrl != null"> AND user_head_url = #{userHeadUrl}</if>

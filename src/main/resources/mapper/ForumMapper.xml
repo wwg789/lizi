@@ -96,7 +96,7 @@
         <include refid="searchInfoSql"/>
         FROM xt_forum_info
         <include refid="whereinfoSql"/>
-        ORDER BY createTime
+        ORDER BY createTime DESC
     </select>
 
     <!-- 查询列表  热门 -->

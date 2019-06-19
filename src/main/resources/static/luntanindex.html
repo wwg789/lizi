@@ -76,9 +76,9 @@
     var thisPage = 1;
     var temp = 0;
     var path = "http://localhost:80";
-    var path0 = path + "/forum/queryForumList?forunParentId="+parentId;
-
-    $('#fatie').attr("href", path0);
+    var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
+    $('#fatie').attr("href", path + "/view/write?parentId="+parentId);
+    //加载列表
     $.ajax({
         type: "GET",
         url: path0+"&temp=" + temp + "&page=" + thisPage,
@@ -172,23 +172,8 @@
         });
     });
 
-    //设置分页
-    function setPageInfo(data) {
-        $('#box').paging({
-            initPageNo: 1, // 初始页码
-            totalPages: data.pages, //总页数
-            totalCount: '合计' + data.count + '条数据', // 条目总数
-            slideSpeed: 600, // 缓动速度。单位毫秒
-            jump: true, //是否支持跳转
-            callback: function(page) { // 回调函数
-                thisPage = page;
-            }
-        })
-    }
-
-
+    //翻页
     $("#boxfenye").click(function(){
-        alert(thisPage);
         $.ajax({
             type: "GET",
             url: path0 + "&temp=" + temp + "&page=" + thisPage,
