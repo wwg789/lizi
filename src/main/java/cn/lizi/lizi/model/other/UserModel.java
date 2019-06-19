@@ -21,7 +21,7 @@ public class UserModel {
 
 
     //主键ID
-    private Long id;
+    private Integer id;
 
     //昵称
     private String nickName;

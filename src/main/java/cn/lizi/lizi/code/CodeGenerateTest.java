@@ -42,7 +42,7 @@ public class CodeGenerateTest {
 
     private static void codeGenrate() throws Exception {
 
-        String tableName = "xt_index_advertisement";
+        String tableName = "xt_eval_reply";
         String modelPath = "D:\\ACODE";
         Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         DatabaseMetaData databaseMetaData = connection.getMetaData();

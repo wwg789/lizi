@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.olayc.engine.core.dal.manager.invoice.MisInvoiceMapper" >
+
+    <sql id="searchInfoSql">
+        id AS id,
+        forum_info_id AS forumInfoId,
+        user_id AS userId,
+        user_head_url AS userHeadUrl,
+        user_nick_name AS userNickName,
+        eval_content AS evalContent,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
+
+    <sql id="replyInfoSql">
+        id AS id,
+        forum_eval_id AS forumEvalId,
+        user_id AS userId,
+        user_head_url AS userHeadUrl,
+        user_nick_name AS userNickName,
+        reply_content AS replyContent,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
+
+
+
+    <insert id="addEvalDetail" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.EvalReply.EvalModel" >
+        INSERT INTO xt_eval_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="forumInfoId != null"> forum_info_id,</if>
+            <if test="userId != null"> user_id,</if>
+            <if test="userHeadUrl != null"> user_head_url,</if>
+            <if test="userNickName != null"> user_nick_name,</if>
+            <if test="evalContent != null"> eval_content,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="forumInfoId != null"> #{forumInfoId},</if>
+            <if test="userId != null"> #{userId},</if>
+            <if test="userHeadUrl != null"> #{userHeadUrl},</if>
+            <if test="userNickName != null"> #{userNickName},</if>
+            <if test="evalContent != null"> #{evalContent},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <select id="queryEvalDetail" resultType="cn.lizi.lizi.model.EvalReply.EvalModel">
+        SELECT
+        <include refid="searchInfoSql"/>
+        FROM xt_eval_detail
+        WHERE 1
+        <trim prefix="" suffixOverrides="">     <if test="id != null"> AND id = #{id}</if>
+            <if test="forumInfoId != null"> AND forum_info_id = #{forumInfoId}</if>
+            <if test="userId != null"> AND user_id = #{userId}</if>
+            <if test="userHeadUrl != null"> AND user_head_url = #{userHeadUrl}</if>
+            <if test="userNickName != null"> AND user_nick_name = #{userNickName}</if>
+            <if test="evalContent != null"> AND eval_content = #{evalContent}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+    </select>
+
+
+    <insert id="addReplyDetail" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.EvalReply.ReplyModel" >
+        INSERT INTO xt_eval_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="forumEvalId != null"> forum_eval_id,</if>
+            <if test="userId != null"> user_id,</if>
+            <if test="userHeadUrl != null"> user_head_url,</if>
+            <if test="userNickName != null"> user_nick_name,</if>
+            <if test="replyContent != null"> reply_content,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="forumEvalId != null"> #{forumEvalId},</if>
+            <if test="userId != null"> #{userId},</if>
+            <if test="userHeadUrl != null"> #{userHeadUrl},</if>
+            <if test="userNickName != null"> #{userNickName},</if>
+            <if test="replyContent != null"> #{replyContent},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <select id="queryReplyList" resultType="cn.lizi.lizi.model.EvalReply.ReplyModel">
+        SELECT
+        <include refid="replyInfoSql"/>
+        FROM xt_eval_reply
+        WHERE 1
+        <trim prefix="" suffixOverrides="">     <if test="id != null"> AND id = #{id}</if>
+            <if test="forumEvalId != null"> AND forum_eval_id = #{forumEvalId}</if>
+            <if test="userId != null"> AND user_id = #{userId}</if>
+            <if test="userHeadUrl != null"> AND user_head_url = #{userHeadUrl}</if>
+            <if test="userNickName != null"> AND user_nick_name = #{userNickName}</if>
+            <if test="replyContent != null"> AND reply_content = #{replyContent}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+    </select>
+
+
+</mapper>

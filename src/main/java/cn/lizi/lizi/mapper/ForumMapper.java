@@ -20,4 +20,10 @@ public interface ForumMapper {
     int addForum(ForumInfoModel model);
 
     List<ForumParentDetailModel> queryForumParentList();
+
+    List<ForumInfoModel> queryForumListZuiXin(ForumInfoModel model);
+
+    List<ForumInfoModel> queryForumListReMen(ForumInfoModel model);
+
+    List<ForumInfoModel> queryForumListJingHua(ForumInfoModel model);
 }

@@ -8,6 +8,7 @@ import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.forum.ForumService;
 import cn.lizi.lizi.service.other.CheckParamService;
+import cn.lizi.lizi.utils.DateUtils4Java8;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,10 +42,33 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             model.setPage(0);
         }
         if(null == model.getPageSize()){
-            model.setPageSize(9);
+            model.setPageSize(10);
         }
-        setQueryPage(model);
-        List<ForumInfoModel> forumList = forumMapper.queryForumList(model);
+
+        List<ForumInfoModel> forumList = new ArrayList<>();
+        //最新
+        if(model.getTemp() == 0){
+            setQueryPage(model);
+            forumList = forumMapper.queryForumListZuiXin(model);
+        }
+        //热门
+        else if (model.getTemp() == 1){
+            setQueryPage(model);
+            forumList = forumMapper.queryForumListReMen(model);
+        }
+        //精华
+        else if (model.getTemp() == 2){
+            setQueryPage(model);
+            forumList = forumMapper.queryForumListJingHua(model);
+        }
+        forumList.forEach(k->{
+            try {
+                k.setChaTime(DateUtils4Java8.getTimeDiff(new Date(), k.getCreateTime()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         return ResultModel.getPageData("成功",forumList);
     }
 
@@ -56,8 +81,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
     public ResultModel queryForumDetail(ForumInfoModel model){
        log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
-        ResultModel 成功 = ResultModel.getSuccess("成功", forumInfo);
-        return 成功;
+        return ResultModel.getSuccess("成功", forumInfo);
     }
 
     /**
@@ -88,7 +112,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         }
         //TODO  此部分用户信息从token中获取
         UserModel userModel = new UserModel();
-        userModel.setId(1l);
+        userModel.setId(1);
         userModel.setGender(1);
         userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
         userModel.setNickName("栗哥的大树");
@@ -115,6 +139,21 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
     @Override
     public ResultModel queryForumParentList(ForumParentDetailModel model){
         return ResultModel.getSuccess("成功",forumMapper.queryForumParentList());
+    }
+
+    @Override
+    public ResultModel queryForumListByZuiXin(ForumInfoModel model) {
+        return null;
+    }
+
+    @Override
+    public ResultModel queryForumListByReMen(ForumInfoModel model) {
+        return null;
+    }
+
+    @Override
+    public ResultModel queryForumListByJingHua(ForumInfoModel model) {
+        return null;
     }
 
 }

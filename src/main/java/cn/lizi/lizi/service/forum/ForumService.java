@@ -17,4 +17,10 @@ public interface ForumService{
     ResultModel addForum(ForumInfoModel model);
 
     ResultModel queryForumParentList(ForumParentDetailModel model);
+
+    ResultModel queryForumListByZuiXin(ForumInfoModel model);
+
+    ResultModel queryForumListByReMen(ForumInfoModel model);
+
+    ResultModel queryForumListByJingHua(ForumInfoModel model);
 }

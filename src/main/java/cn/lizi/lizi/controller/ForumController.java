@@ -38,12 +38,45 @@ public class ForumController {
     }
 
     /**
+     * 主题列表最新
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryForumListByZuiXin")
+    public ResultModel queryForumListByZuiXin(ForumInfoModel model){
+        return forumService.queryForumListByZuiXin(model);
+    }
+
+    /**
+     * 主题列表热门
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryForumListByReMen")
+    public ResultModel queryForumListByReMen(ForumInfoModel model){
+        return forumService.queryForumListByReMen(model);
+    }
+
+    /**
+     * 主题列表热门
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryForumListByJingHua")
+    public ResultModel queryForumListByJingHua(ForumInfoModel model){
+        return forumService.queryForumListByJingHua(model);
+    }
+
+    /**
      * 主题详情查询
      * @param model
      * @return
      */
     @ResponseBody
-    @RequestMapping(name = "/queryForumDetail")
+    @RequestMapping("/queryForumDetail")
     public ResultModel queryForumDetail(ForumInfoModel model){
         return forumService.queryForumDetail(model);
     }

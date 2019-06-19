@@ -325,7 +325,7 @@
     width: 100%;
     height: 41px;
     border-bottom: 1px solid #eee;
-    background: url("../img/meIcon.png") no-repeat right center;
+    background: url("http://localhost:80/images/meIcon.png") no-repeat right center;
     background-size: 6px 11px;
 }
 .meContent li:last-of-type{

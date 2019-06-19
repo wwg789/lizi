@@ -20,26 +20,29 @@
 
 </head>
 <body style="background-color: #f4f4f4;">
+<div style=" position: fixed;background-color: #FFF;z-index:19;bottom: 51px;width: 100%;height: 40px;"></div>
 <div class="inHead">
         <div class="inHead_inner center">
             <a href=""><img src="images/logo.png" alt="" class="indexPic1"/></a>
             <div class="indexSearch">
                 <input type="text" placeholder="请输入关键词......" name="search"/>
-                <input type="button" name="indexBtn"/>
+                <input type="button" name="indexBtn" id="sousuo"/>
             </div>
         </div>
     </div>
 <div class="indexTable">
     <ul>
-        <li class="on">最新</li>
-        <li>热门</li>
-        <li>精华</li>
+        <li class="on"id="zuixin">最新</li>
+        <li id="remen">热门</li>
+        <li id="jinghua">精华</li>
     </ul>
 </div>
 <div style="width: 100%;height: 81px"></div>
 <div class="indexTable_con" style="display: block"></div>
+<div class="indexTable_con" style="display: block"></div>
+<div class="indexTable_con" style="display: block"></div>
 <div style="z-index:9999">
-<div style="width:100%;background-color: #fff;position: absolute;left: 4%;bottom: 44px;" id="boxfenye">
+<div style="width:100%;background-color: #fff;position: absolute;left: 4%;bottom: 44px;z-index:20;" id="boxfenye">
     <div class="box" id="box"></div>
 </div>
 </div>
@@ -70,63 +73,125 @@
     //获取cookie
     var parentId = getCookie("parentId");
     //定义重新获取到的分页值
-    var thisPage;
-    $('#fatie').attr("href", "http://localhost/view/write?id="+parentId);
+    var thisPage = 1;
+    var temp = 0;
+    var path = "http://localhost:80";
+    var path0 = path + "/forum/queryForumList?forunParentId="+parentId;
 
+    $('#fatie').attr("href", path0);
     $.ajax({
         type: "GET",
-        url: "http://localhost:80/forum/queryForumList?forunParentId="+parentId,
+        url: path0+"&temp=" + temp + "&page=" + thisPage,
         dataType: "json",
         success: function (data) {
             if (data.code == 0) {
                 var divstr = subString(data.data);
                 $('.indexTable_con').html(divstr);
-                $('#box').paging({
-                    initPageNo: 1, // 初始页码
-                    totalPages: data.pages, //总页数
-                    totalCount: '合计' + data.count + '条数据', // 条目总数
-                    slideSpeed: 600, // 缓动速度。单位毫秒
-                    jump: true, //是否支持跳转
-                    callback: function(page) { // 回调函数
-                        thisPage = page;
-                    }
-                })
-
+                setPageInfo(data);
             } else {
                 alert("创建失败：" + data.msg);
             }
         },
     });
-
-    //九宫格
-    $(window).load(function(){
-        var spotlight = {
-            opacity : 0.2,
-            imgWidth : $('.spotlightWrapper ul li').find('img').width(),
-            imgHeight : $('.spotlightWrapper ul li').find('img').height()
-        };
-        $('.spotlightWrapper ul li').css({ 'width' : spotlight.imgWidth, 'height' : spotlight.imgHeight });
-        $('.spotlightWrapper ul li').hover(function(){
-            $(this).find('img').addClass('active').css({ 'opacity' : 1});
-            $(this).siblings('li').find('img').css({'opacity' : spotlight.opacity}) ;
-        }, function(){
-            $(this).find('img').removeClass('active');
-        });
-        $('.spotlightWrapper ul').bind('mouseleave',function(){
-            $(this).find('img').css('opacity', 1);
-        });
-    });
-
-    $(".indexTable li").click(function(){
-        var indexs=$(this).index();
-        $(".indexTable li").removeClass("on").eq(indexs).addClass("on");
-        $(".indexTable_con").hide().eq(indexs).show();
-    });
-
-    $("#boxfenye").click(function(){
+    //点击最新
+    $("#zuixin").click(function(){
+        temp = 0;
+        path1 = path0 + "&page=" + thisPage + "&temp="+ 0;
         $.ajax({
             type: "GET",
-            url: "http://localhost:80/forum/queryForumList?forunParentId="+parentId + "&page=" + thisPage,
+            url: path0+"&temp=" + temp + "&page=" + thisPage,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                    setPageInfo(data);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+    //点击热门
+    $("#remen").click(function(){
+        temp = 1;
+        path1 = path0 + "&page=" + thisPage + "&temp="+ temp;
+        $.ajax({
+            type: "GET",
+            url: path0+"&temp=" + temp + "&page=" + thisPage,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                    setPageInfo(data);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+    //点击精华
+    $("#jinghua").click(function(){
+        temp = 2;
+        path1 = path0 + "&page=" + thisPage + "&temp="+ temp;
+        $.ajax({
+            type: "GET",
+            url: path0+"&temp=" + temp + "&page=" + thisPage,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                    setPageInfo(data);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+    //点击搜索
+    $("#sousuo").click(function(){
+        temp = 0;
+        $("#zuixin").attr("class","on");
+        $("#remen").attr("class","");
+        $("#jinghua").attr("class","");
+        $.ajax({
+            type: "GET",
+            url: path0+"&temp=" + temp + "&page=" + "&forumSubject=" + $("input[name='search']").val(),
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                    setPageInfo(data);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+
+    //设置分页
+    function setPageInfo(data) {
+        $('#box').paging({
+            initPageNo: 1, // 初始页码
+            totalPages: data.pages, //总页数
+            totalCount: '合计' + data.count + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function(page) { // 回调函数
+                thisPage = page;
+            }
+        })
+    }
+
+
+    $("#boxfenye").click(function(){
+        alert(thisPage);
+        $.ajax({
+            type: "GET",
+            url: path0 + "&temp=" + temp + "&page=" + thisPage,
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
@@ -139,7 +204,6 @@
         });
     });
 
-
     function subString(data) {
         var divstr="";
         for (var i=0; i<data.length;i++ ) {
@@ -149,7 +213,7 @@
             }else{
                 divstr += "<div class=\"indexTable_son\">\n";
             }
-            divstr +="<a href=\"http://localhost/lt_content.html\">\n" +
+            divstr +="<a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
                 "            <div class=\"indexTable_sonHead\">\n" +
                 "                <div class=\"inHeadPic\">\n" +
                 "                    <img src=\""+ a.userHeadPortraitUrl +"\" alt=\"\"/>\n" +
@@ -159,7 +223,7 @@
                 "                <span>置顶</span>\n" +
                 "            </div>\n" +
                 "        </a>\n" +
-                "        <a href=\"http://localhost/lt_content.html\">\n" +
+                "        <a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
                 "            <div class=\"indexTableCon\">\n" +
                 "                <h1>"+ a.forumSubject +"</h1>\n" +
                 "                <p>"+ a.forumContent +"</p>\n" +
@@ -167,18 +231,18 @@
                 "        </a>\n" +
                 "<div class='spotlightWrapper'>\n" +
                     "<ul>\n" +
-                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/1.jpg' /></a></li>\n" +
-                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/2.jpg' /></a></li>\n" +
-                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/3.png' /></a></li>\n" +
-                        "<li><a href=\"http://www.17sucai.com/\"><img src='http://localhost:80/images/4.jpg' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/1.jpg' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/2.jpg' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/3.png' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/4.jpg' /></a></li>\n" +
                     "</ul>\n" +
                 "</div>\n"+
 
                 "<ul class=\"indexTable_conFoot clearfix\">\n" +
-                "<li>收藏<span>"+ a.forumCollectCount +"</span></li>\n" +
-                "<li>评论<span>"+ a.forumEvaluateCount +"</span></li>\n" +
-                "<li>查看<span>"+ a.forumSelectCount +"</span></li>\n" +
-                "<li>10分钟前</li>\n" +
+                "<li><a href=\"\">收藏</a><span>"+ a.forumCollectCount +"</span></li>\n" +
+                "<li><a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">评论</a><span>"+ a.forumEvaluateCount +"</span></li>\n" +
+                "<li><a href=\"\">查看</a><span>"+ a.forumSelectCount +"</span></li>\n" +
+                "<li>"+ a.chaTime +"前</li>\n" +
                 "</ul>\n" +
                 "</div>"
         }

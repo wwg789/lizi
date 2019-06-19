@@ -26,7 +26,7 @@ public class ForumInfoModel extends CommonModel implements Serializable {
     private String id;
 
     //用户ID
-    private Long userId;
+    private Integer userId;
 
     //用户昵称
     private String nickName;
@@ -57,4 +57,12 @@ public class ForumInfoModel extends CommonModel implements Serializable {
 
     //修改时间
     private Date updateTime;
+
+    //查询分类 0最新 1热门 2精华
+    private Integer temp;
+
+    //距离创建时间的时间差
+    private String chaTime;
+
+
 }

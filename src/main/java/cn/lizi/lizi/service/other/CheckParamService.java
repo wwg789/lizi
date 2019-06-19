@@ -1,5 +1,7 @@
 package cn.lizi.lizi.service.other;
 
+import cn.lizi.lizi.model.EvalReply.EvalModel;
+import cn.lizi.lizi.model.EvalReply.ReplyModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -24,4 +26,45 @@ public class CheckParamService {
         return null;
     }
 
+
+
+    public String checkQueryEvalDetailParam(EvalModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(null == model.getForumInfoId()){
+            return "主题ID空";
+        }
+        return null;
+    }
+
+    public String checkAddEvalDetail(EvalModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(null == model.getForumInfoId()){
+            return "主题ID空";
+        }
+        if(StringUtils.isEmpty(model.getEvalContent())){
+            return "评价内容空";
+        }
+
+        return null;
+
+    }
+
+    public String checkAddReplyDetail(ReplyModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(null == model.getForumEvalId()){
+            return "评价ID空";
+        }
+        if(StringUtils.isEmpty(model.getReplyContent())){
+            return "回复内容空";
+        }
+
+        return null;
+
+    }
 }

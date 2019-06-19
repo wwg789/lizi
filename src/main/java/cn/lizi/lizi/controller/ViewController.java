@@ -24,4 +24,10 @@ public class ViewController {
         return "write";
     }
 
+    @RequestMapping("/lt_content")
+    public String lt_content(@Param("forumId") String forumId, HttpServletResponse response) {
+        response.addCookie(new Cookie("forumId",forumId));
+        return "lt_content";
+    }
+
 }

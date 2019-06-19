@@ -7,8 +7,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/global.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
+    <script src="http://localhost:80/js/utils.js"></script>
 </head>
 <body style="background-color: #f4f4f4;">
 <div class="writeHead">
@@ -18,18 +20,14 @@
     </div>
 </div>
 <div style="width: 100%;height: 46px"></div>
-<div class="lt_contentTop">
-    <h1 class="lt_contentTop_Title">广州4月19号举行限外听证会！2018年是否会实行车牌限行？</h1>
-    <div class="lt_contentTop_Msg">
-        <a href="">
-            <div class="ltConPic"><img src="images/cs.png" alt=""/></div>
-            <p>坦诚相待</p>
-        </a>
-        <button class="ltCon_collect">收藏</button>
-    </div>
-    <div class="ltCon_detail">
-        <p>拍王深耕广州竞价3年，最近听到很多广州即将限行的消息。作为一个一线城市，广州是唯一一个没有限行的城市。所以拍王预测，2018年，广州限行的正式方案应该会出炉。（网络上流传的限行时段以及区域图）</p>
-    </div>
+<div class="lt_contentTop"></div>
+<div class='spotlightWrapper' style="padding: 0px 0px 0px 4%;">
+    <ul>
+        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/1.jpg' /></a></li>
+        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/2.jpg' /></a></li>
+        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/3.png' /></a></li>
+        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/4.jpg' /></a></li>
+    </ul>
 </div>
 <div class="ltCon_pend">
     <p class="ltCon_pendFont center">评论区</p>
@@ -81,3 +79,62 @@
 </html>
 <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+
+<script>
+    //获取cookie
+    var forumId = getCookie("forumId");
+    var path = "http://localhost:80";
+    var path0 = path + "/forum/queryForumDetail?id="+forumId;
+
+    //获取详情
+    $.ajax({
+        type: "GET",
+        url: path0,
+        dataType: "json",
+        success: function (data) {
+            if (data.code == 0) {
+                var contentStr = subString(data.data);
+                $('.lt_contentTop').html(contentStr);
+            } else {
+                alert("网络错误：" + data.msg);
+            }
+        },
+    });
+
+
+    $("#boxfenye").click(function(){
+        alert(thisPage);
+        $.ajax({
+            type: "GET",
+            url: path0 + "&temp=" + temp + "&page=" + thisPage,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+    function subString(data) {
+        var contentStr = "<h1 class=\"lt_contentTop_Title\">"+ data.forumSubject +"</h1>\n" +
+            "<div class=\"lt_contentTop_Msg\">\n" +
+            "<a href=\"\">\n" +
+            "<div class=\"ltConPic\"><img src=\""+ data.userHeadPortraitUrl +"\" alt=\"\"/></div>\n" +
+            "<p>"+ data.nickName +"</p>\n" +
+            "</a>\n" +
+            "<button class=\"ltCon_collect\">收藏</button>\n" +
+            "</div>\n" +
+            "<div class=\"ltCon_detail\">\n" +
+            "<p>"+ data.forumContent +"</p>\n" +
+            "</div>";
+        return contentStr;
+    }
+
+</script>
+
+
+
+
