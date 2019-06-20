@@ -123,7 +123,7 @@
         <include refid="searchInfoSql"/>
         FROM xt_forum_info
         <include refid="whereinfoSql"/>
-        ORDER BY createTime
+        ORDER BY createTime DESC
     </select>
 
     <!-- 查询详情 -->
@@ -241,7 +241,20 @@
         FROM xt_user_collect_detail xucd
         LEFT JOIN xt_forum_info xfi ON xucd.forum_id = xfi.id
         WHERE
-        xfi.user_id = #{UserId}
+        xfi.user_id = #{userId}
+    </select>
+
+
+    <!--查询用户是否收藏此贴-->
+    <select id="queryUserIsCollect" resultType="cn.lizi.lizi.model.forum.UserCollectModel">
+        SELECT
+        id AS id
+        FROM xt_user_collect_detail
+        WHERE
+        user_id = #{userId}
+        AND
+        forum_id = #{forumId}
+        LIMIT 1
     </select>
 
 </mapper>

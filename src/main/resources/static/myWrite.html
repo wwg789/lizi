@@ -2,83 +2,143 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>首页</title>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/paging.css">
+    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
+    <script src="http://localhost:80/js/paging.js"></script>
+    <script src="http://localhost:80/js/utils.js"></script>
+    <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
+
+
 </head>
 <body style="background-color: #f4f4f4;">
+<div style=" position: fixed;background-color: #FFF;z-index:19;bottom: 51px;width: 100%;height: 40px;"></div>
+
 <div class="writeHead">
     <div class="writeHead_top center">
-        <a href=""><img src="images/backIcon.png" alt="" class="backBtn"/></a>
         <h1>我的发帖</h1>
     </div>
 </div>
 <div style="width: 100%;height: 46px"></div>
-<div class="indexTable_son current">
-    <a href="">
-        <div class="indexTable_sonHead">
-            <div class="inHeadPic">
-                <img src="images/cs.png" alt=""/>
-            </div>
-            <p>坦诚相待</p>
-            <i>8分钟前</i>
-        </div>
-    </a>
-    <a href="">
-        <div class="indexTableCon">
-            <h1>广州4月19号举行限外听证会！2018年是否会实行车牌限行？</h1>
-        </div>
-    </a>
-    <ul class="myWriteBtn">
-        <li>删除</li>
-        <li>修改</li>
-    </ul>
+<div class="indexTable_con" style="display: block"></div>
+
+<div style="z-index:9999">
+<div style="width:100%;background-color: #fff;position: absolute;left: 4%;bottom: 44px;z-index:20;" id="boxfenye">
+    <div class="box" id="box"></div>
 </div>
-<div class="indexTable_son current">
-    <a href="">
-        <div class="indexTable_sonHead">
-            <div class="inHeadPic">
-                <img src="images/cs.png" alt=""/>
-            </div>
-            <p>坦诚相待</p>
-            <i>8分钟前</i>
-        </div>
-    </a>
-    <a href="">
-        <div class="indexTableCon">
-            <h1>广州4月19号举行限外听证会！2018年是否会实行车牌限行？</h1>
-        </div>
-    </a>
-    <ul class="myWriteBtn">
-        <li>删除</li>
-        <li>修改</li>
-    </ul>
 </div>
-<div class="indexTable_son current">
-    <a href="">
-        <div class="indexTable_sonHead">
-            <div class="inHeadPic">
-                <img src="images/cs.png" alt=""/>
-            </div>
-            <p>坦诚相待</p>
-            <i>8分钟前</i>
+<div class="footBar">
+    <a href="http://localhost">
+        <div class="footBar_pic">
+            <img src="http://localhost:80/images/footIcon1.png" alt=""/>
         </div>
+        <p class="on">首页</p>
     </a>
-    <a href="">
-        <div class="indexTableCon">
-            <h1>广州4月19号举行限外听证会！2018年是否会实行车牌限行？</h1>
+    <a id="wode" href="http://localhost/me.html">
+        <div class="footBar_pic">
+            <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
         </div>
+        <p>我的</p>
     </a>
-    <ul class="myWriteBtn">
-        <li>删除</li>
-        <li>修改</li>
-    </ul>
 </div>
 </body>
 </html>
-<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+
+<script>
+    //定义重新获取到的分页值
+    var thisPage = 1;
+    var temp = 0;
+    var path = "http://localhost:80";
+    var path0 = path + "/forum/queryForumList";
+    $('#wode').attr("href", path + "/view/me");
+    //加载列表
+    $.ajax({
+        type: "GET",
+        url: path0+"?page=" + thisPage,
+        dataType: "json",
+        success: function (data) {
+            if (data.code == 0) {
+                var divstr = subString(data.data);
+                $('.indexTable_con').html(divstr);
+                setPageInfo(data);
+            } else {
+                alert("创建失败：" + data.msg);
+            }
+        },
+    });
+
+    //翻页
+    $("#boxfenye").click(function(){
+        $.ajax({
+            type: "GET",
+            url: path0 + "?page=" + thisPage,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    var divstr = subString(data.data);
+                    $('.indexTable_con').html(divstr);
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+
+    function subString(data) {
+        var divstr="";
+        for (var i=0; i<data.length;i++ ) {
+            var a = data[i];
+            if(i==data.length-1){
+                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 300px 4%;\">\n";
+            }else{
+                divstr += "<div class=\"indexTable_son\">\n";
+            }
+            divstr +="<a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
+                "            <div class=\"indexTable_sonHead\">\n" +
+                "                <div class=\"inHeadPic\">\n" +
+                "                    <img src=\""+ a.userHeadPortraitUrl +"\" alt=\"\"/>\n" +
+                "                </div>\n" +
+                "                <p>"+ a.nickName +"</p>\n" +
+                "                <span>精华</span>\n" +
+                "                <span>置顶</span>\n" +
+                "            </div>\n" +
+                "        </a>\n" +
+                "        <a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
+                "            <div class=\"indexTableCon\">\n" +
+                "                <h1>"+ a.forumSubject +"</h1>\n" +
+                "                <p>"+ a.forumContent +"</p>\n" +
+                "            </div>\n" +
+                "        </a>\n" +
+                "<div class='spotlightWrapper'>\n" +
+                    "<ul>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/1.jpg' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/2.jpg' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/3.png' /></a></li>\n" +
+                        "<li><a href=\"\"><img src='http://localhost:80/images/4.jpg' /></a></li>\n" +
+                    "</ul>\n" +
+                "</div>\n"+
+
+                "<ul class=\"indexTable_conFoot clearfix\">\n" +
+                "<li><a href=\"\">收藏</a><span>"+ a.forumCollectCount +"</span></li>\n" +
+                "<li><a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">评论</a><span>"+ a.forumEvaluateCount +"</span></li>\n" +
+                "<li><a href=\"\">查看</a><span>"+ a.forumSelectCount +"</span></li>\n" +
+                "<li>"+ a.chaTime +"前</li>\n" +
+                "</ul>\n" +
+                "</div>"
+        }
+        return divstr;
+    }
+
+
+</script>
+
+

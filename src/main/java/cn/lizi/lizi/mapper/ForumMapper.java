@@ -11,22 +11,14 @@ public interface ForumMapper {
     //主题列表查询
     List<ForumInfoModel> queryForumList(ForumInfoModel model);
 
-    //
-    ForumInfoModel queryForumDetail(ForumInfoModel model);
-
-    //
-    int updateForum(ForumInfoModel model);
-
-    //
-    int addForum(ForumInfoModel model);
-
-    List<ForumParentDetailModel> queryForumParentList();
-
     List<ForumInfoModel> queryForumListZuiXin(ForumInfoModel model);
 
     List<ForumInfoModel> queryForumListReMen(ForumInfoModel model);
 
     List<ForumInfoModel> queryForumListJingHua(ForumInfoModel model);
+
+    //获取父级分类列表
+    List<ForumParentDetailModel> queryForumParentList();
 
     //修改统计次数
     int updateForumSelectCount();
@@ -38,4 +30,16 @@ public interface ForumMapper {
 
     //查询用户收藏列表
     List<ForumInfoModel> queryUserCollectList(ForumInfoModel model);
+
+    //查询发帖详情
+    ForumInfoModel queryForumDetail(ForumInfoModel model);
+
+    //修改发帖详情
+    int updateForum(ForumInfoModel model);
+
+    //发帖
+    int addForum(ForumInfoModel model);
+
+    //查询是否收藏此帖
+    UserCollectModel queryUserIsCollect(UserCollectModel model);
 }

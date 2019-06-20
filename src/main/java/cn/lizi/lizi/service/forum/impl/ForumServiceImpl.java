@@ -47,8 +47,13 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         }
 
         List<ForumInfoModel> forumList = new ArrayList<>();
+
+        if(model.getTemp() == null){
+            setQueryPage(model);
+            forumList = forumMapper.queryForumList(model);
+        }
         //最新
-        if(model.getTemp() == 0){
+        else if(model.getTemp() == 0){
             setQueryPage(model);
             forumList = forumMapper.queryForumListZuiXin(model);
         }
@@ -62,6 +67,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             setQueryPage(model);
             forumList = forumMapper.queryForumListJingHua(model);
         }
+
         forumList.forEach(k->{
             try {
                 k.setChaTime(DateUtils4Java8.getTimeDiff(new Date(), k.getCreateTime()));
@@ -193,7 +199,6 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         return ResultModel.getSuccess("成功",null);
     }
 
-
     /**
      * 获取用户收藏列表
      * @param model
@@ -207,6 +212,8 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         userModel.setGender(1);
         userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
         userModel.setNickName("栗哥的大树");
+
+        model.setUserId(1);
 
         //查询用户收藏
         List<ForumInfoModel> forumInfoModels = forumMapper.queryUserCollectList(model);

@@ -112,9 +112,9 @@
     overflow: hidden;
 }
 .indexTableCon h1{
-    font-size: 14px;
     font-weight: bold;
-    color: #333;
+    color: #727481;
+    font-size: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
     word-wrap: break-word;
@@ -122,8 +122,8 @@
 .indexTableCon p{
     width: 100%;
     height: 60px;
-    color: #4c4c4c;
-    font-size: 10px;
+    color: #727481;
+    font-size: 20px;
     overflow: hidden;
     word-wrap: break-word;
 }
@@ -202,6 +202,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index:20;
 }
 .writeHead_top{
     height: 46px;
