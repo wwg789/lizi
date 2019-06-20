@@ -3,6 +3,7 @@ package cn.lizi.lizi.service.other;
 import cn.lizi.lizi.model.EvalReply.EvalModel;
 import cn.lizi.lizi.model.EvalReply.ReplyModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
+import cn.lizi.lizi.model.forum.UserCollectModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -78,5 +79,15 @@ public class CheckParamService {
 
         return null;
 
+    }
+
+    public String checkAddCollect(UserCollectModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(null == model.getForumId()){
+            return "发帖ID空";
+        }
+        return null;
     }
 }

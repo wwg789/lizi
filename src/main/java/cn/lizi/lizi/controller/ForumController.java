@@ -3,6 +3,7 @@ package cn.lizi.lizi.controller;
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
+import cn.lizi.lizi.model.forum.UserCollectModel;
 import cn.lizi.lizi.service.forum.ForumService;
 import com.sun.deploy.net.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -112,6 +113,28 @@ public class ForumController {
     @RequestMapping("/queryForumParentList")
     public ResultModel queryForumParentList(ForumParentDetailModel model){
         return forumService.queryForumParentList(model);
+    }
+
+    /**
+     * 用户收藏
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addCollect")
+    public ResultModel addCollect(UserCollectModel model){
+        return forumService.addCollect(model);
+    }
+
+    /**
+     * 查询用户收藏的帖子
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/queryUserCollectList")
+    public ResultModel queryUserCollectList(ForumInfoModel model){
+        return forumService.queryUserCollectList(model);
     }
 
 

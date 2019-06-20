@@ -196,6 +196,52 @@
         id = #{id}
     </update>
 
+    <!--用户收藏字段-->
+    <sql id="collectInfoSql">
+        id AS id,
+        user_id AS userId,
+        forum_id AS forumId,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
 
+    <!--添加用户收藏-->
+    <insert id="addCollect" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.forum.UserCollectModel" >
+        INSERT INTO xt_user_collect_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> user_id,</if>
+            <if test="forumId != null"> forum_id,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> #{userId},</if>
+            <if test="forumId != null"> #{forumId},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!--查询用户收藏列表-->
+    <select id="queryUserCollectList" resultType="cn.lizi.lizi.model.forum.ForumInfoModel">
+        SELECT
+        xfi.id AS id,
+        xfi.user_id AS userId,
+        xfi.nick_name AS nickName,
+        xfi.user_head_portrait_url AS userHeadPortraitUrl,
+        xfi.forum_parent_id AS forunParentId,
+        xfi.forum_subject AS forumSubject,
+        xfi.forum_content AS forumContent,
+        xfi.forum_collect_count AS forumCollectCount,
+        xfi.forum_evaluate_count AS forumEvaluateCount,
+        xfi.forum_select_count AS forumSelectCount,
+        xfi.create_time AS createTime,
+        xfi.update_time AS updateTime
+
+        FROM xt_user_collect_detail xucd
+        LEFT JOIN xt_forum_info xfi ON xucd.forum_id = xfi.id
+        WHERE
+        xfi.user_id = #{UserId}
+    </select>
 
 </mapper>

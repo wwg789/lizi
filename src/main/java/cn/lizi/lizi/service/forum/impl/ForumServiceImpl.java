@@ -4,6 +4,7 @@ import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.mapper.ForumMapper;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
+import cn.lizi.lizi.model.forum.UserCollectModel;
 import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.forum.ForumService;
@@ -161,6 +162,57 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
     @Override
     public ResultModel queryForumListByJingHua(ForumInfoModel model) {
         return null;
+    }
+
+    /**
+     * 添加收藏
+     * @param model
+     * @return
+     */
+    @Override
+    public ResultModel addCollect(UserCollectModel model) {
+        //参数校验
+        String resout = checkParamService.checkAddCollect(model);
+        if(StringUtils.isNotEmpty(resout)){
+            return ResultModel.getError(resout);
+        }
+
+        //TODO  此部分用户信息从token中获取
+        UserModel userModel = new UserModel();
+        userModel.setId(1);
+        userModel.setGender(1);
+        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
+        userModel.setNickName("栗哥的大树");
+
+        int resoutData = forumMapper.addCollect(model);
+        if(resoutData == 0){
+            return ResultModel.getError("收藏失败");
+        }
+        //修改发帖收藏数量
+        forumMapper.updateCollectCount();
+        return ResultModel.getSuccess("成功",null);
+    }
+
+
+    /**
+     * 获取用户收藏列表
+     * @param model
+     * @return
+     */
+    @Override
+    public ResultModel queryUserCollectList(ForumInfoModel model) {
+        //TODO  此部分用户信息从token中获取
+        UserModel userModel = new UserModel();
+        userModel.setId(1);
+        userModel.setGender(1);
+        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
+        userModel.setNickName("栗哥的大树");
+
+        //查询用户收藏
+        List<ForumInfoModel> forumInfoModels = forumMapper.queryUserCollectList(model);
+
+
+        return ResultModel.getSuccess("成功",forumInfoModels);
     }
 
 }
