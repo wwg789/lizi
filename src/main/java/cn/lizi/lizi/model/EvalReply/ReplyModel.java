@@ -34,4 +34,7 @@ public class ReplyModel {
     private Date createTime;
     //修改时间
     private Date updateTime;
+
+    //距离创建时间的时间差
+    private String chaTime;
 }

@@ -10,9 +10,16 @@
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
+    <link rel="stylesheet" href="http://localhost:80/css/common.css">
     <script src="http://localhost:80/js/getCookie.js"></script>
+
+
+
+
 </head>
 <body style="background-color: #f4f4f4;">
+<!--回复框-->
+<div id="huifu01"><div id="huifu02"><textarea id="input01"></textarea><button id="button01">提      交</button></div></div>
 <div class="writeHead">
     <div class="writeHead_top center">
         <a href=""><img src="img/backIcon.png" alt="" class="backBtn"/></a>
@@ -49,6 +56,7 @@
     var forumId = getCookie("forumId");
     var path = "http://localhost:80";
     var path0 = path + "/forum/queryForumDetail?id="+forumId;
+    var evalId;
     //获取详情
     $.ajax({
         type: "GET",
@@ -91,25 +99,35 @@
             success: function (data) {
                 if (data.code == 0) {
                     alert("成功");
-                    $("#submitEval").val("");
                     getEvalContent();
                 } else {
                     alert("网络错误：" + data.msg);
                 }
             },
         });
+        $("#submitEval").val("");
     });
 
-    //回复
-    $("#boxfenye").click(function(){
+
+    //点击回复按钮显示回复框
+    $(".ltCon_pend").delegate("a","click",function(){
+        //$("#huifu01").style.display="none";
+        //$("#huifu01").css("display", "");
+        $("#huifu01").css("display","block");
+        evalId = $(this).attr("id");
+    });
+
+
+    //提交回复
+    $("#button01").click(function(){
         $.ajax({
             type: "GET",
-            url: path + "/evalReply/addEvalDetail?forumInfoId="+forumId,
+            url: path + "/evalReply/addReplyDetail?forumEvalId=" + evalId + "&replyContent=" + $("#input01").val(),
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
-                    var divstr = subStringEval(data.data);
-                    $('.ltCon_pendCen').html(divstr);
+                    $("#huifu01").css("display","none");
+                    getEvalContent();
                 } else {
                     alert("网络错误：" + data.msg);
                 }
@@ -124,7 +142,7 @@
         for (var i=0; i<eval.length; i++){
             //回复内容
             var replyStr = "";
-            var reply = eval.replyList;
+            var reply = eval[i].replyList;
             if(reply != null){
                 if(reply != null && reply.length > 0){
                     replyStr = subStringReply(reply,eval[i]);
@@ -134,17 +152,17 @@
             evalStr +=
                 "<div class=\"ltCon_pendCen center\">\n" +
                     "<div class=\"ltCon_pendCen_left\">\n" +
-                    "<a href=\"\"><img src=\""+ eval[i].userHeadUrl +"\" alt=\"\"/></a>\n" +
-                "</div>\n" +
-                "<div class=\"ltCon_pendCen_right\">\n" +
-                    "<a href=\"\"><h6>"+ eval[i].userNickName +"</h6></a>\n" +
-                    "<span>"+ eval[i].chaTime +"</span>\n" +
-                    "<div class=\"clear\"></div>\n" +
-                    "<p class=\"ltReplay\">" + eval[i].evalContent + "</p>\n" +
-                    "<div class=\"ltDo\"><span>回复</span></div>\n" +
+                         "<a href=\"\"><img src=\""+ eval[i].userHeadUrl +"\" alt=\"\"/></a>\n" +
                     "</div>\n" +
-                replyStr+
-                "</div>";
+                    "<div class=\"ltCon_pendCen_right\">\n" +
+                        "<a href=\"\"><h6>"+ eval[i].userNickName +"</h6></a>\n" +
+                        "<span>"+ eval[i].chaTime +"</span>\n" +
+                        "<div class=\"clear\"></div>\n" +
+                        "<p class=\"ltReplay\">" + eval[i].evalContent + "</p>\n" +
+                        "<div class=\"ltDo\"><a href='javascript:;' class='reployHuifu' id='"+ eval[i].id +"'>回复</a></div>\n" +
+                    "</div>\n" +
+                "</div>" +
+                replyStr;
         }
         //回复详情
         function subStringReply(reply,eval) {
@@ -152,14 +170,13 @@
                 replyStr +=
                     "<div class=\"ltCon_pendCen center\">\n" +
                         "<div class=\"ltCon_pendCen_left\">\n" +
-                            "<a href=\"\"><img src=\""+ eval[i].userHeadUrl +"\" alt=\"\"/></a>\n" +
+                            "<a href=\"\"><img src=\""+ reply[i].userHeadUrl +"\" alt=\"\"/></a>\n" +
                         "</div>\n" +
                         "<div class=\"ltCon_pendCen_right\">\n" +
                             "<a href=\"\"><h6>"+ reply[i].userNickName +"</h6></a>\n" +
                             "<span>"+ reply[i].chaTime +"</span>\n" +
                             "<div class=\"clear\"></div>\n" +
-                            "<p class=\"ltReplay\">回复 <a href=\"\">"+ eval.userNickName +"</a>"+ reply[i].replyContent +"</p>\n" +
-                            "<div class=\"ltDo\"><span>回复</span></div>\n" +
+                            "<p class=\"ltReplay\">回复 <a href=\"\"> "+ eval.userNickName +" </a>"+ reply[i].replyContent +"</p>\n" +
                         "</div>\n" +
                     "</div>";
             }

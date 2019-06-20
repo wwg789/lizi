@@ -122,9 +122,19 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
      */
     public List<ReplyModel> queryReplyDetail(Long evalId) {
         if(null == evalId)return null;
-        return evalReplyMapper.queryReplyList(ReplyModel.builder()
+        List<ReplyModel> replyModels = evalReplyMapper.queryReplyList(ReplyModel.builder()
                 .forumEvalId(evalId)
                 .build());
+        if(null != replyModels && replyModels.size() > 0){
+            replyModels.forEach(k->{
+                try {
+                    k.setChaTime(DateUtils4Java8.getTimeDiff(new Date(), k.getCreateTime()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        return replyModels;
     }
 
 

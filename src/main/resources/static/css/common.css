@@ -1,0 +1,47 @@
+#huifu01{
+    position: fixed;
+    left: 600px;
+    top: 400px;
+    width: 900px;
+    height: 200px;
+    background-color: #cfe7e6;
+    z-index:20;
+    border-radius: 10px;
+    /*display: none;*/
+    display: none;
+}
+
+#huifu02{
+    position: fixed;
+    left: 610px;
+    top: 410px;
+    width: 880px;
+    height: 180px;
+    background-color: #eef5f4;
+    z-index:21;
+    border-radius: 10px;
+}
+
+#input01{
+    width: 876px;
+    height: 140px;
+    background-color: #eef5f4;
+    z-index:22;
+    border-radius:10px 10px 0px 0px;
+    border-style:solid;
+    color: #7db5db;
+    font-size: 20px;
+    resize:none
+}
+
+#button01{
+    border-radius:0px 0px 10px 10px;
+    width: 880px;
+    height: 38px;
+    background-color: #3385FF;
+    z-index:22;
+    border-style:solid;
+    font-size: 20px;
+    color: #ffffff;
+}
+
