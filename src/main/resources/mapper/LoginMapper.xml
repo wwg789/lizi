@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lizi.lizi.mapper.LoginMapper" >
+
+    <sql id="searchInfoSql">
+        id AS id,
+        nick_name AS nickName,
+        gender AS gender,
+        head_portrait_url AS headPortraitUrl,
+        create_time AS createTime,
+        update_time AS updateTime
+    </sql>
+
+    <insert id="addUser" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.other.UserModel" >
+        INSERT INTO xt_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null"> id,</if>
+            <if test="nickName != null"> nick_name,</if>
+            <if test="gender != null"> gender,</if>
+            <if test="headPortraitUrl != null"> head_portrait_url,</if>
+            <if test="createTime != null"> create_time,</if>
+            <if test="updateTime != null"> update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null"> #{id},</if>
+            <if test="nickName != null"> #{nickName},</if>
+            <if test="gender != null"> #{gender},</if>
+            <if test="headPortraitUrl != null"> #{headPortraitUrl},</if>
+            <if test="createTime != null"> #{createTime},</if>
+            <if test="updateTime != null"> #{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updataUserInfo">
+        UPDATE
+        xt_user
+        <set>
+            <trim prefix="" suffixOverrides=",">
+                <if test="nickName != null">nick_name=#{nickName}</if>
+                <if test="gender != null">gender=#{gender}</if>
+                <if test="headPortraitUrl != null">head_portrait_url=#{headPortraitUrl}</if>
+                <if test="createTime != null">create_time=#{createTime}</if>
+                <if test="updateTime != null">update_time=#{updateTime}</if>
+            </trim>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getUserInfo" resultType="cn.lizi.lizi.model.other.UserModel">
+        SELECT
+        <include refid="searchInfoSql"/>
+        FROM xt_user
+        WHERE 1
+        <trim prefix="" suffixOverrides="">
+            <if test="id != null"> AND id = #{id}</if>
+            <if test="nickName != null"> AND nick_name = #{nickName}</if>
+            <if test="gender != null"> AND gender = #{gender}</if>
+            <if test="headPortraitUrl != null"> AND head_portrait_url = #{headPortraitUrl}</if>
+            <if test="createTime != null"> AND create_time = #{createTime}</if>
+            <if test="updateTime != null"> AND update_time = #{updateTime}</if>
+        </trim>
+        LIMIT 1
+    </select>
+
+</mapper>

@@ -30,4 +30,22 @@ public class ViewController {
         return "lt_content";
     }
 
+    @RequestMapping("/me")
+    public String lt_content(HttpServletResponse response) {
+        //response.addCookie(new Cookie("forumId",forumId));
+        return "me";
+    }
+
+    @RequestMapping("/myWrite")
+    public String myWrite(HttpServletResponse response) {
+        //response.addCookie(new Cookie("forumId",forumId));
+        return "myWrite";
+    }
+
+    @RequestMapping("/myCelect")
+    public String myCelect(HttpServletResponse response) {
+        //response.addCookie(new Cookie("forumId",forumId));
+        return "myCelect";
+    }
+
 }

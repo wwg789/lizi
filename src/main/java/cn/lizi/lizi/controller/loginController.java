@@ -1,10 +1,13 @@
 package cn.lizi.lizi.controller;
 
+import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.dingshi.Test01Model;
+import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.model.putonglei.user;
 import cn.lizi.lizi.service.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,11 +48,21 @@ public class loginController{
      * @param model
      * @return
      */
-    @RequestMapping("/getUserInfo")
-    public String getUserInfo(Object model){
+    @RequestMapping("/UserInfo")
+    public String userInfo(Object model){
 
         return "null";
     }
 
+    /**
+     * 取用户信息
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getUserInfo")
+    public ResultModel getUserInfo(UserModel model){
+        return loginService.getUserInfo(model);
+    }
 
 }

@@ -1,16 +1,22 @@
 package cn.lizi.lizi.service.login.impl;
 
+import cn.lizi.lizi.common.ResultModel;
+import cn.lizi.lizi.mapper.LoginMapper;
 import cn.lizi.lizi.model.dingshi.Test01Model;
+import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.model.putonglei.user;
 import cn.lizi.lizi.service.login.LoginService;
 import cn.lizi.lizi.utils.KieSessionUtils1;
 import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    @Autowired
+    LoginMapper loginMapper;
 
     @Override
     public String login(user model) {
@@ -52,6 +58,21 @@ public class LoginServiceImpl implements LoginService {
         allRules.fireAllRules();
         allRules.dispose();
         return "123";
+    }
+
+    /**
+     * 获取用户信息
+     * @param model
+     * @return
+     */
+    @Override
+    public ResultModel getUserInfo(UserModel model) {
+        //tocken中获取用户id
+        model.setId(1);
+
+        UserModel userInfo= loginMapper.getUserInfo(model);
+
+        return ResultModel.getSuccess("成功",userInfo);
     }
 
 }

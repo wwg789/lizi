@@ -37,4 +37,6 @@ public class UserModel {
 
     //修改时间
     private Date updateTime;
+
+    private String _token;
 }

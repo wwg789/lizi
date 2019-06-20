@@ -59,7 +59,7 @@
         </div>
         <p>发帖</p>
     </a>
-    <a href="http://localhost/me.html">
+    <a id="wode" href="http://localhost/me.html">
         <div class="footBar_pic">
             <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
         </div>
@@ -78,6 +78,7 @@
     var path = "http://localhost:80";
     var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
     $('#fatie').attr("href", path + "/view/write?parentId="+parentId);
+    $('#wode').attr("href", path + "/view/me");
     //加载列表
     $.ajax({
         type: "GET",

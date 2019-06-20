@@ -136,6 +136,22 @@
         });
     });
 
+    //点击收藏
+    $(".lt_contentTop").delegate("button","click",function(){
+        $.ajax({
+            type: "GET",
+            url: path + "/forum/addCollect?forumId=" +forumId,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    alert("收藏成功 请在我的收藏查看");
+                } else {
+                    alert("网络错误：" + data.msg);
+                }
+            },
+        });
+    });
+
     //评价详情
     function subStringEval(eval) {
         //评价内容
