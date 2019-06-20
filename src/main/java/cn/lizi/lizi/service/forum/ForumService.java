@@ -4,8 +4,10 @@ import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 import cn.lizi.lizi.model.forum.UserCollectModel;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 public interface ForumService{
 
@@ -28,4 +30,6 @@ public interface ForumService{
     ResultModel addCollect(UserCollectModel model);
 
     ResultModel queryUserCollectList(ForumInfoModel model);
+
+    ResultModel upload(MultipartFile file);
 }

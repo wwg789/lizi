@@ -23,5 +23,11 @@ public class CommonServiceImpl implements CommonService {
             PageHelper.startPage(model.getPage(), model.getPageSize());
     }
 
+    //计算文件路径
+    public String getFileSavePath(String timeStr) {
+        String Path = "picture-" + timeStr.substring(timeStr.length()-1,timeStr.length());
+        return  Path;
+    }
+
 
 }

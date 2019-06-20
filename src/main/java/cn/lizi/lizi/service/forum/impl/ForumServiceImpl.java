@@ -16,8 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +33,8 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
     ForumMapper forumMapper;
     @Autowired
     CheckParamService checkParamService;
+    @Autowired
+    HttpServletRequest request;
 
     /**
      * 获取发帖列表
@@ -221,5 +226,39 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
 
         return ResultModel.getSuccess("成功",forumInfoModels);
     }
+
+    /**
+     * 发帖图片上传
+     * @param file
+     * @return
+     */
+    @Override
+    public ResultModel upload(MultipartFile file) {
+        if(null == file){
+            return ResultModel.getError("文件空");
+        }
+        // 获取文件名
+        String fileName = file.getOriginalFilename();
+        // 获取文件后缀
+        String prefix = fileName.substring(fileName.lastIndexOf("."));
+        //时间戳
+        String timeStr = System.currentTimeMillis()+"";
+        //新的文件名称
+        String resoutPath = "PIC-"+ timeStr +prefix;
+
+        File pathfile = new File("D:/picture/"+ getFileSavePath(timeStr)+"/");
+        if(!pathfile.exists()){
+            pathfile.mkdirs();
+        }
+        try {
+            file.transferTo(new File(pathfile+"/"+resoutPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResultModel.getSuccess(resoutPath,null);
+    }
+
+
 
 }
