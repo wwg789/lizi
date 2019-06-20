@@ -2,6 +2,7 @@ package cn.lizi.lizi.service.evalReply.impl;
 
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.mapper.EvalReplyMapper;
+import cn.lizi.lizi.mapper.ForumMapper;
 import cn.lizi.lizi.model.EvalReply.EvalModel;
 import cn.lizi.lizi.model.EvalReply.ReplyModel;
 import cn.lizi.lizi.model.other.UserModel;
@@ -23,6 +24,9 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
     EvalReplyMapper evalReplyMapper;
     @Autowired
     CheckParamService checkParamService;
+    @Autowired
+    ForumMapper forumMapper;
+
 
     /**
      * 新增 评价
@@ -33,7 +37,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
     public ResultModel addEvalDetail(EvalModel model) {
         String resout = checkParamService.checkAddEvalDetail(model);
         if(StringUtils.isNotEmpty(resout)){
-            ResultModel.getError(resout);
+            return ResultModel.getError(resout);
         }
         //TODO 获取用户信息  这里先创建一个
         UserModel user = new UserModel();
@@ -48,6 +52,9 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
         model.setCreateTime(new Date());
 
         int resoutData = evalReplyMapper.addEvalDetail(model);
+
+        //修改评价次数统计
+        forumMapper.updateForumEvalCount();
 
         if(resoutData < 1){
            return  ResultModel.getError("评价失败  网络错误");
@@ -65,7 +72,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
 
         String resout = checkParamService.checkAddReplyDetail(model);
         if(StringUtils.isNotEmpty(resout)){
-            ResultModel.getError(resout);
+            return ResultModel.getError(resout);
         }
 
         //TODO 获取用户信息  这里先创建一个
@@ -97,7 +104,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
     public ResultModel queryEvalList(EvalModel model) {
         String resout = checkParamService.checkQueryEvalDetailParam(model);
         if(StringUtils.isNotEmpty(resout)){
-            ResultModel.getError(resout);
+            return ResultModel.getError(resout);
         }
 
         setQueryPage(model);

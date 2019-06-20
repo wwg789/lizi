@@ -85,6 +85,9 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         }
        log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
+        //修改帖子访问次数
+
+        forumMapper.updateForumSelectCount();
         return ResultModel.getSuccess("成功", forumInfo);
     }
 

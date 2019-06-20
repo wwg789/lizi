@@ -26,4 +26,9 @@ public interface ForumMapper {
     List<ForumInfoModel> queryForumListReMen(ForumInfoModel model);
 
     List<ForumInfoModel> queryForumListJingHua(ForumInfoModel model);
+
+    //修改统计次数
+    int updateForumSelectCount();
+    int updateCollectCount();
+    int updateForumEvalCount();
 }
