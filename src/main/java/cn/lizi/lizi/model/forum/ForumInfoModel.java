@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
 * 描述：333333模型
@@ -42,6 +43,9 @@ public class ForumInfoModel extends CommonModel implements Serializable {
 
     //论坛内容
     private String forumContent;
+
+    //图片名称
+    private String forumPictures;
 
     //主题收藏数量
     private Integer forumCollectCount;

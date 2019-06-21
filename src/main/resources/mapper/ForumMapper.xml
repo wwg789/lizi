@@ -10,6 +10,7 @@
         forum_parent_id AS forunParentId,
         forum_subject AS forumSubject,
         forum_content AS forumContent,
+        forum_pictures AS forumPictures,
         forum_collect_count AS forumCollectCount,
         forum_evaluate_count AS forumEvaluateCount,
         forum_select_count AS forumSelectCount,
@@ -45,6 +46,7 @@
             <if test="forumParentId != null"> forum_parent_id,</if>
             <if test="forumSubject != null"> forum_subject,</if>
             <if test="forumContent != null"> forum_content,</if>
+            <if test="forumPictures != null"> forum_pictures,</if>
             <if test="forumCollectCount != null"> forum_collect_count,</if>
             <if test="forumEvaluateCount != null"> forum_evaluate_count,</if>
             <if test="forumSelectCount != null"> forum_select_count,</if>
@@ -58,6 +60,7 @@
             <if test="forumParentId != null"> #{forumParentId},</if>
             <if test="forumSubject != null"> #{forumSubject},</if>
             <if test="forumContent != null"> #{forumContent},</if>
+            <if test="forumPictures != null"> #{forumPictures},</if>
             <if test="forumCollectCount != null"> #{forumCollectCount},</if>
             <if test="forumEvaluateCount != null"> #{forumEvaluateCount},</if>
             <if test="forumSelectCount != null"> #{forumSelectCount},</if>

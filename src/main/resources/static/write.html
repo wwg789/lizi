@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="http://localhost:80/css/upload.css">
     <script src="http://localhost:80/js/utils.js"></script>
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-    <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
 
     <style>
         input::-webkit-input-placeholder {
@@ -54,7 +53,7 @@
     <textarea placeholder="请输入您想说的..." id="forumContent"></textarea>
 </div>
 <div>
-    <div class="upload" action='upload.html' id='case'></div>
+    <div class="upload" action='http://localhost:80/forum/upload' id='case'></div>
 </div>
 
 <div class="footBar">
@@ -82,11 +81,21 @@
 
 <script type="text/javascript">
     var parentId = getCookie("parentId");
+    //该函数为点击放大镜的回调函数，如没有该函数，则不显示放大镜
+    $(function(){
+        $("#case").upload(
+            function(_this,data){
+                alert("已经上传成功 文件"+ data);
+            }
+        )
+    });
+    //发布
     $("#btnAjax").click(function(){
         var data = "?_token=GJYGKUYFGJHBNKJDBNLKGUYGCYGBDLJKBLKUHFLJKH" +
             "&forumParentId="+ parentId +
             "&forumSubject="+ $("#forumSubject").val()+
-            "&forumContent="+ $("#forumContent").val();
+            "&forumContent="+ $("#forumContent").val()+
+            "&forumPictures="+$("input[name='upload']").val();
         $.ajax({
             type: "GET",
             url: "http://localhost:80/forum/addForum"+data,
@@ -103,14 +112,6 @@
     });
     })
 
-    //该函数为点击放大镜的回调函数，如没有该函数，则不显示放大镜
-    $(function(){
-        $("#case").upload(
-            function(_this,data){
-                console.log(data)
-            }
-        );
-    })
 
     $("#city").click(function (e) {
         SelCity(this,e);

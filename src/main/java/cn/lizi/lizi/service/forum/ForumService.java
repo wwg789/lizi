@@ -32,4 +32,6 @@ public interface ForumService{
     ResultModel queryUserCollectList(ForumInfoModel model);
 
     ResultModel upload(MultipartFile file);
+
+    ResultModel downloadPic(String picUrl);
 }

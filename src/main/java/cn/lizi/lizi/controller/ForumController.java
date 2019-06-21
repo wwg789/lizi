@@ -151,6 +151,17 @@ public class ForumController {
         return forumService.upload(file);
     }
 
+    /**
+     * 发帖图片上传
+     * @param  picUrl
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/downloadPic")
+    public ResultModel downloadPic(@Param("picUrl")String picUrl){
+        return forumService.downloadPic(picUrl);
+    }
+
 
 
 }

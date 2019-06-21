@@ -12,18 +12,24 @@ import cn.lizi.lizi.service.other.CheckParamService;
 import cn.lizi.lizi.utils.DateUtils4Java8;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -35,6 +41,8 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
     CheckParamService checkParamService;
     @Autowired
     HttpServletRequest request;
+    @Autowired
+    HttpServletResponse response;
 
     /**
      * 获取发帖列表
@@ -97,8 +105,11 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         }
        log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
-        //修改帖子访问次数
 
+        //获取
+
+
+        //修改帖子访问次数
         forumMapper.updateForumSelectCount();
         return ResultModel.getSuccess("成功", forumInfo);
     }
@@ -254,11 +265,46 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             file.transferTo(new File(pathfile+"/"+resoutPath));
         } catch (IOException e) {
             e.printStackTrace();
+            return ResultModel.getResult(0,"上传异常",null);
         }
 
-        return ResultModel.getSuccess(resoutPath,null);
+        return ResultModel.getResult(1,resoutPath,null);
     }
 
+    /**
+     * 获取帖子图片
+     * @param picUrl
+     * @return
+     */
+    @Override
+    public ResultModel downloadPic(String picUrl) {
+        if(StringUtils.isEmpty(picUrl)){
+            return ResultModel.getError("文件空");
+        }
+
+        String path = "D:/picture/"+ getFileDownloadPath(picUrl)+ "/" + picUrl;
+
+        try {
+            FileInputStream in = new FileInputStream(new File(path));
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + MimeUtility.encodeText(UUID.randomUUID().toString().replaceAll("-","") + ".jpg", "gb2312", "B") + "\"");
+            ServletOutputStream out = response.getOutputStream();
+            int len = 0;
+            byte buf[] = new byte[1024];
+            out = response.getOutputStream();
+            while( (len = in.read(buf)) > 0 ){
+                //向客户端输出，实际是把数据存放在response中，然后web服务器再去response中读取
+                out.write(buf, 0, len);
+            }
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 
 }
