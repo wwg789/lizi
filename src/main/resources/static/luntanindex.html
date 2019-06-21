@@ -59,7 +59,7 @@
         </div>
         <p>发帖</p>
     </a>
-    <a id="wode" href="http://localhost/me.html">
+    <a id="wode" href="">
         <div class="footBar_pic">
             <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
         </div>
@@ -72,13 +72,15 @@
 <script>
     //获取cookie
     var parentId = getCookie("parentId");
+    alert(document.cookie);
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
     var path = "http://localhost:80";
     var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
-    $('#fatie').attr("href", path + "/view/write?parentId="+parentId);
     $('#wode').attr("href", path + "/view/me");
+    $('#fatie').attr("href", path + "/view/write");
+
     //加载列表
     $.ajax({
         type: "GET",
@@ -213,7 +215,7 @@
 
             var a = data[i];
             if(i==data.length-1){
-                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 300px 4%;\">\n";
+                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 340px 4%;\">\n";
             }else{
                 divstr += "<div class=\"indexTable_son\">\n";
             }
@@ -245,12 +247,21 @@
     }
 
     function subStringPic(pic) {
-        alert(pic.length);
-        var picStr = "<div class='spotlightWrapper'>\n" + "<ul>\n";
+        var picStr = "";
         for (var j =0; j<pic.length; j++){
-            picStr += "<li><a href=\"\"><img src='http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"'/></a></li>\n";
+            var img = new Image;
+            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
+            var imgTag = "";
+            if(img.width>img.height){
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+            }else{
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+            }
+            picStr +=
+                "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+
+                  imgTag +
+                "</div>\n"
         }
-        picStr += "</ul>\n" + "</div>\n";
         return picStr;
     }
 

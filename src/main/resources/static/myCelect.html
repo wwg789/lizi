@@ -96,6 +96,14 @@
     function subString(data) {
         var divstr="";
         for (var i=0; i<data.length;i++ ) {
+            var picStr = "";
+            var pic = null;
+            if(data != null && data[i].forumPictures != null){
+                pic = data[i].forumPictures.split(",");
+            }
+            if(null != pic && pic.length>0){
+                picStr = subStringPic(pic);
+            }
             var a = data[i];
             if(i==data.length-1){
                 divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 300px 4%;\">\n";
@@ -117,16 +125,7 @@
                 "                <h1>"+ a.forumSubject +"</h1>\n" +
                 "                <p>"+ a.forumContent +"</p>\n" +
                 "            </div>\n" +
-                "        </a>\n" +
-                "<div class='spotlightWrapper'>\n" +
-                "<ul>\n" +
-                "<li><a href=\"\"><img src='http://localhost:80/images/1.jpg' /></a></li>\n" +
-                "<li><a href=\"\"><img src='http://localhost:80/images/2.jpg' /></a></li>\n" +
-                "<li><a href=\"\"><img src='http://localhost:80/images/3.png' /></a></li>\n" +
-                "<li><a href=\"\"><img src='http://localhost:80/images/4.jpg' /></a></li>\n" +
-                "</ul>\n" +
-                "</div>\n"+
-
+                "        </a>\n" + picStr +
                 "<ul class=\"indexTable_conFoot clearfix\">\n" +
                 "<li><a href=\"\">收藏</a><span>"+ a.forumCollectCount +"</span></li>\n" +
                 "<li><a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">评论</a><span>"+ a.forumEvaluateCount +"</span></li>\n" +
@@ -138,6 +137,24 @@
         return divstr;
     }
 
+    function subStringPic(pic) {
+        var picStr = "";
+        for (var j =0; j<pic.length; j++){
+            var img = new Image;
+            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
+            var imgTag = "";
+            if(img.width>img.height){
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+            }else{
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+            }
+            picStr +=
+                "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+
+                imgTag +
+                "</div>\n"
+        }
+        return picStr;
+    }
 
 </script>
 

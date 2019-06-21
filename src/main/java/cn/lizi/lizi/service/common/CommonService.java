@@ -1,6 +1,10 @@
 package cn.lizi.lizi.service.common;
 
+import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.common.CommonModel;
+import cn.lizi.lizi.model.other.UserModel;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 public interface CommonService {
 

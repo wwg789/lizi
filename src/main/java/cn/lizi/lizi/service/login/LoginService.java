@@ -1,17 +1,27 @@
 package cn.lizi.lizi.service.login;
 
 import cn.lizi.lizi.common.ResultModel;
-import cn.lizi.lizi.model.dingshi.Test01Model;
 import cn.lizi.lizi.model.other.UserModel;
-import cn.lizi.lizi.model.putonglei.user;
 import cn.lizi.lizi.service.other.BaseService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface LoginService extends BaseService {
 
+    /**
+     * 获取注册
+     * @param model
+     * @return
+     */
+    ResultModel register(UserModel model);
 
-    String test01(Test01Model model);
-    String test02(Integer i);
-    String rule(user model) throws Exception;
+    /**
+     * 用户登陆
+     * @param model
+     * @return
+     */
+    ResultModel login(UserModel model);
 
     /**
      * 获取用户信息
@@ -19,4 +29,15 @@ public interface LoginService extends BaseService {
      * @return
      */
     ResultModel getUserInfo(UserModel model);
+
+
+    /**
+     * 获取验证码
+     * @param model
+     * @return
+     */
+    ResultModel sendVerificationCode(UserModel model);
+
+
+
 }

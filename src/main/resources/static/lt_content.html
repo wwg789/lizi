@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
     <link rel="stylesheet" href="http://localhost:80/css/common.css">
     <script src="http://localhost:80/js/getCookie.js"></script>
     <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
@@ -31,14 +30,7 @@
 <div class="lt_contentTop">
 
 </div>
-<div class='spotlightWrapper' style="padding-left: 70px;">
-    <ul>
-        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/1.jpg' /></a></li>
-        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/2.jpg' /></a></li>
-        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/3.png' /></a></li>
-        <li><a href="http://www.17sucai.com/"><img src='http://localhost:80/images/4.jpg' /></a></li>
-    </ul>
-</div>
+<div class="picture" style="padding-left: 75px;"></div>
 <div class="ltCon_pend"></div>
 <div style="width: 100%;height: 50px"></div>
 <div class="ltConFoot">
@@ -67,6 +59,13 @@
             if (data.code == 0) {
                 var contentStr = subStringContent(data.data);
                 $('.lt_contentTop').html(contentStr);
+                var pic = null;
+                if(data.data != null && data.data.forumPictures != null){
+                    pic = data.data.forumPictures.split(",");
+                    var upPicImgs = subStringPic(pic);
+                    $('.picture').html(upPicImgs);
+                }
+
             } else {
                 alert("网络错误：" + data.msg);
             }
@@ -97,6 +96,9 @@
             type: "GET",
             url: path + "/evalReply/addEvalDetail?forumInfoId="+forumId+"&evalContent=" + $("#submitEval").val(),
             dataType: "json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("token", token);
+            },
             success: function (data) {
                 if (data.code == 0) {
                     alert("成功");
@@ -112,8 +114,6 @@
 
     //点击回复按钮显示回复框
     $(".ltCon_pend").delegate("a","click",function(){
-        //$("#huifu01").style.display="none";
-        //$("#huifu01").css("display", "");
         $("#huifu01").css("display","block");
         evalId = $(this).attr("id");
     });
@@ -125,6 +125,9 @@
             type: "GET",
             url: path + "/evalReply/addReplyDetail?forumEvalId=" + evalId + "&replyContent=" + $("#input01").val(),
             dataType: "json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("token", token);
+            },
             success: function (data) {
                 if (data.code == 0) {
                     $("#huifu01").css("display","none");
@@ -142,6 +145,9 @@
             type: "GET",
             url: path + "/forum/addCollect?forumId=" +forumId,
             dataType: "json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("token", token);
+            },
             success: function (data) {
                 if (data.code == 0) {
                     alert("收藏成功 请在我的收藏查看");
@@ -218,24 +224,25 @@
         return contentStr;
     }
 
+    function subStringPic(pic) {
+        var picStr = "";
+        for (var j =0; j<pic.length; j++){
+            var img = new Image;
+            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
+            var imgTag = "";
+            if(img.width>img.height){
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+            }else{
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+            }
+            picStr +=
+                "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+
+                imgTag +
+                "</div>\n"
+        }
+        return picStr;
+    }
 
-    $(window).load(function(){
-        var spotlight = {
-            opacity : 0.2,
-            imgWidth : $('.spotlightWrapper ul li').find('img').width(),
-            imgHeight : $('.spotlightWrapper ul li').find('img').height()
-        };
-        $('.spotlightWrapper ul li').css({ 'width' : spotlight.imgWidth, 'height' : spotlight.imgHeight });
-        $('.spotlightWrapper ul li').hover(function(){
-            $(this).find('img').addClass('active').css({ 'opacity' : 1});
-            $(this).siblings('li').find('img').css({'opacity' : spotlight.opacity}) ;
-        }, function(){
-            $(this).find('img').removeClass('active');
-        });
-        $('.spotlightWrapper ul').bind('mouseleave',function(){
-            $(this).find('img').css('opacity', 1);
-        });
-    });
 
 </script>
 

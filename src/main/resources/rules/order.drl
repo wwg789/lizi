@@ -1,5 +1,6 @@
 package rules;
 import cn.lizi.lizi.model.putonglei.user
+import cn.lizi.lizi.model.index.user
 dialect  "mvel"
 
 declare

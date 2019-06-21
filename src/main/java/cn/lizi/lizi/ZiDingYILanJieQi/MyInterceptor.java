@@ -1,6 +1,9 @@
 package cn.lizi.lizi.ZiDingYILanJieQi;
 
 import cn.lizi.lizi.ZiDingYiZhuJie.authority;
+import cn.lizi.lizi.utils.JwtTokenUtil;
+import com.auth0.jwt.interfaces.Claim;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -8,11 +11,13 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Map;
 
 /**
  * 自定义拦截器
@@ -27,19 +32,36 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        boolean annotationPresent = method.isAnnotationPresent(authority.class);
+
+
+
         //如果方法未注明@authority
         if (method.isAnnotationPresent(authority.class)) {
-            String parameter = request.getParameter("userName");
-            JSONObject res = new JSONObject();
-            res.put("status","-1");
-            res.put("msg","tocken  Invalid");
-            PrintWriter out = null ;
-            out = response.getWriter();
-            out.write(res.toString());
-            //System.out.print("Method: " + method.getName() + ", IgnoreSecurity: " + method.isAnnotationPresent(IgnoreSecurity.class));
-            System.out.print("param: " + parameter);
-            return false;
+            Cookie[] cookies = request.getCookies();
+            String token = "";
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie cookie = cookies[i];
+                if("token".equals(cookie.getName())){
+                    token = cookie.getValue();
+                }
+            }
+            if(StringUtils.isEmpty(token)){
+                return false;
+            }
+            try {
+                //校验token
+                Map<String, Claim> stringClaimMap = JwtTokenUtil.verifyToken(token);
+                stringClaimMap.get("userId").asString();
+                Map<String, String[]> parameterMap = request.getParameterMap();
+                parameterMap.forEach((key,val)->{
+                    System.out.print("key="+key+"  value="+val);
+                });
+
+            }catch (Exception e){
+                return false;
+            }
+
+            return true;
         }
 
         return true;

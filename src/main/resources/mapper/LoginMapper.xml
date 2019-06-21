@@ -3,29 +3,33 @@
 <mapper namespace="cn.lizi.lizi.mapper.LoginMapper" >
 
     <sql id="searchInfoSql">
-        id AS id,
-        nick_name AS nickName,
-        gender AS gender,
-        head_portrait_url AS headPortraitUrl,
-        create_time AS createTime,
-        update_time AS updateTime
+       id AS id,
+       nick_name AS nickName,
+       gender AS gender,
+       head_portrait_url AS headPortraitUrl,
+       phone AS phone,
+       password AS password,
+       create_time AS createTime,
+       update_time AS updateTime
     </sql>
 
-    <insert id="addUser" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.other.UserModel" >
+    <insert id="register" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.other.UserModel" >
         INSERT INTO xt_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null"> id,</if>
             <if test="nickName != null"> nick_name,</if>
             <if test="gender != null"> gender,</if>
             <if test="headPortraitUrl != null"> head_portrait_url,</if>
+            <if test="phone != null"> phone,</if>
+            <if test="password != null"> password,</if>
             <if test="createTime != null"> create_time,</if>
             <if test="updateTime != null"> update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null"> #{id},</if>
             <if test="nickName != null"> #{nickName},</if>
             <if test="gender != null"> #{gender},</if>
             <if test="headPortraitUrl != null"> #{headPortraitUrl},</if>
+            <if test="phone != null"> #{phone},</if>
+            <if test="password != null"> #{password},</if>
             <if test="createTime != null"> #{createTime},</if>
             <if test="updateTime != null"> #{updateTime},</if>
         </trim>
@@ -39,6 +43,8 @@
                 <if test="nickName != null">nick_name=#{nickName}</if>
                 <if test="gender != null">gender=#{gender}</if>
                 <if test="headPortraitUrl != null">head_portrait_url=#{headPortraitUrl}</if>
+                <if test="phone != null">phone=#{phone}</if>
+                <if test="password != null">password=#{password}</if>
                 <if test="createTime != null">create_time=#{createTime}</if>
                 <if test="updateTime != null">update_time=#{updateTime}</if>
             </trim>
@@ -57,6 +63,8 @@
             <if test="nickName != null"> AND nick_name = #{nickName}</if>
             <if test="gender != null"> AND gender = #{gender}</if>
             <if test="headPortraitUrl != null"> AND head_portrait_url = #{headPortraitUrl}</if>
+            <if test="phone != null"> AND phone = #{phone}</if>
+            <if test="password != null"> AND password = #{password}</if>
             <if test="createTime != null"> AND create_time = #{createTime}</if>
             <if test="updateTime != null"> AND update_time = #{updateTime}</if>
         </trim>
