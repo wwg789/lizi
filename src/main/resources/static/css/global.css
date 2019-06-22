@@ -75,11 +75,11 @@
     display: none;
 }
 .indexTable_son{
-    box-sizing: border-box;
     padding: 10px 4% 200px 4%;
     width: 100%;
     background-color: #fff;
     margin-bottom: 10px;
+    height: 179px;
 }
 .indexTable_sonHead{
     width: 100%;

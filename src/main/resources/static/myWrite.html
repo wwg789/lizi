@@ -16,6 +16,7 @@
     <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
     <script src="http://localhost:80/js/paging.js"></script>
     <script src="http://localhost:80/js/utils.js"></script>
+    <script src="http://localhost:80/js/getCookie.js"></script>
     <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
 
 
@@ -56,17 +57,29 @@
 <script>
     //获取token
     var token =  getCookie("token");
-
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
     var path = "http://localhost:80";
-    var path0 = path + "/forum/queryUserWrite?token" + token;
-    $('#wode').attr("href", path + "/view/me");
+    var path0 = path + "/forum/queryUserWrite?token=" + token;
+
+    //查看tocken是否过期
+    $.ajax({
+        type: "GET",
+        url: path + "/login/checkToken?token=" + token,
+        dataType: "json",
+        success: function (data) {
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //跳转到登录页
+            window.location.href=path+"/view/login";
+        },
+    });
+
     //加载列表
     $.ajax({
         type: "GET",
-        url: path0+"?page=" + thisPage,
+        url: path0+"&page=" + thisPage,
         dataType: "json",
         success: function (data) {
             if (data.code == 0) {
@@ -74,7 +87,7 @@
                 $('.indexTable_con').html(divstr);
                 setPageInfo(data);
             } else {
-                alert("创建失败：" + data.msg);
+                alert(data.msg);
             }
         },
     });
@@ -83,15 +96,32 @@
     $("#boxfenye").click(function(){
         $.ajax({
             type: "GET",
-            url: path0 + "?page=" + thisPage,
+            url: path0 + "&page=" + thisPage,
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
                     var divstr = subString(data.data);
                     $('.indexTable_con').html(divstr);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
+            },
+        });
+    });
+
+    //点击我的
+    $("#wode").click(function(){
+        //查看tocken是否过期
+        $.ajax({
+            type: "GET",
+            url: path + "/login/checkToken?token=" + token,
+            dataType: "json",
+            success: function (data) {
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //跳转到登录页
+                window.location.href=path+"/view/login?token=" + token;
             },
         });
     });

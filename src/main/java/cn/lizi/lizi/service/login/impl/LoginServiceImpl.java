@@ -140,7 +140,16 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public ResultModel getUserInfo(UserModel model) {
-        model.setId(model.getUserId());
+        try {
+            Integer userId = JwtTokenUtil.verifyToken(model.getToken()).get("userId").asInt();
+            if(null == userId){
+                return ResultModel.getError("登陆信息过期请重新登陆");
+            }
+            model.setId(userId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         UserModel userInfo= loginMapper.getUserInfo(model);
         return ResultModel.getSuccess("成功",userInfo);
     }

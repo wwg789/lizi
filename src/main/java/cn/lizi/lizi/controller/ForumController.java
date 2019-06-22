@@ -161,7 +161,6 @@ public class ForumController {
      * @param file
      * @return
      */
-    @authority
     @ResponseBody
     @RequestMapping("/upload")
     public ResultModel upload(@Param("file")MultipartFile file){

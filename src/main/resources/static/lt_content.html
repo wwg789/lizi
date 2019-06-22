@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/common.css">
-
+    <script src="http://localhost:80/js/getCookie.js"></script>
 
 
 </head>
 <body style="background-color: #f4f4f4;">
 <!--回复框-->
-<div id="huifu01"><div id="huifu02"><textarea id="input01"></textarea><button id="button01">提      交</button></div></div>
+<div id="huifu01"><div id="huifu02"><textarea id="input01"></textarea><button id="button01">提      交</button><button id="button02">取消</button></div></div>
 <div class="writeHead">
     <div class="writeHead_top center">
-        <a href=""><img src="img/backIcon.png" alt="" class="backBtn"/></a>
+        <a href=""><img src="http://localhost:80/images/backIcon.png" alt="" class="backBtn"/></a>
         <h1>帖子内容</h1>
     </div>
 </div>
@@ -100,11 +100,10 @@
                 //token验证通过 进行评价
                 $.ajax({
                     type: "GET",
-                    url: path + "/evalReply/addEvalDetail?forumInfoId="+forumId+"&evalContent=" + $("#submitEval").val() + "&token"+token,
+                    url: path + "/evalReply/addEvalDetail?forumInfoId="+forumId+"&evalContent=" + $("#submitEval").val() + "&token="+token,
                     dataType: "json",
                     success: function (data) {
                         if (data.code == 0) {
-                            alert("成功");
                             getEvalContent();
                         } else {
                             alert("网络错误：" + data.msg);
@@ -146,7 +145,7 @@
     $("#button01").click(function(){
         $.ajax({
             type: "GET",
-            url: path + "/evalReply/addReplyDetail?forumEvalId=" + evalId + "&replyContent=" + $("#input01").val() + "&token"+token,
+            url: path + "/evalReply/addReplyDetail?forumEvalId=" + evalId + "&replyContent=" + $("#input01").val() + "&token="+token,
             dataType: "json",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("token", token);
@@ -162,6 +161,11 @@
         });
     });
 
+    //关闭回复框
+    $("#button02").click(function(){
+        $("#huifu01").css("display","none");
+    });
+
     //点击收藏
     $(".lt_contentTop").delegate("button","click",function(){
         //查看tocken是否过期
@@ -174,7 +178,7 @@
                     //token验证成功再进行收藏
                     $.ajax({
                         type: "GET",
-                        url: path + "/forum/addCollect?forumId=" +forumId + "&token"+token,
+                        url: path + "/forum/addCollect?forumId=" +forumId + "&token="+token,
                         dataType: "json",
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader("token", token);
@@ -197,20 +201,6 @@
             },
         });
     });
-
-
-    function getCookie(name) {
-        var cookies = document.cookie;
-        var list = cookies.split("; ");          // 解析出名/值对列表
-
-        for(var i = 0; i < list.length; i++) {
-            var arr = list[i].split("=");          // 解析出名和值
-            if(arr[0] == name)
-                return decodeURIComponent(arr[1]);   // 对cookie值解码
-        }
-        return "";
-    }
-
 
     //评价详情
     function subStringEval(eval) {

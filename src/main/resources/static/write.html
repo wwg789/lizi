@@ -10,13 +10,11 @@
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
 
-
     <script src="http://localhost:80/js/jquery.min.js"></script>
     <script src="http://localhost:80/js/jQuery.upload.min.js"></script>
     <link rel="stylesheet" href="http://localhost:80/css/upload.css">
-    <script src="http://localhost:80/js/utils.js"></script>
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-
+    <script src="http://localhost:80/js/getCookie.js"></script>
     <style>
         input::-webkit-input-placeholder {
             color: #333;
@@ -59,7 +57,7 @@
 <div class="footBar">
     <a href="http://localhost">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon1_hover.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon1.png" alt=""/>
         </div>
         <p>首页</p>
     </a>
@@ -71,7 +69,7 @@
     </a>
     <a href="http://localhost/me.html">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon3.png" alt=""/>
         </div>
         <p>我的</p>
     </a>
@@ -80,7 +78,7 @@
 </html>
 
 <script type="text/javascript">
-    alert(document.cookie);
+    var path = "http://localhost:80";
     var parentId = getCookie("parentId");
     var token = getCookie("token");
     //该函数为点击放大镜的回调函数，如没有该函数，则不显示放大镜
@@ -104,8 +102,8 @@
             dataType: "json",
                 success: function (data) {
                 if (data.code == 0) {
-                    $("#forumSubject").val("");
-                    $("#forumContent").val("");
+                    /*$("#forumSubject").val("");
+                    $("#forumContent").val("");*/
                     //跳转到指定页面
                     window.location.href=path + "/view/luntanindex?token=" + token + "&id="+parentId;
                 } else {

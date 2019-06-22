@@ -16,6 +16,7 @@
     <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
     <script src="http://localhost:80/js/paging.js"></script>
     <script src="http://localhost:80/js/utils.js"></script>
+    <script src="http://localhost:80/js/getCookie.js"></script>
 
 
 </head>
@@ -54,13 +55,13 @@
     </a>
     <a id="fatie">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon2_hover.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon2.png" alt=""/>
         </div>
         <p>发帖</p>
     </a>
     <a id="wode">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon3.png" alt=""/>
         </div>
         <p>我的</p>
     </a>
@@ -88,7 +89,7 @@
                 $('.indexTable_con').html(divstr);
                 setPageInfo(data);
             } else {
-                alert("创建失败：" + data.msg);
+                alert(data.msg);
             }
         },
     });
@@ -109,7 +110,7 @@
                     $('.indexTable_con').html(divstr);
                     setPageInfo(data);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
             },
         });
@@ -131,7 +132,7 @@
                     $('.indexTable_con').html(divstr);
                     setPageInfo(data);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
             },
         });
@@ -153,7 +154,7 @@
                     $('.indexTable_con').html(divstr);
                     setPageInfo(data);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
             },
         });
@@ -174,7 +175,7 @@
                     $('.indexTable_con').html(divstr);
                     setPageInfo(data);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
             },
         });
@@ -191,12 +192,11 @@
                     var divstr = subString(data.data);
                     $('.indexTable_con').html(divstr);
                 } else {
-                    alert("网络错误：" + data.msg);
+                    alert(data.msg);
                 }
             },
         });
     });
-    alert(document.cookie)
    var token =  getCookie("token");
     //点击我的
     $("#wode").click(function(){

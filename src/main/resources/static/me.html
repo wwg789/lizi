@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
+    <script src="http://localhost:80/js/getCookie.js"></script>
 </head>
 <body style="background-color: #f4f4f4;">
 <div class="writeHead">
@@ -23,9 +24,6 @@
     <ul class="center">
         <li><a href="#" id="mySend">我的发帖</a></li>
         <li><a href="#" id="myCollect">我的收藏</a></li>
-        <li><a href="#">我的回复</a></li>
-        <li><a href="#">评论消息<i></i></a></li>
-        <li><a href="#">回复消息<i></i></a></li>
     </ul>
 </div>
 <div class="meQuit">退出登录</div>
@@ -46,10 +44,9 @@
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 
 <script>
-    var path = "http://localhost:80";
     var token =  getCookie("token");
+    var path = "http://localhost:80";
     var path0 = path + "/login/getUserInfo?token="+token;
-
     //加载我的信息
     $.ajax({
         type: "GET",
@@ -60,14 +57,13 @@
                 var divstr = subStringMeInfo(data.data);
                 $('.meHead').html(divstr);
             } else {
-                alert("网络错误：" + data.msg);
+                alert(data.msg);
             }
         },
     });
 
     //点击我的发帖
     $("#mySend").click(function(){
-        alert(ssss);
         //查看tocken是否过期
         $.ajax({
             type: "GET",
@@ -87,7 +83,6 @@
     });
     //点击我的收藏
     $("#myCollect").click(function(){
-        alert(ssss);
         //查看tocken是否过期
         $.ajax({
             type: "GET",
@@ -105,11 +100,6 @@
             },
         });
     });
-
-
-
-
-
 
     function subStringMeInfo(data) {
         var meStr =

@@ -69,6 +69,7 @@ public class CheckParamService {
         if(StringUtils.isEmpty(model.getEvalContent())){
             return "评价内容空";
         }
+
         if(commonServiceImpl.initUserInfo(model) == false){
             return "用户信息设置失败";
         }
