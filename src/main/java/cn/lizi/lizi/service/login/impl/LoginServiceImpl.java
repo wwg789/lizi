@@ -140,11 +140,8 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public ResultModel getUserInfo(UserModel model) {
-        //TODO tocken中获取用户id
-        model.setId(1);
-
+        model.setId(model.getUserId());
         UserModel userInfo= loginMapper.getUserInfo(model);
-
         return ResultModel.getSuccess("成功",userInfo);
     }
 

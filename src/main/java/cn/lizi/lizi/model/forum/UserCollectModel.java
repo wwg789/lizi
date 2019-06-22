@@ -1,5 +1,6 @@
 package cn.lizi.lizi.model.forum;
 
+import cn.lizi.lizi.model.common.CommonModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCollectModel {
+public class UserCollectModel extends CommonModel {
 
     //主键ID
     private Integer id;

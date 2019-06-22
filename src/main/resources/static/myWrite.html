@@ -54,11 +54,14 @@
 </html>
 
 <script>
+    //获取token
+    var token =  getCookie("token");
+
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
     var path = "http://localhost:80";
-    var path0 = path + "/forum/queryForumList";
+    var path0 = path + "/forum/queryUserWrite?token" + token;
     $('#wode').attr("href", path + "/view/me");
     //加载列表
     $.ajax({

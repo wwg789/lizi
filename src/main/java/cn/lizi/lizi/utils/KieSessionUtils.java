@@ -21,7 +21,7 @@ public class KieSessionUtils {
     }
 
     /**
-     * @description TODO (快速新建KieSession)
+     * @description
      * @param classPath 绝对路径
      * @return KieSession 有状态  普通模式  云模式
      */
@@ -46,7 +46,7 @@ public class KieSessionUtils {
     }
 
     /**
-     * @description TODO (快速新建StatelessKieSession)
+     * @description
      * @param classPath 绝对路径
      * @return StatelessKieSession 无状态
      */

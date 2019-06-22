@@ -183,10 +183,10 @@
 </div>
 
 <script>
-
+    var path = "http://localhost:80";
     $.ajax({
         type: "GET",
-        url: "http://localhost:80/index/queryTopAdvertisementList",
+        url: path+"/index/queryTopAdvertisementList",
         dataType: "json",
         success: function (data) {
             if (data.code == 0) {
@@ -218,7 +218,7 @@
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:80/forum/queryForumParentList",
+        url: path+"/forum/queryForumParentList",
         dataType: "json",
         success: function (data) {
             if (data.code == 0) {
@@ -226,7 +226,7 @@
                 var divstr = "";
                 for (var i=0; i<parentList.length;i++ ){
                     model = parentList[i];
-                    divstr += "<a href=\"http://localhost/view/luntanindex/?id="+ model.id +"\" class=\"aui-class-link\">"+ model.forumParentName +"</a>";
+                    divstr += "<a href=\""+ path +"/view/luntanindex/?id="+ model.id +"\" class=\"aui-class-link\">"+ model.forumParentName +"</a>";
                 }
                 $('.aui-class-content').html(divstr);
             }

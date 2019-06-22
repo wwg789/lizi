@@ -1,5 +1,6 @@
 package cn.lizi.lizi.controller;
 
+import cn.lizi.lizi.ZiDingYiZhuJie.authority;
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
@@ -101,6 +102,7 @@ public class ForumController {
      * @param model
      * @return
      */
+    @authority
     @ResponseBody
     @RequestMapping("/addForum")
     public ResultModel addForum(ForumInfoModel model){
@@ -123,6 +125,7 @@ public class ForumController {
      * @param model
      * @return
      */
+    @authority
     @ResponseBody
     @RequestMapping("/addCollect")
     public ResultModel addCollect(UserCollectModel model){
@@ -134,6 +137,7 @@ public class ForumController {
      * @param model
      * @return
      */
+    @authority
     @ResponseBody
     @RequestMapping("/queryUserCollectList")
     public ResultModel queryUserCollectList(ForumInfoModel model){
@@ -141,10 +145,23 @@ public class ForumController {
     }
 
     /**
+     * 查询用户发送的帖子
+     * @param model
+     * @return
+     */
+    @authority
+    @ResponseBody
+    @RequestMapping("/queryUserWrite")
+    public ResultModel queryUserWrite(ForumInfoModel model){
+        return forumService.queryUserWrite(model);
+    }
+
+    /**
      * 发帖图片上传
      * @param file
      * @return
      */
+    @authority
     @ResponseBody
     @RequestMapping("/upload")
     public ResultModel upload(@Param("file")MultipartFile file){

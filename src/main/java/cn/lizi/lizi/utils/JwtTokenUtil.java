@@ -20,7 +20,7 @@ public class JwtTokenUtil {
         Date istDate = new Date();
         //设置过期时间
         Calendar nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.MINUTE, 1);
+        nowTime.add(Calendar.MINUTE, 50);
         Date expiresDate = nowTime.getTime();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("alg", "HS256");
@@ -45,17 +45,20 @@ public class JwtTokenUtil {
         return jwt.getClaims();
     }
 
+
+
+
     public static void main(String[] args) throws Exception {
-        String token = JwtTokenUtil.createToken(UserModel.builder().id(1).build());
-        System.out.println(token);
-        //正常测试
-        Map<String, Claim> verifyToken = JwtTokenUtil.verifyToken(token);
-        String asString = verifyToken.get("name").asString();
-        System.out.println(asString);
+
         //过期测试
-        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImV4cCI6MTUyNzQ5NzA3MiwiaWF0IjoxNTI3NDk3MDExLCJhZ2UiOjExfQ.yg1Hn4FT0OWu8KecNzvaayMEbbDrKctjWlI4bblcRfA";
-        Map<String, Claim> verifyToken2 = JwtTokenUtil.verifyToken(token);
-        System.out.print(verifyToken2.toString());
+        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjExOTQyNDcsInVzZXJJZCI6MywiaWF0IjoxNTYxMTkxMjQ3fQ.eaGqn0yMP-uXl-JL4mfybuI-WlLnos4VN4DXoK5MVvM";
+        Map<String, Claim> verifyToken = JwtTokenUtil.verifyToken(token);
+        verifyToken.forEach((key,val)->{
+            Integer integer = val.asInt();
+            System.out.println(key);
+        });
+
+
     }
 }
 

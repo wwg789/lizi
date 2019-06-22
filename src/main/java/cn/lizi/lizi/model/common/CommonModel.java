@@ -28,6 +28,6 @@ public class CommonModel implements java.io.Serializable {
 
     private UserModel user;
 
-    private String _token;
+    private String token;
 
 }

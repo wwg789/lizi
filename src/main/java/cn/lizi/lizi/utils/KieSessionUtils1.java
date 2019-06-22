@@ -31,7 +31,7 @@ public class KieSessionUtils1 {
     private static final String RULES_PATH = "rules/";
 
     /**
-     * @description TODO(创建包含所有规则的对象)
+     * @description
      * @throws Exception
      * @return KieSession
      */
@@ -60,7 +60,7 @@ public class KieSessionUtils1 {
     }
 
     /**
-     * @description TODO (快速新建KieSession)
+     * @description
      * @param classPath 绝对路径
      * @return KieSession 有状态
      */
@@ -72,7 +72,7 @@ public class KieSessionUtils1 {
     }
 
     /**
-     * @description TODO (快速新建StatelessKieSession)
+     * @description
      * @param classPath 绝对路径
      * @return StatelessKieSession 无状态
      */
@@ -83,7 +83,7 @@ public class KieSessionUtils1 {
     }
 
     /**
-     * @description TODO (清空对象)
+     * @description
      * @title disposeKieSession 重置KieSession
      * @return void
      */

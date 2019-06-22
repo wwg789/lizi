@@ -1,5 +1,6 @@
 package cn.lizi.lizi.controller;
 
+import cn.lizi.lizi.ZiDingYiZhuJie.authority;
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.login.LoginService;
@@ -27,6 +28,18 @@ public class loginController{
     @RequestMapping("/sendVerificationCode")
     ResultModel sendVerificationCode(UserModel model){
         return loginService.sendVerificationCode(model);
+    }
+
+    /**
+     * 校验token是否过期
+     * @param model
+     * @return
+     */
+    @authority
+    @ResponseBody
+    @RequestMapping("/checkToken")
+    ResultModel chackToken(UserModel model){
+        return ResultModel.getSuccess("成功",null);
     }
 
 

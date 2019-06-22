@@ -2,6 +2,7 @@ package cn.lizi.lizi.service.forum.impl;
 
 import cn.lizi.lizi.common.ResultModel;
 import cn.lizi.lizi.mapper.ForumMapper;
+import cn.lizi.lizi.mapper.LoginMapper;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 import cn.lizi.lizi.model.forum.UserCollectModel;
@@ -10,6 +11,7 @@ import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.forum.ForumService;
 import cn.lizi.lizi.service.other.CheckParamService;
 import cn.lizi.lizi.utils.DateUtils4Java8;
+import cn.lizi.lizi.utils.JwtTokenUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
@@ -37,6 +39,8 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
 
     @Autowired()
     ForumMapper forumMapper;
+    @Autowired
+    LoginMapper loginMapper;
     @Autowired
     CheckParamService checkParamService;
     @Autowired
@@ -106,9 +110,6 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
        log.info("getForumInfo params {}",model);
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
 
-        //获取
-
-
         //修改帖子访问次数
         forumMapper.updateForumSelectCount();
         return ResultModel.getSuccess("成功", forumInfo);
@@ -140,13 +141,6 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         if(StringUtils.isNotEmpty(resout)){
             return ResultModel.getError(resout);
         }
-        //TODO  此部分用户信息从token中获取
-        UserModel userModel = new UserModel();
-        userModel.setId(1);
-        userModel.setGender(1);
-        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        userModel.setNickName("栗哥的大树");
-        model.setUser(userModel);
 
         //初始参数
         model.setUserId(model.getUser().getId());
@@ -199,13 +193,6 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             return ResultModel.getError(resout);
         }
 
-        //TODO  此部分用户信息从token中获取
-        UserModel userModel = new UserModel();
-        userModel.setId(1);
-        userModel.setGender(1);
-        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        userModel.setNickName("栗哥的大树");
-
         int resoutData = forumMapper.addCollect(model);
         if(resoutData == 0){
             return ResultModel.getError("收藏失败");
@@ -222,20 +209,41 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
      */
     @Override
     public ResultModel queryUserCollectList(ForumInfoModel model) {
-        //TODO  此部分用户信息从token中获取
-        UserModel userModel = new UserModel();
-        userModel.setId(1);
-        userModel.setGender(1);
-        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        userModel.setNickName("栗哥的大树");
-
-        model.setUserId(1);
+        //参数校验 设置当前登陆用户ID
+        String resout = checkParamService.checkQueryUserCollectParam(model);
+        if(StringUtils.isNotEmpty(resout)){
+            return ResultModel.getError(resout);
+        }
+        model.setUserId(model.getUser().getId());
 
         //查询用户收藏
+        setQueryPage(model);
         List<ForumInfoModel> forumInfoModels = forumMapper.queryUserCollectList(model);
 
 
-        return ResultModel.getSuccess("成功",forumInfoModels);
+        return ResultModel.getPageData("成功",forumInfoModels);
+    }
+
+    /**
+     * 查询用户发帖
+     * @param model
+     * @return
+     */
+    @Override
+    public ResultModel queryUserWrite(ForumInfoModel model) {
+        //参数校验 设置当前登陆用户ID
+        String resout = checkParamService.checkQueryUserWriteParam(model);
+        if(StringUtils.isNotEmpty(resout)){
+            return ResultModel.getError(resout);
+        }
+
+        model.setUserId(model.getUser().getId());
+
+        //查询用户发帖
+        setQueryPage(model);
+        List<ForumInfoModel> forumInfoModels = forumMapper.queryForumList(model);
+
+        return ResultModel.getPageData("成功",forumInfoModels);
     }
 
     /**

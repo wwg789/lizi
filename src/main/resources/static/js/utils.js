@@ -1,4 +1,3 @@
-// 定义一个函数，用来读取特定的cookie值。
 function getCookie(name) {
     var cookies = document.cookie;
     var list = cookies.split("; ");          // 解析出名/值对列表
@@ -10,8 +9,6 @@ function getCookie(name) {
     }
     return "";
 }
-
-
 
 //设置分页
 function setPageInfo(data) {

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
     <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
-    <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
 </head>
 <body style="background-color: #f4f4f4;">
 <div class="writeHead">
@@ -38,12 +37,7 @@
         </div>
         <p class="on">首页</p>
     </a>
-    <a id="wode" href="#">
-        <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
-        </div>
-        <p>我的</p>
-    </a>
+
 
 </div>
 </body>
@@ -52,12 +46,10 @@
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 
 <script>
-
     var path = "http://localhost:80";
-    var path0 = path + "/login/getUserInfo?_token=GJYGKUYFGJHBNKJDBNLKGUYGCYGBDLJKBLKUHFLJKH";
-    $('#mySend').attr("href", path + "/view/myWrite");
-    $('#myCollect').attr("href", path + "/view/myCelect");
-    $('#wode').attr("href", path + "/view/me");
+    var token =  getCookie("token");
+    var path0 = path + "/login/getUserInfo?token="+token;
+
     //加载我的信息
     $.ajax({
         type: "GET",
@@ -72,6 +64,52 @@
             }
         },
     });
+
+    //点击我的发帖
+    $("#mySend").click(function(){
+        alert(ssss);
+        //查看tocken是否过期
+        $.ajax({
+            type: "GET",
+            url: path + "/login/checkToken?token=" + token,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    //跳转到指定页面
+                    window.location.href=path + "/view/myWrite?token=" + token;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //跳转到登录页
+                window.location.href=path+"/view/login?token=" + token;
+            },
+        });
+    });
+    //点击我的收藏
+    $("#myCollect").click(function(){
+        alert(ssss);
+        //查看tocken是否过期
+        $.ajax({
+            type: "GET",
+            url: path + "/login/checkToken?token=" + token,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    //跳转到指定页面
+                    window.location.href=path + "/view/myCelect?token=" + token;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //跳转到登录页
+                window.location.href=path+"/view/login?token=" + token;
+            },
+        });
+    });
+
+
+
+
+
 
     function subStringMeInfo(data) {
         var meStr =

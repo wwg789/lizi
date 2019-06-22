@@ -16,7 +16,6 @@
     <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
     <script src="http://localhost:80/js/paging.js"></script>
     <script src="http://localhost:80/js/utils.js"></script>
-    <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
 
 
 </head>
@@ -59,7 +58,7 @@
         </div>
         <p>发帖</p>
     </a>
-    <a id="wode" href="">
+    <a id="wode">
         <div class="footBar_pic">
             <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
         </div>
@@ -72,14 +71,11 @@
 <script>
     //获取cookie
     var parentId = getCookie("parentId");
-    alert(document.cookie);
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
     var path = "http://localhost:80";
     var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
-    $('#wode').attr("href", path + "/view/me");
-    $('#fatie').attr("href", path + "/view/write");
 
     //加载列表
     $.ajax({
@@ -200,6 +196,49 @@
             },
         });
     });
+    alert(document.cookie)
+   var token =  getCookie("token");
+    //点击我的
+    $("#wode").click(function(){
+        //查看tocken是否过期
+        $.ajax({
+            type: "GET",
+            url: path + "/login/checkToken?token=" + token,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    //跳转到指定页面
+                    window.location.href=path + "/view/me?token=" + token;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //跳转到登录页
+                window.location.href=path+"/view/login?token=" + token;
+            },
+        });
+    });
+    //点击发帖
+    $("#fatie").click(function(){
+        //查看tocken是否过期
+        $.ajax({
+            type: "GET",
+            url: path + "/login/checkToken?token=" + token,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    //跳转到指定页面
+                    window.location.href=path + "/view/write?token=" + token+"&parentId="+parentId;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //跳转到登录页
+                window.location.href=path+"/view/login?token=" + token;
+            },
+        });
+    });
+
+
+
 
     function subString(data) {
         var divstr="";

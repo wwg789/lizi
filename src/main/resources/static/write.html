@@ -80,7 +80,9 @@
 </html>
 
 <script type="text/javascript">
+    alert(document.cookie);
     var parentId = getCookie("parentId");
+    var token = getCookie("token");
     //该函数为点击放大镜的回调函数，如没有该函数，则不显示放大镜
     $(function(){
         $("#case").upload(
@@ -91,7 +93,7 @@
     });
     //发布
     $("#btnAjax").click(function(){
-        var data = "?_token=GJYGKUYFGJHBNKJDBNLKGUYGCYGBDLJKBLKUHFLJKH" +
+        var data = "?token=" + token+
             "&forumParentId="+ parentId +
             "&forumSubject="+ $("#forumSubject").val()+
             "&forumContent="+ $("#forumContent").val()+
@@ -104,13 +106,14 @@
                 if (data.code == 0) {
                     $("#forumSubject").val("");
                     $("#forumContent").val("");
-                    alert("创建成功 请在首页对应分类列表中查看");
+                    //跳转到指定页面
+                    window.location.href=path + "/view/luntanindex?token=" + token + "&id="+parentId;
                 } else {
                     alert("创建失败：" + data.msg);
                 }
             },
     });
-    })
+    });
 
 
     $("#city").click(function (e) {

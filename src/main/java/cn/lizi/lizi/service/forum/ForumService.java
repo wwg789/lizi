@@ -34,4 +34,7 @@ public interface ForumService{
     ResultModel upload(MultipartFile file);
 
     ResultModel downloadPic(String picUrl);
+
+    ResultModel queryUserWrite(ForumInfoModel model);
 }
+

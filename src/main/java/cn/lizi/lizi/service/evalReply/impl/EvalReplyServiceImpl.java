@@ -39,16 +39,10 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
         if(StringUtils.isNotEmpty(resout)){
             return ResultModel.getError(resout);
         }
-        //TODO 获取用户信息  这里先创建一个
-        UserModel user = new UserModel();
-        user.setId(1);
-        user.setNickName("栗哥的大树");
-        user.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        user.setGender(1);
 
-        model.setUserId(user.getId());
-        model.setUserHeadUrl(user.getHeadPortraitUrl());
-        model.setUserNickName(user.getNickName());
+        model.setUserId(model.getUser().getId());
+        model.setUserHeadUrl(model.getUser().getHeadPortraitUrl());
+        model.setUserNickName(model.getUser().getNickName());
         model.setCreateTime(new Date());
 
         int resoutData = evalReplyMapper.addEvalDetail(model);
@@ -75,18 +69,10 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
             return ResultModel.getError(resout);
         }
 
-        //TODO 获取用户信息  这里先创建一个
-        UserModel user = new UserModel();
-        user.setId(2);
-        user.setNickName("栗哥的大树");
-        user.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        user.setGender(1);
-
-        model.setUserId(user.getId());
-        model.setUserHeadUrl(user.getHeadPortraitUrl());
-        model.setUserNickName(user.getNickName());
+        model.setUserId(model.getUser().getId());
+        model.setUserHeadUrl(model.getUser().getHeadPortraitUrl());
+        model.setUserNickName(model.getUser().getNickName());
         model.setCreateTime(new Date());
-
 
         int resoutData = evalReplyMapper.addReplyDetail(model);
         if(resoutData < 1){

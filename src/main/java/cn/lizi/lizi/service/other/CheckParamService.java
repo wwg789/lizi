@@ -4,9 +4,13 @@ import cn.lizi.lizi.mapper.ForumMapper;
 import cn.lizi.lizi.mapper.LoginMapper;
 import cn.lizi.lizi.model.EvalReply.EvalModel;
 import cn.lizi.lizi.model.EvalReply.ReplyModel;
+import cn.lizi.lizi.model.common.CommonModel;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.UserCollectModel;
 import cn.lizi.lizi.model.other.UserModel;
+import cn.lizi.lizi.service.common.CommonService;
+import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
+import cn.lizi.lizi.utils.JwtTokenUtil;
 import org.apache.catalina.manager.util.SessionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,8 @@ public class CheckParamService {
     ForumMapper forumMapper;
     @Autowired
     LoginMapper loginMapper;
+    @Autowired
+    CommonServiceImpl commonServiceImpl;
 
     public String checkAddForum(ForumInfoModel model){
         if(null == model){
@@ -35,9 +41,12 @@ public class CheckParamService {
         if(StringUtils.isEmpty(model.getForumContent())){
             return "主题内容空";
         }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
+        }
+
         return null;
     }
-
 
 
     public String checkQueryEvalDetailParam(EvalModel model) {
@@ -60,6 +69,9 @@ public class CheckParamService {
         if(StringUtils.isEmpty(model.getEvalContent())){
             return "评价内容空";
         }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
+        }
 
         return null;
 
@@ -74,6 +86,9 @@ public class CheckParamService {
         }
         if(StringUtils.isEmpty(model.getReplyContent())){
             return "回复内容空";
+        }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
         }
 
         return null;
@@ -99,16 +114,15 @@ public class CheckParamService {
         if(null == model.getForumId()){
             return "发帖ID空";
         }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
+        }
 
-        //TODO  此部分用户信息从token中获取
-        UserModel userModel = new UserModel();
-        userModel.setId(1);
-        userModel.setGender(1);
-        userModel.setHeadPortraitUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3768890033,68770272&fm=27&gp=0.jpg");
-        userModel.setNickName("栗哥的大树");
-        model.setUserId(userModel.getId());
 
-        UserCollectModel userCollectModel = forumMapper.queryUserIsCollect(model);
+        UserCollectModel userCollectModel = forumMapper.queryUserIsCollect(UserCollectModel.builder()
+                .userId(model.getUser().getId())
+                .forumId(model.getForumId())
+                .build());
         if(null != userCollectModel){
             return "已经收藏过此贴";
         }
@@ -175,6 +189,44 @@ public class CheckParamService {
 
 
 
+        return null;
+    }
+
+    public String checkQueryUserCollectParam(ForumInfoModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(model.getPage() == null){
+            model.setPage(0);
+        }
+        if(model.getPageSize() == null){
+            model.setPageSize(10);
+        }
+        if(null == model.getToken()){
+            return "token空";
+        }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
+        }
+        return null;
+    }
+
+    public String checkQueryUserWriteParam(ForumInfoModel model) {
+        if(null == model){
+            return "参数空";
+        }
+        if(model.getPage() == null){
+            model.setPage(0);
+        }
+        if(model.getPageSize() == null){
+            model.setPageSize(10);
+        }
+        if(null == model.getToken()){
+            return "token空";
+        }
+        if(commonServiceImpl.initUserInfo(model) == false){
+            return "用户信息设置失败";
+        }
         return null;
     }
 }

@@ -15,4 +15,6 @@ public interface CommonService {
      */
     void setQueryPage(CommonModel model);
 
+    boolean initUserInfo(CommonModel model);
+
 }

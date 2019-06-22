@@ -40,4 +40,5 @@ public class UserModel {
     //验证码
     private String verifyNo;
     private String token;
+    private Integer userId;
 }

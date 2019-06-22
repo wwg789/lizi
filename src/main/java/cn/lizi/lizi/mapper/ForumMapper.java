@@ -42,4 +42,5 @@ public interface ForumMapper {
 
     //查询是否收藏此帖
     UserCollectModel queryUserIsCollect(UserCollectModel model);
+
 }

@@ -26,7 +26,9 @@ public class ViewController {
     }
     @authority
     @RequestMapping("/write")
-    public String write() {
+    public String write(@Param("parentId") String parentId,@Param("token")String token, HttpServletResponse response) {
+        response.addCookie(new Cookie("parentId",parentId));
+        response.addCookie(new Cookie("token",token));
         return "write";
     }
 
@@ -37,20 +39,20 @@ public class ViewController {
     }
     @authority
     @RequestMapping("/me")
-    public String lt_content(HttpServletResponse response) {
-        //response.addCookie(new Cookie("forumId",forumId));
+    public String me(@Param("token") String token, HttpServletResponse response) {
+        response.addCookie(new Cookie("token",token));
         return "me";
     }
     @authority
     @RequestMapping("/myWrite")
-    public String myWrite(HttpServletResponse response) {
-        //response.addCookie(new Cookie("forumId",forumId));
+    public String myWrite(@Param("token") String token, HttpServletResponse response) {
+        response.addCookie(new Cookie("token",token));
         return "myWrite";
     }
     @authority
     @RequestMapping("/myCelect")
-    public String myCelect(HttpServletResponse response) {
-        //response.addCookie(new Cookie("forumId",forumId));
+    public String myCelect(@Param("token") String token, HttpServletResponse response) {
+        response.addCookie(new Cookie("token",token));
         return "myCelect";
     }
 
