@@ -2,22 +2,22 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>首页</title>
+    <title>我的发帖</title>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/paging.css">
-    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/reset.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/global.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/paging.css">
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/jiugongge.css">
     <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-    <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
-    <script src="http://localhost:80/js/paging.js"></script>
-    <script src="http://localhost:80/js/utils.js"></script>
-    <script src="http://localhost:80/js/getCookie.js"></script>
-    <script type="text/javascript" src="http://localhost:80/js/noAgain.js"></script>
+    <script src="http://106.12.29.235:80/js/jquery-1.11.1.min.js"></script>
+    <script src="http://106.12.29.235:80/js/paging.js"></script>
+    <script src="http://106.12.29.235:80/js/utils.js"></script>
+    <script src="http://106.12.29.235:80/js/getCookie.js"></script>
+    <script type="text/javascript" src="http://106.12.29.235:80/js/noAgain.js"></script>
 
 
 </head>
@@ -38,15 +38,15 @@
 </div>
 </div>
 <div class="footBar">
-    <a href="http://localhost">
+    <a href="http://106.12.29.235">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon1.png" alt=""/>
+            <img src="http://106.12.29.235:80/images/footIcon1.png" alt=""/>
         </div>
         <p class="on">首页</p>
     </a>
-    <a id="wode" href="http://localhost/me.html">
+    <a id="wode" href="http://106.12.29.235/me.html">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon3_hover.png" alt=""/>
+            <img src="http://106.12.29.235:80/images/footIcon3_hover.png" alt=""/>
         </div>
         <p>我的</p>
     </a>
@@ -60,7 +60,7 @@
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
-    var path = "http://localhost:80";
+    var path = "http://106.12.29.235:80";
     var path0 = path + "/forum/queryUserWrite?token=" + token;
 
     //查看tocken是否过期
@@ -174,12 +174,12 @@
         var picStr = "";
         for (var j =0; j<pic.length; j++){
             var img = new Image;
-            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
+            img.src = "http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j];
             var imgTag = "";
             if(img.width>img.height){
-                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
             }else{
-                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
             }
             picStr +=
                 "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+

@@ -148,6 +148,7 @@ public class CheckParamService {
         if(null == model.getVerifyNo()){
             return "验证码错误";
         }
+        model.setHeadPortraitUrl("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2922170376,2371336021&fm=27&gp=0.jpg");
 
         //校验验证码
         String key = "REGISTERPHONE" + model.getPhone();
