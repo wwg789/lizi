@@ -7,10 +7,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/common.css">
-    <script src="http://localhost:80/js/getCookie.js"></script>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/reset.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/global.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/common.css">
+    <script src="http://106.12.29.235:80/js/getCookie.js"></script>
 
 
 </head>
@@ -19,7 +19,7 @@
 <div id="huifu01"><div id="huifu02"><textarea id="input01"></textarea><button id="button01">提      交</button><button id="button02">取消</button></div></div>
 <div class="writeHead">
     <div class="writeHead_top center">
-        <a href=""><img src="http://localhost:80/images/backIcon.png" alt="" class="backBtn"/></a>
+        <a href=""><img src="http://106.12.29.235:80/images/backIcon.png" alt="" class="backBtn"/></a>
         <h1>帖子内容</h1>
     </div>
 </div>
@@ -46,7 +46,7 @@
     var forumId = getCookie("forumId");
     var token = getCookie("token");
     alert(document.cookie)
-    var path = "http://localhost:80";
+    var path = "http://106.12.29.235:80";
     var path0 = path + "/forum/queryForumDetail?id="+forumId;
     var evalId;
     //获取详情
@@ -272,12 +272,12 @@
         var picStr = "";
         for (var j =0; j<pic.length; j++){
             var img = new Image;
-            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
+            img.src = "http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j];
             var imgTag = "";
             if(img.width>img.height){
-                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
             }else{
-                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
             }
             picStr +=
                 "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+

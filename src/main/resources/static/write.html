@@ -7,14 +7,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
-    <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/reset.css"/>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/global.css"/>
 
-    <script src="http://localhost:80/js/jquery.min.js"></script>
-    <script src="http://localhost:80/js/jQuery.upload.min.js"></script>
-    <link rel="stylesheet" href="http://localhost:80/css/upload.css">
+    <script src="http://106.12.29.235:80/js/jquery.min.js"></script>
+    <script src="http://106.12.29.235:80/js/jQuery.upload.min.js"></script>
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/upload.css">
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-    <script src="http://localhost:80/js/getCookie.js"></script>
+    <script src="http://106.12.29.235:80/js/getCookie.js"></script>
     <style>
         input::-webkit-input-placeholder {
             color: #333;
@@ -51,25 +51,25 @@
     <textarea placeholder="请输入您想说的..." id="forumContent"></textarea>
 </div>
 <div>
-    <div class="upload" action='http://localhost:80/forum/upload' id='case'></div>
+    <div class="upload" action='http://106.12.29.235:80/forum/upload' id='case'></div>
 </div>
 
 <div class="footBar">
-    <a href="http://localhost">
+    <a href="http://106.12.29.235">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon1.png" alt=""/>
+            <img src="http://106.12.29.235:80/images/footIcon1.png" alt=""/>
         </div>
         <p>首页</p>
     </a>
-    <a href="http://localhost/write.html">
+    <a href="http://106.12.29.235/write.html">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon2.png" alt=""/>
+            <img src="http://106.12.29.235:80/images/footIcon2.png" alt=""/>
         </div>
         <p class="on">发帖</p>
     </a>
-    <a href="http://localhost/me.html">
+    <a href="http://106.12.29.235/me.html">
         <div class="footBar_pic">
-            <img src="http://localhost:80/images/footIcon3.png" alt=""/>
+            <img src="http://106.12.29.235:80/images/footIcon3.png" alt=""/>
         </div>
         <p>我的</p>
     </a>
@@ -78,7 +78,7 @@
 </html>
 
 <script type="text/javascript">
-    var path = "http://localhost:80";
+    var path = "http://106.12.29.235:80";
     var parentId = getCookie("parentId");
     var token = getCookie("token");
     //该函数为点击放大镜的回调函数，如没有该函数，则不显示放大镜
@@ -98,7 +98,7 @@
             "&forumPictures="+$("input[name='upload']").val();
         $.ajax({
             type: "GET",
-            url: "http://localhost:80/forum/addForum"+data,
+            url: "http://106.12.29.235:80/forum/addForum"+data,
             dataType: "json",
                 success: function (data) {
                 if (data.code == 0) {

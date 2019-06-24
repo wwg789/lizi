@@ -6,19 +6,13 @@ import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 import cn.lizi.lizi.model.forum.UserCollectModel;
 import cn.lizi.lizi.service.forum.ForumService;
-import com.sun.deploy.net.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 
 /**
  * 论坛

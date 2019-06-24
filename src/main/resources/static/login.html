@@ -7,10 +7,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>邢台1234 - 登陆</title>
-    <link rel="stylesheet" href="http://localhost:80/css/login.css">
+    <link rel="stylesheet" href="http://106.12.29.235:80/css/login.css">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <script type="text/javascript" src="http://localhost:80/js/jquery.min.js"></script>
+    <script type="text/javascript" src="http://106.12.29.235:80/js/jquery.min.js"></script>
 </head>
 <body>
 
@@ -32,7 +32,7 @@
 
     <div class="login-help">
         <h1>忘记密码? <a href="index.html">点击修改</a>.</h1>
-        <h1>没有账户? <a href="http://localhost/view/register">马上注册</a></h1>
+        <h1>没有账户? <a href="http://106.12.29.235/view/register">马上注册</a></h1>
     </div>
 </section>
 
@@ -40,7 +40,7 @@
 </html>
 
 <script>
-    var path = "http://localhost";
+    var path = "http://106.12.29.235";
     //登陆
     $("#denglua").click(function(){
         $.ajax({
@@ -49,7 +49,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
-                    window.location.href = 'http://localhost:80/view/index?token='+ data.data.token;
+                    window.location.href = 'http://106.12.29.235:80/view/index?token='+ data.data.token;
                 } else {
                     alert(data.msg);
                 }
