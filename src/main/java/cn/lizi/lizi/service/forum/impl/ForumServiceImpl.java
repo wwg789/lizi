@@ -259,7 +259,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         //新的文件名称
         String resoutPath = "PIC-"+ timeStr +prefix;
 
-        File pathfile = new File("D:/picture/"+ getFileSavePath(timeStr)+"/");
+        File pathfile = new File("/usr/local/tomcat/picture/"+ getFileSavePath(timeStr)+"/");
         if(!pathfile.exists()){
             pathfile.mkdirs();
         }
@@ -284,7 +284,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             return ResultModel.getError("文件空");
         }
 
-        String path = "D:/picture/"+ getFileDownloadPath(picUrl)+ "/" + picUrl;
+        String path = "/usr/local/tomcat/picture/"+ getFileDownloadPath(picUrl)+ "/" + picUrl;
 
         try {
             FileInputStream in = new FileInputStream(new File(path));
