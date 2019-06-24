@@ -245,7 +245,7 @@
         for (var i=0; i<data.length;i++ ) {
             var picStr = "";
             var pic = null;
-            if(data != null && data[i].forumPictures != null){
+            if(data != null && data[i].forumPictures != null && data[i].forumPictures != ""){
                 pic = data[i].forumPictures.split(",");
             }
             if(null != pic && pic.length>0){
