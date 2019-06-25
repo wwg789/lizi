@@ -217,14 +217,12 @@ input[type=submit]:active {
 }
 
 #denglua{
-  position: fixed;
-  left: 1037px;
-  top: 273px;
   width: 68px;
   height: 22px;
   background-color: #057AFC;
   border-radius: 10px;
   text-align: center;
   color: #FFF;
-  cursor:pointer
+  cursor:pointer;
+  float: left;
 }
