@@ -69,6 +69,16 @@
         </trim>
     </insert>
 
+    <!-- 批量新增 -->
+    <insert id="addForumList" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lizi.lizi.model.forum.ForumInfoModel" >
+        INSERT INTO xt_forum_info
+        (user_id,nick_name,user_head_portrait_url,forum_parent_id,forum_subject,forum_content,create_time)
+        VALUES
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.userId}, #{item.nickName}, #{item.userHeadPortraitUrl}, #{item.forumParentId}, #{item.forumSubject}, #{item.forumContent}, #{item.createTime})
+        </foreach>
+    </insert>
+
     <!-- 修改 -->
     <update id="updateForum">
         UPDATE

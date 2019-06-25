@@ -3,7 +3,9 @@ package cn.lizi.lizi.mapper;
 import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.forum.ForumParentDetailModel;
 import cn.lizi.lizi.model.forum.UserCollectModel;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ForumMapper {
@@ -43,4 +45,5 @@ public interface ForumMapper {
     //查询是否收藏此帖
     UserCollectModel queryUserIsCollect(UserCollectModel model);
 
+    void addForumList(@Param("list") ArrayList<ForumInfoModel> forumList);
 }
