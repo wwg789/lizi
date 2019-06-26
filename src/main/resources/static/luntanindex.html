@@ -167,7 +167,7 @@
         $("#jinghua").attr("class","");
         $.ajax({
             type: "GET",
-            url: path0+"&temp=" + temp + "&page=" + "&forumSubject=" + $("input[name='search']").val(),
+            url: path0+"&temp=" + temp + "&page=" + "&forumContent=" + $("input[name='search']").val(),
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {

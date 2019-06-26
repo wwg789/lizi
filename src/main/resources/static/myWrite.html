@@ -117,7 +117,8 @@
             url: path + "/login/checkToken?token=" + token,
             dataType: "json",
             success: function (data) {
-
+                //跳转到指定页面
+                window.location.href=path + "/view/me?token=" + token;
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //跳转到登录页

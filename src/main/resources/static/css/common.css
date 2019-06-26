@@ -1,8 +1,8 @@
 #huifu01{
     position: fixed;
-    left: 600px;
-    top: 400px;
-    width: 900px;
+    left: 63px;
+    top: 96px;
+    width: 500px;
     height: 200px;
     background-color: #cfe7e6;
     z-index:20;
@@ -13,8 +13,8 @@
 
 #huifu02{
     position: fixed;
-    left: 610px;
-    top: 410px;
+    left: 73px;
+    top: 105px;
     width: 880px;
     height: 180px;
     background-color: #eef5f4;
@@ -23,7 +23,7 @@
 }
 
 #input01{
-    width: 876px;
+    width: 477px;
     height: 140px;
     background-color: #eef5f4;
     z-index:22;
@@ -35,7 +35,7 @@
 }
 
 #button01{
-    width: 800px;
+    width: 398px;
     height: 38px;
     background-color: #3385FF;
     z-index:22;

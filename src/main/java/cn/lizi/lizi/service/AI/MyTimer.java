@@ -13,7 +13,7 @@ public class MyTimer {
     /**
      * 定时器01
      */
-    @Scheduled(cron = "0 5 0 * * ?")
+    @Scheduled(cron = "0 59 23 * * ?")
     public void start01(){
         System.out.print("一分钟时间到\n");
         xingtai123Service.saveXingTai123Data();
