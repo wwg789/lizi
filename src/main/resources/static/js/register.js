@@ -8,7 +8,7 @@
     };
     function require(f) {
         var g = {
-            phone: /^1(3\d|5[0-35-9]|8[025-9]|47)\d{8}$/,
+            phone: /^1[3456789]\d{9}$/,
             company: /^[\u4E00-\u9FA5a-zA-Z][\u4E00-\u9FA5a-zA-Z0-9\s-,-.]*$/,
             uname: /^[\u4E00-\u9FA5a-zA-Z][\u4E00-\u9FA5a-zA-Z0-9_]*$/,
             zh: /^[\u4e00-\u9fa5]+$/,
