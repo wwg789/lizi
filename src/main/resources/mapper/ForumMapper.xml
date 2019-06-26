@@ -27,7 +27,7 @@
             <if test="userHeadPortraitUrl != null"> AND user_head_portrait_url = #{userHeadPortraitUrl}</if>
             <if test="forumParentId != null"> AND forum_parent_id = #{forumParentId}</if>
             <if test="forumSubject != null"> AND forum_subject LIKE '%${forumSubject}%'</if>
-            <if test="forumContent != null"> AND forum_content = #{forumContent}</if>
+            <if test="forumContent != null"> AND forum_content LIKE '%${forumContent}%'</if>
             <if test="forumCollectCount != null"> AND forum_collect_count = #{forumCollectCount}</if>
             <if test="forumEvaluateCount != null"> AND forum_evaluate_count = #{forumEvaluateCount}</if>
             <if test="forumSelectCount != null"> AND forum_select_count = #{forumSelectCount}</if>

@@ -10,13 +10,24 @@ import org.springframework.stereotype.Component;
 public class MyTimer {
     @Autowired
     xingtai123Service xingtai123Service;
-    /**
-     * 定时器01
-     */
+
+    //门市  装修
     @Scheduled(cron = "0 59 23 * * ?")
     public void start01(){
-        System.out.print("一分钟时间到\n");
+        System.out.print("开始执行爬虫程序\n");
         xingtai123Service.saveXingTai123Data();
+    }
+    //招聘
+    @Scheduled(cron = "0 58 23 * * ?")
+    public void start02(){
+        System.out.print("开始执行爬虫程序\n");
+        xingtai123Service.saveZP();
+    }
+    //卡票卷
+    @Scheduled(cron = "0 57 23 * * ?")
+    public void start03(){
+        System.out.print("开始执行爬虫程序\n");
+        xingtai123Service.savekapiaojuan();
     }
 
 }

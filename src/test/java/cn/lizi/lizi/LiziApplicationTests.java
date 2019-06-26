@@ -1,5 +1,6 @@
 package cn.lizi.lizi;
 
+import cn.lizi.lizi.service.AI.xingtai123Service;
 import cn.lizi.lizi.utils.RedisUtil;
 
 import org.junit.Test;
@@ -14,6 +15,13 @@ import java.util.HashMap;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LiziApplicationTests {
+    @Autowired
+    xingtai123Service i123Service;
 
+
+    @Test
+    public void saveJiazhuang(){
+        i123Service.savekapiaojuan();
+    }
 
 }
