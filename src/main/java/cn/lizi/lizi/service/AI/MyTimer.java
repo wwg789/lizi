@@ -30,4 +30,12 @@ public class MyTimer {
         xingtai123Service.savekapiaojuan();
     }
 
+    //白色那个
+    @Scheduled(cron = "0 55 23 * * ?")
+    public void saveType03(){
+        System.out.print("开始执行爬虫程序\n");
+        xingtai123Service.saveType03();
+    }
+
+
 }

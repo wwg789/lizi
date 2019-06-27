@@ -1,7 +1,7 @@
 #huifu01{
     position: fixed;
     top: 96px;
-    width: 400px;
+    width: 330px;
     height: 200px;
     background-color: #cfe7e6;
     z-index:20;
@@ -13,7 +13,7 @@
     position: fixed;
     left: 7px;
     top: 105px;
-    width: 380px;
+    width: 309px;
     height: 180px;
     background-color: #eef5f4;
     z-index:21;

@@ -75,8 +75,9 @@
     //定义重新获取到的分页值
     var thisPage = 1;
     var temp = 0;
+    var forumContent = "";
     var path = "http://106.12.29.235:80";
-    var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
+    var path0 = path + "/forum/queryForumList?forumParentId="+parentId+"&forumContent="+forumContent;
 
     //加载列表
     $.ajax({
@@ -99,7 +100,8 @@
         $("#remen").attr("class","");
         $("#jinghua").attr("class","");
         temp = 0;
-        path1 = path0 + "&page=" + thisPage + "&temp="+ 0;
+        thisPage = 1;
+        forumContent="";
         $.ajax({
             type: "GET",
             url: path0+"&temp=" + temp + "&page=" + thisPage,
@@ -121,7 +123,8 @@
         $("#remen").attr("class","on");
         $("#jinghua").attr("class","");
         temp = 1;
-        path1 = path0 + "&page=" + thisPage + "&temp="+ temp;
+        thisPage = 1;
+        forumContent="";
         $.ajax({
             type: "GET",
             url: path0+"&temp=" + temp + "&page=" + thisPage,
@@ -143,7 +146,8 @@
         $("#remen").attr("class","");
         $("#jinghua").attr("class","on");
         temp = 2;
-        path1 = path0 + "&page=" + thisPage + "&temp="+ temp;
+        thisPage = 1;
+        forumContent="";
         $.ajax({
             type: "GET",
             url: path0+"&temp=" + temp + "&page=" + thisPage,
@@ -162,12 +166,14 @@
     //点击搜索
     $("#sousuo").click(function(){
         temp = 0;
+        thisPage = 1;
+        forumContent=$("input[name='search']").val();
         $("#zuixin").attr("class","on");
         $("#remen").attr("class","");
         $("#jinghua").attr("class","");
         $.ajax({
             type: "GET",
-            url: path0+"&temp=" + temp + "&page=" + "&forumContent=" + $("input[name='search']").val(),
+            url: path0+"&temp=" + temp + "&page=" + thisPage,
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {

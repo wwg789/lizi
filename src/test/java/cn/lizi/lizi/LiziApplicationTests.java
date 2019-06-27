@@ -21,7 +21,7 @@ public class LiziApplicationTests {
 
     @Test
     public void saveJiazhuang(){
-        i123Service.savekapiaojuan();
+        i123Service.test();
     }
 
 }

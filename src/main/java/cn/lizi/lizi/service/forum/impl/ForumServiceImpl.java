@@ -56,6 +56,9 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         if(null == model.getPageSize()){
             model.setPageSize(10);
         }
+        if(StringUtils.isEmpty(model.getForumContent())){
+            model.setForumContent(null);
+        }
 
         List<ForumInfoModel> forumList = new ArrayList<>();
 

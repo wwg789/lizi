@@ -30,17 +30,61 @@ public class xingtai123Service {
 
     public void test() {
 
-        String path = "http://www.xingtai123.com/youjiao/index.asp?page=";
+        String path = "http://www.xingtai123.com/youhui/xiezhen/index.asp?page=";
         //获取昨天
         ArrayList<ForumInfoModel> forumList = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
             String pathUrl = path+i;
-            if(getParentUtl(pathUrl,34,forumList) == false){
+            if(getParentUtl04(pathUrl,34,forumList) == false){
                 break;
             }
         }
         log.info("测试结果 time {} ，条数 {}",DateUtils4Java8.getCurDateTimeFull(),forumList.size());
     }
+
+    public void saveType03() {
+
+        HashMap<String, Integer> parents = new HashMap<>();
+        //教育培训
+        parents.put("mlmt",28);
+        //搬家
+        parents.put("fssyxz",27);
+        //家电维修
+        parents.put("nxsxx",26);
+        //保洁清洗
+        parents.put("yscy",25);
+        //管道疏通
+        parents.put("kjjd",24);
+        //修锁开锁
+        parents.put("kdhy",17);
+        //快递物流
+        parents.put("fcslbz",16);
+        //健身房
+        parents.put("mrjg",14);
+        //上门回收家具-家电-设备-废物
+        parents.put("qc4s",13);
+        //上门回收老酒-黄金-烟酒礼品
+        parents.put("jjdqc",13);
+        //汽修厂
+        parents.put("qixiu",12);
+        //驾校陪练
+        parents.put("jxpl",3);
+        //邢台彩钢
+        parents.put("xiezhen",1);
+
+        parents.forEach((parentPath,parentId)->{
+            //获取内容
+            ArrayList<ForumInfoModel> forumList = getContent04(parentPath,parentId);
+            //保存内容
+            if(forumList!=null && forumList.size()>0){
+                forumMapper.addForumList(forumList);
+                log.info(parentPath+"-爬虫结果保存 time {} ，条数 {}",DateUtils4Java8.getCurDateTimeFull(),forumList.size());
+            }
+
+        });
+    }
+
+
     /**
      * 卡票卷
      */
@@ -106,7 +150,19 @@ public class xingtai123Service {
 
         });
     }
-
+    //获取内容
+    private ArrayList<ForumInfoModel> getContent04(String parentPath,Integer parentId) {
+        String path = "http://www.xingtai123.com/youhui/";
+        path += parentPath+"/index.asp?page=";
+        ArrayList<ForumInfoModel> forumList = new ArrayList<>();
+        for (int i = 1; i < 10; i++) {
+            String pathUrl = path+i;
+            if(getParentUtl04(pathUrl,parentId,forumList) == false){
+                break;
+            }
+        }
+        return forumList;
+    }
     //获取内容
     private ArrayList<ForumInfoModel> getContent(String parentPath,Integer parentId) {
         String path = "http://www.xingtai123.com";
@@ -149,7 +205,7 @@ public class xingtai123Service {
                                 content = b.get(0).ownText();
                             }
                             Elements span = element.getElementsByClass("zi14_black_xi");
-                            if(null != b){
+                            if(null != span){
                                 content += span.get(0).ownText();
                             }
                             forumInfoModel.setForumContent(content);
@@ -203,7 +259,7 @@ public class xingtai123Service {
                                 content = b.get(0).ownText();
                             }
                             Elements span = element.getElementsByClass("zi14_black_xi");
-                            if(null != b){
+                            if(null != span){
                                 content += span.get(0).ownText();
                             }
                             forumInfoModel.setForumContent(content);
@@ -252,7 +308,7 @@ public class xingtai123Service {
                                 content = b.get(0).ownText();
                             }
                             Elements span = element.getElementsByClass("zi14_black_xi");
-                            if(null != b){
+                            if(null != span){
                                 content += span.get(0).ownText();
                             }
                             forumInfoModel.setForumContent(content);
@@ -273,7 +329,70 @@ public class xingtai123Service {
         return true;
     }
 
+    //获取信息内容
+    public boolean getParentUtl04(String path,Integer parentId,ArrayList<ForumInfoModel> forumList) {
+        HttpClientUtil httpClientUtil = new HttpClientUtil();
+        Document document = httpClientUtil.getDocument(path,new HashMap<>(),new HashMap<>());
+        if(null != document){
+            Elements tbody = document.getElementsByTag("tbody");
+            String todat = DateUtils4Java8.getCurDateTime("MM.dd");
+            if(null != tbody && tbody.size()>0){
+                //获取用户信息
+                UserModel userInfo = loginMapper.getUserInfo(UserModel.builder()
+                        .userId(4).build());
+                for (int i = 0; i < tbody.size() ; i++) {
+                    Element element = tbody.get(i);
+                    if(null != element){
+                        ForumInfoModel forumInfoModel = new ForumInfoModel();
 
+                        //获取信息
+                        Elements tds = element.getElementsByTag("td");
+                        //获取是不是发表的信息
+                        String bgcolor = tds.get(0).attr("bgcolor");
+                        String valign = tds.get(0).attr("valign");
+                        if(bgcolor == null || !"#ffffff".equals(bgcolor) || !"middle".equals(valign)){
+                            continue;
+                        }
+
+                            if(null != tds && tds.size()>2){
+                                String content = "";
+                                String leixing = "";
+
+                                Element element2 = tds.get(2);
+                                if(null != element2){
+                                  String dataTime = element2.getElementsByTag("span").get(0).ownText();
+                                  if(!todat.equals(dataTime)){
+                                      return false;
+                                  }
+                                }
+                                Element element1 = tds.get(0);
+                                if(null != element1){
+                                    Elements b = element1.getElementsByTag("b");
+                                    if(b!=null && b.size()>0){
+                                        leixing = b.get(0).ownText();
+                                    }
+                                    Elements span = element1.getElementsByTag("span");
+                                    if(span!=null && span.size()>0){
+                                        content = span.get(0).ownText();
+                                    }
+                                    content = leixing + content;
+                                }
+                                forumInfoModel.setForumContent(content);
+                                //添加用户信息
+                                forumInfoModel.setUserId(userInfo.getUserId());
+                                forumInfoModel.setNickName(userInfo.getNickName());
+                                forumInfoModel.setForumParentId(parentId);
+                                forumInfoModel.setUserHeadPortraitUrl(userInfo.getHeadPortraitUrl());
+                                forumInfoModel.setForumSubject("系统自动搜所邢台信息");
+                                forumInfoModel.setCreateTime(new Date());
+                                forumList.add(forumInfoModel);
+                            }
+                        }
+                    }
+                }
+        }
+        return true;
+    }
 
 
 }

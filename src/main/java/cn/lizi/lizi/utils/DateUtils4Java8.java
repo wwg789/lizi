@@ -239,10 +239,7 @@ public class DateUtils4Java8 {
      */
     public static String beforeNDaysDate(String format, int day) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
-        if (day > 0) {
-            return LocalDateTime.now().minusDays(day).format(dateTimeFormatter);
-        }
-        return null;
+        return LocalDateTime.now().minusDays(day).format(dateTimeFormatter);
     }
 
     /**
