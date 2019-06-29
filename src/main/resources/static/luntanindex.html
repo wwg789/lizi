@@ -276,7 +276,7 @@
                 "        </a>\n" +
                 "        <a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
                 "            <div class=\"indexTableCon\">\n" +
-                "                <h1>"+ a.forumSubject +"</h1>\n" +
+
                 "                <p>"+ a.forumContent +"</p>\n" +
                 "            </div>\n" +
                 "        </a>\n" + picStr +
@@ -298,12 +298,12 @@
             img.src = "http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j];
             var imgTag = "";
             if(img.width>img.height){
-                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 140px\">";
             }else{
-                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 200px\">";
+                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 140px\">";
             }
             picStr +=
-                "<div class='userUpPic' style='width: 200px;height: 200px;overflow:hidden;float: left;'>\n"+
+                "<div class='userUpPic' style='width: 140px;height: 140px;overflow:hidden;float: left;'>\n"+
                   imgTag +
                 "</div>\n"
         }

@@ -2,7 +2,9 @@ package cn.lizi.lizi.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
+import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -133,7 +135,15 @@ public class HttpClientUtil {
     public Document getDocument (String url,Map<String,String> headers, Map<String,String> cookies){
 
         HttpGet httpGet = new HttpGet(url);
-
+        //设置代理IP，设置连接超时时间 、 设置 请求读取数据的超时时间 、 设置从connect Manager获取Connection超时时间、
+        HttpHost proxy = new HttpHost("182.61.200.100", 80);
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setProxy(proxy)
+                .setConnectTimeout(10000)
+                .setSocketTimeout(10000)
+                .setConnectionRequestTimeout(3000)
+                .build();
+        httpGet.setConfig(requestConfig);
         try{
             if(headers != null){
                 for (String header: headers.keySet()) {

@@ -183,7 +183,7 @@
 
 
     <!-- 修改访问次数 -->
-    <update id="updateForumSelectCount">
+    <update id="updateForumSelectCount" parameterType="cn.lizi.lizi.model.forum.ForumInfoModel">
         UPDATE
         xt_forum_info
         SET forum_select_count = forum_select_count+1
@@ -192,7 +192,7 @@
     </update>
 
     <!-- 修改收藏次数次数 -->
-    <update id="updateCollectCount">
+    <update id="updateCollectCount" parameterType="cn.lizi.lizi.model.forum.ForumInfoModel">
         UPDATE
         xt_forum_info
         SET forum_collect_count = forum_collect_count + 1
@@ -201,7 +201,7 @@
     </update>
 
     <!-- 修改评价次数次数 -->
-    <update id="updateForumEvalCount">
+    <update id="updateForumEvalCount" parameterType="cn.lizi.lizi.model.forum.ForumInfoModel">
         UPDATE
         xt_forum_info
         SET forum_evaluate_count = forum_evaluate_count + 1

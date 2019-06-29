@@ -108,7 +108,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
         ForumInfoModel forumInfo = forumMapper.queryForumDetail(model);
 
         //修改帖子访问次数
-        forumMapper.updateForumSelectCount();
+        forumMapper.updateForumSelectCount(model);
         return ResultModel.getSuccess("成功", forumInfo);
     }
 
@@ -195,7 +195,7 @@ public class ForumServiceImpl extends CommonServiceImpl implements ForumService 
             return ResultModel.getError("收藏失败");
         }
         //修改发帖收藏数量
-        forumMapper.updateCollectCount();
+        forumMapper.updateCollectCount(ForumInfoModel.builder().id(model.getForumId().toString()).build());
         return ResultModel.getSuccess("成功",null);
     }
 

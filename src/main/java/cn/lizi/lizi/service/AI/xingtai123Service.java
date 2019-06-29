@@ -78,9 +78,12 @@ public class xingtai123Service {
             //保存内容
             if(forumList!=null && forumList.size()>0){
                 forumMapper.addForumList(forumList);
-                log.info(parentPath+"-爬虫结果保存 time {} ，条数 {}",DateUtils4Java8.getCurDateTimeFull(),forumList.size());
+           }
+           Integer size = 0;
+            if(forumList!=null){
+                size = forumList.size();
             }
-
+            log.info(parentPath+"-爬虫结果保存 time {} ，条数 {}",DateUtils4Java8.getCurDateTimeFull(),size);
         });
     }
 

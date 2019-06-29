@@ -5,6 +5,7 @@ import cn.lizi.lizi.mapper.EvalReplyMapper;
 import cn.lizi.lizi.mapper.ForumMapper;
 import cn.lizi.lizi.model.EvalReply.EvalModel;
 import cn.lizi.lizi.model.EvalReply.ReplyModel;
+import cn.lizi.lizi.model.forum.ForumInfoModel;
 import cn.lizi.lizi.model.other.UserModel;
 import cn.lizi.lizi.service.common.impl.CommonServiceImpl;
 import cn.lizi.lizi.service.evalReply.EvalReplyService;
@@ -48,7 +49,7 @@ public class EvalReplyServiceImpl  extends CommonServiceImpl implements EvalRepl
         int resoutData = evalReplyMapper.addEvalDetail(model);
 
         //修改评价次数统计
-        forumMapper.updateForumEvalCount();
+        forumMapper.updateForumEvalCount(ForumInfoModel.builder().id(model.getForumInfoId().toString()).build());
 
         if(resoutData < 1){
            return  ResultModel.getError("评价失败  网络错误");

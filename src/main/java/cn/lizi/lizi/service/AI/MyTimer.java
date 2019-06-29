@@ -12,7 +12,7 @@ public class MyTimer {
     xingtai123Service xingtai123Service;
 
     //门市  装修
-    @Scheduled(cron = "0 59 23 * * ?")
+    /*@Scheduled(cron = "0 59 23 * * ?")
     public void start01(){
         System.out.print("开始执行爬虫程序\n");
         xingtai123Service.saveXingTai123Data();
@@ -35,7 +35,7 @@ public class MyTimer {
     public void saveType03(){
         System.out.print("开始执行爬虫程序\n");
         xingtai123Service.saveType03();
-    }
+    }*/
 
 
 }

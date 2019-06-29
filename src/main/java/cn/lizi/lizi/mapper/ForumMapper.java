@@ -23,9 +23,9 @@ public interface ForumMapper {
     List<ForumParentDetailModel> queryForumParentList();
 
     //修改统计次数
-    int updateForumSelectCount();
-    int updateCollectCount();
-    int updateForumEvalCount();
+    int updateForumSelectCount(ForumInfoModel model);
+    int updateCollectCount(ForumInfoModel model);
+    int updateForumEvalCount(ForumInfoModel model);
 
     //添加用户收藏
     int addCollect(UserCollectModel model);
