@@ -7,24 +7,30 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" href="http://106.12.29.235:80/css/reset.css"/>
-    <link rel="stylesheet" href="http://106.12.29.235:80/css/global.css"/>
-    <link rel="stylesheet" href="http://106.12.29.235:80/css/paging.css">
-    <link rel="stylesheet" href="http://106.12.29.235:80/css/jiugongge.css">
+    <link rel="stylesheet" href="http://localhost:80/css/reset.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/global.css"/>
+    <link rel="stylesheet" href="http://localhost:80/css/paging.css">
+    <link rel="stylesheet" href="http://localhost:80/css/jiugongge.css">
     <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-    <script src="http://106.12.29.235:80/js/jquery-1.11.1.min.js"></script>
-    <script src="http://106.12.29.235:80/js/paging.js"></script>
-    <script src="http://106.12.29.235:80/js/utils.js"></script>
-    <script src="http://106.12.29.235:80/js/getCookie.js"></script>
+    <script src="http://localhost:80/js/jquery-1.11.1.min.js"></script>
+    <script src="http://localhost:80/js/paging.js"></script>
+    <script src="http://localhost:80/js/utils.js"></script>
+    <script src="http://localhost:80/js/getCookie.js"></script>
 
 
 </head>
 <body style="background-color: #f4f4f4;">
-<div style=" position: fixed;background-color: #FFF;z-index:19;bottom: 51px;width: 100%;height: 40px;"></div>
+<div style=" position: fixed;background-color: #FFF;z-index:19;bottom: 51px;width: 100%;height: 40px;">
+    <div style="z-index:9999">
+        <div style="width:100%;background-color: #fff;left: 4%;bottom: 44px;z-index:20;" id="boxfenye">
+            <div class="box" id="box"></div>
+        </div>
+    </div>
+</div>
+<div id="title01" style="position: fixed;left: 60px;top: 16px;z-index: 11;font-size: 19px;"><h1 id="h101"></h1></div>
 <div class="inHead">
         <div class="inHead_inner center">
-            <a href=""><img src="images/logo.png" alt="" class="indexPic1"/></a>
             <div class="indexSearch">
                 <input type="text" placeholder="请输入关键词......" name="search"/>
                 <input type="button" name="indexBtn" id="sousuo"/>
@@ -41,27 +47,23 @@
 <div style="width: 100%;height: 81px"></div>
 <div class="indexTable_con" style="display: block"></div>
 
-<div style="z-index:9999">
-<div style="width:100%;background-color: #fff;position: absolute;left: 4%;bottom: 44px;z-index:20;" id="boxfenye">
-    <div class="box" id="box"></div>
-</div>
-</div>
+
 <div class="footBar">
-    <a href="http://106.12.29.235">
+    <a href="http://localhost">
         <div class="footBar_pic">
-            <img src="http://106.12.29.235:80/images/footIcon1.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon1.png" alt=""/>
         </div>
         <p class="on">首页</p>
     </a>
     <a id="fatie">
         <div class="footBar_pic">
-            <img src="http://106.12.29.235:80/images/footIcon2.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon2.png" alt=""/>
         </div>
         <p>发帖</p>
     </a>
     <a id="wode">
         <div class="footBar_pic">
-            <img src="http://106.12.29.235:80/images/footIcon3.png" alt=""/>
+            <img src="http://localhost:80/images/footIcon3.png" alt=""/>
         </div>
         <p>我的</p>
     </a>
@@ -76,8 +78,23 @@
     var thisPage = 1;
     var temp = 0;
     var forumContent = "";
-    var path = "http://106.12.29.235:80";
-    var path0 = path + "/forum/queryForumList?forumParentId="+parentId+"&forumContent="+forumContent;
+    var path = "http://localhost:80";
+    var path0 = path + "/forum/queryForumList?forumParentId="+parentId;
+    h101
+    //查询标题
+    $.ajax({
+        type: "GET",
+        url: path+"/forum/queryForumParentList?id="+parentId,
+        dataType: "json",
+        success: function (data) {
+            if (data.code == 0) {
+                var titleName = data.data[0].forumParentName;
+                $('#h101').html(titleName);
+            } else {
+                alert(data.msg);
+            }
+        },
+    });
 
     //加载列表
     $.ajax({
@@ -173,7 +190,7 @@
         $("#jinghua").attr("class","");
         $.ajax({
             type: "GET",
-            url: path0+"&temp=" + temp + "&page=" + thisPage,
+            url: path0+"&temp=" + temp + "&page=" + thisPage + "&forumContent=" + forumContent,
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
@@ -191,12 +208,13 @@
     $("#boxfenye").click(function(){
         $.ajax({
             type: "GET",
-            url: path0 + "&temp=" + temp + "&page=" + thisPage,
+            url: path0 + "&temp=" + temp + "&page=" + thisPage + "&forumContent=" + forumContent,
             dataType: "json",
             success: function (data) {
                 if (data.code == 0) {
                     var divstr = subString(data.data);
                     $('.indexTable_con').html(divstr);
+                    window.scroll(0,-200);
                 } else {
                     alert(data.msg);
                 }
@@ -260,9 +278,17 @@
 
             var a = data[i];
             if(i==data.length-1){
-                divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 340px 4%;\">\n";
+                if(pic != null){
+                    divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 300px 4%;\">\n";
+                }else {
+                    divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 130px 4%;\">\n";
+                }
             }else{
-                divstr += "<div class=\"indexTable_son\">\n";
+                if(pic != null){
+                    divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 188px 4%;\">\n";
+                }else {
+                    divstr += "<div class=\"indexTable_son\" style=\"padding: 19px 5% 50px 4%;\">\n";
+                }
             }
             divstr +="<a href=\""+ path +"/view/lt_content?forumId="+ a.id +"\">\n" +
                 "            <div class=\"indexTable_sonHead\">\n" +
@@ -295,12 +321,12 @@
         var picStr = "";
         for (var j =0; j<pic.length; j++){
             var img = new Image;
-            img.src = "http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j];
+            img.src = "http://localhost:80/forum/downloadPic?picUrl="+ pic[j];
             var imgTag = "";
             if(img.width>img.height){
-                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 140px\">";
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"height: 140px\">";
             }else{
-                imgTag = "<img src=\"http://106.12.29.235:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 140px\">";
+                imgTag = "<img src=\"http://localhost:80/forum/downloadPic?picUrl="+ pic[j] +"\" style=\"width: 140px\">";
             }
             picStr +=
                 "<div class='userUpPic' style='width: 140px;height: 140px;overflow:hidden;float: left;'>\n"+

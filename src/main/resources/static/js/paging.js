@@ -34,7 +34,7 @@
             that.options.jump ? jumpDom = '<input type="text" placeholder="1" class="jump-text" id="jumpText"><button type="button" class="jump-button" id="jumpBtn">跳转</button>' : jumpDom = '';
             content = '<button type="button" id="firstPage" class="turnPage first-page">首页</button>' +
                 '<button class="turnPage" id="prePage">上一页</button>' +
-                '<div class="pageWrap" style="width:' + wrapLength + 'px">' +
+                '<div class="pageWrap" style="width:' + wrapLength/1.66 + 'px">' +
                 '<ul id="pageSelect" style="transition:all ' + that.options.slideSpeed + 'ms">' +
                 ulDom +
                 '</ul></div>' +
